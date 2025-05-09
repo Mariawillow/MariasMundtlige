@@ -1,18 +1,15 @@
 import Image from "next/image";
 import Header from "@/components/Header";
 import ButtonPrimary from "@/components/ButtonPrimary";
-import DashCard from "@/components/(dashboard)/DashCard"
-import EventCrad from "@/components¨/(evventside)/EventCrad";
-import EventetsVaerker from "@/components/(eventside)/EventetsVaerker";
-import DropdownLokation from "@/components/(listeview)/DropdownLokation";
-import DropdownSorter from "@/components/(listeview)/DropdownSorter";
-import ListeCard from "@/components/(listeview)/ListeCard";
-import VaerkSide from "@/components¨/(vaerkside)/VaerkSide";
-import ButtonSecondary from "@/components¨/ButtonSecondary";
-import Kurv from "@/components/Kurv";
+import DashCard from "@/components/(dashboard)/DashCard";
+import EventArt from "@/components/(eventSingleView)/EventArt";
+import DropdownLocation from "@/components/(listeView)/DropdownLocation";
+import DropdownSorter from "@/components/(listeView)/DropdownSorter";
+import ListeCard from "@/components/(listeView)/ListeCard";
+import ButtonSecondary from "@/components/ButtonSecondary";
+import Kurv from "@/components/Basket";
 import Popup from "@/components/Popup";
 import Footer from "@/components/Footer";
-
 
 export default function Home() {
   return (
@@ -29,12 +26,10 @@ export default function Home() {
       <ButtonPrimary variant="danger">Slet</ButtonPrimary>
       <ButtonPrimary variant="ukendt">Fallback</ButtonPrimary>
       <DashCard></DashCard>
-      <EventCrad></EventCrad>
-      <EventetsVaerker></EventetsVaerker>
-      <DropdownLokation></DropdownLokation>
+      <EventArt></EventArt>
+      <DropdownLocation></DropdownLocation>
       <DropdownSorter></DropdownSorter>
       <ListeCard></ListeCard>
-      <VaerkSide></VaerkSide>
       <ButtonSecondary></ButtonSecondary>
       <Kurv></Kurv>
       <Popup></Popup>
