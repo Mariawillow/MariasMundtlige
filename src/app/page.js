@@ -9,7 +9,6 @@ import ListeCard from "@/components/(listeView)/ListeCard";
 import ButtonSecondary from "@/components/ButtonSecondary";
 import Kurv from "@/components/Basket";
 import Popup from "@/components/Popup";
-import Footer from "@/components/Footer";
 import { SignUp, SignIn, UserButton } from "@clerk/nextjs";
 
 export default function Home() {
@@ -40,7 +39,6 @@ export default function Home() {
       <ButtonSecondary></ButtonSecondary>
       <Kurv></Kurv>
       <Popup></Popup>
-      <Footer></Footer>
     </div>
   );
 }
