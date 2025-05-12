@@ -2,8 +2,8 @@
 @import "tw-animate-css";
 
 :root {
-  /*Typografi*/
-  --step--1: clamp(0.8333rem, 0.8101rem + 0.1159vw, 0.9rem); /*Er ikke i brug endnu*/
+  /* Typografi */
+  --step--1: clamp(0.8333rem, 0.8101rem + 0.1159vw, 0.9rem);
   --step-0: clamp(1rem, 0.9565rem + 0.2174vw, 1.125rem);
   --step-1: clamp(1.2rem, 1.1283rem + 0.3587vw, 1.4063rem);
   --step-2: clamp(1.44rem, 1.3295rem + 0.5527vw, 1.7578rem);
@@ -11,18 +11,19 @@
   --step-4: clamp(2.0736rem, 1.8395rem + 1.1704vw, 2.7466rem);
   --step-5: clamp(2.4883rem, 2.1597rem + 1.6433vw, 3.4332rem);
 
-  /*Spacing*/
-  --space-2xs: clamp(0.5rem, 0.4744rem + 0.1282vw, 0.5625rem); /*0.3125rem*/
-  --space-xs: clamp(0.75rem, 0.6987rem + 0.2564vw, 0.875rem); /*0.875rem*/
-  --space-s: clamp(1rem, 0.9487rem + 0.2564vw, 1.125rem); /*1.125rem*/
-  --space-m: clamp(1.5rem, 1.4231rem + 0.3846vw, 1.6875rem); /*1.6875rem*/
-  --space-l: clamp(2rem, 1.8974rem + 0.5128vw, 2.25rem); /*2.25rem*/
-  --space-xl: clamp(3rem, 2.8462rem + 0.7692vw, 3.375rem); /*3.375rem*/
-  --space-2xl: clamp(4rem, 3.7949rem + 1.0256vw, 4.5rem); /*4.5rem*/
-  --space-3xl: clamp(6rem, 5.6923rem + 1.5385vw, 6.75rem); /*6.75rem*/
+  /* Spacing */
+  --space-2xs: clamp(0.5rem, 0.4744rem + 0.1282vw, 0.5625rem);
+  --space-xs: clamp(0.75rem, 0.6987rem + 0.2564vw, 0.875rem);
+  --space-s: clamp(1rem, 0.9487rem + 0.2564vw, 1.125rem);
+  --space-m: clamp(1.5rem, 1.4231rem + 0.3846vw, 1.6875rem);
+  --space-l: clamp(2rem, 1.8974rem + 0.5128vw, 2.25rem);
+  --space-xl: clamp(3rem, 2.8462rem + 0.7692vw, 3.375rem);
+  --space-2xl: clamp(4rem, 3.7949rem + 1.0256vw, 4.5rem);
+  --space-3xl: clamp(6rem, 5.6923rem + 1.5385vw, 6.75rem);
 
   --content-width: 1100px;
   --textcolor: #000000;
+  --background: #bab0bc;
 }
 
 /* Spacing klasser til tailwind */
@@ -63,6 +64,7 @@
 }
 
 body {
+  background-color: var(--background);
   color: var(--textcolor);
   font-family: "Montserrat", sans-serif;
 
@@ -71,7 +73,7 @@ body {
 }
 
 main {
-  grid-column: 1/4;
+  grid-column: 1 / 4;
   display: grid;
   grid-template-columns: subgrid;
 }
