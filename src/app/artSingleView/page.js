@@ -1,75 +1,44 @@
-import ButtonSecondary from "@/components/ButtonSecondary";
-import EventArt from "@/components/(eventSingleView)/EventArt.jsx"
-import Stepper from "@/components/Stepper";
+import Image from "next/image";
+import StatuePic from "@/images/statuePic.svg"
+import { HiOutlineArrowLongLeft } from "react-icons/hi2";
 
-const ArtSingleView = () => {
-    return (
-      <div className="flex flex-col gap-6">
-        {/* Top: Titel og Dato */}
-        <div>
-          <h1 className=" font-semibold">Abstrakt Aften</h1>
-          <h3 className="font-light  ml-60">Dato for eventet</h3>
+
+const artSingleView = () => {
+    return ( <div>
+        
+        <div className="inline-block text-center">
+  <p className="text-[#C4FF00] font-semibold inline-block">Tilbage</p>
+  <div className="relative h-6 mt-1">
+    <HiOutlineArrowLongLeft 
+      className="text-[#C4FF00] absolute left-0 top-0 w-full scale-x-[1.0] scale-y-[2]" 
+    />
+  </div>
+</div>
+
+        <section className="grid grid-cols-2 gap-4">
+        <div className="w-[300px] h-[200px]">
+
+        <Image
+      src={StatuePic}
+      alt="statuebillede"
+      width={300}
+      height={200}
+      className="w-full h-full object-cover"
+    />
         </div>
-  
-        {/* Nederste sektion i to kolonner */}
-        <div className="grid grid-cols-2 gap-8">
-          {/* Om Eventet */}
-          <section className="flex flex-col gap-4">
-            <div>
-              <h4 className="font-semibold">Om Eventet</h4>
-              <p className="font-light">
-                Loreem wejfbknefnf n f f efn ekjfkejwnfknke kjenf fkjernfj k jrgj kjrg
-              </p>
-              <p className="font-light">ahhd habfewbifw</p>
-            </div>
-            <div>
-              <h4 className="font-semibold">Lokation</h4>
-              <p>Lokation og adresse for event</p>
-            </div>
-          </section>
-  
-          {/* Billetter */}
-          <section className="flex flex-col gap-4">
-            <h4 className="font-semibold">Billetter</h4>
-            <div className="grid grid-cols-2">
-            <div>
-              <p className="font-light">Voksen</p>
-              <p className="font-light">Pris 170 DKK</p>
-              </div>
-              <Stepper />
-            </div>
-            <div className="grid grid-cols-2">
-                <div>
-              <p className="font-light">Studenter</p>
-              <p className="font-light">Pris 90 DKK</p>
-              </div>
-              <Stepper />
-            </div>
+    <div>
+        <h1 className="font-semibold">Augustus og den tiburtinske sibylle</h1>
+        <h3 className="font-light">1500 - 1550</h3>
+        <p className="font-light">Værket er fremstillet med teknikken clairobscur-træsnit trykt med to stokke, og hører til Den Kongelige Kobbersamlinf</p>
+        <h4 className="font-semibold">Kunstner</h4>
+        <p className="font-light">Antonio da Trento, 1503 - 1540, italiensk</p>
+    </div>
 
-            <ButtonSecondary />
+    </section>
 
 
-          </section>
-        </div>
 
-        <section>
-            <h3 className="font-ligth">Oplev disse værker til eventet</h3>
-            <div className="grid grid-cols-3 gap-4 ">
-            <EventArt />
-            <EventArt />
-            <EventArt />
-            <EventArt />
-            <EventArt />
-            <EventArt />
-            <EventArt />
-            <EventArt />
-            </div>
-        </section>
-
-
-      </div>
-    );
-  };
-  
-  export default ArtSingleView;
-  
+    </div> );
+}
+ 
+export default artSingleView;
