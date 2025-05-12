@@ -10,16 +10,14 @@ import ButtonSecondary from "@/components/ButtonSecondary";
 import Kurv from "@/components/Basket";
 import Popup from "@/components/Popup";
 import Footer from "@/components/Footer";
-import { SignUp, SignIn, UserButton  } from "@clerk/nextjs";
-
-
+import { SignUp, SignIn, UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
     <div className="col-start-2">
-      <header className="flex justify-between"> 
-      <h1>Clover corp</h1>
-      <UserButton showName />
+      <header className="flex justify-between">
+        <h1>Clover corp</h1>
+        <UserButton showName />
       </header>
       <h1>Dav</h1>
       <h2>Dav</h2>
@@ -27,9 +25,8 @@ export default function Home() {
       <h4>Dav</h4>
       <h5>Dav</h5>
       <p>Dav</p>
-       <SignIn />
+      <SignIn />
       {/* <SignUp /> */}
-
 
       <ButtonPrimary variant="primary">Primær</ButtonPrimary>
       <ButtonPrimary variant="secondary">Sekundær</ButtonPrimary>
