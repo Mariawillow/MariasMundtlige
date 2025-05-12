@@ -2,7 +2,7 @@ import Image from "next/image";
 import StatuePic from "@/images/statuePic.svg"
 
 const ListeCard = () => {
-  return <div className="grid grid-cols-3 gap-4 col-span-2  ">
+  return <div className="grid grid-cols-3 col-span-2  ">
   <div className="w-[300px] h-[200px] relative group">
     <Image
       src={StatuePic}
