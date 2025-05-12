@@ -1,15 +1,15 @@
 import Image from "next/image";
-// import Header from "@/components/Header";
-// import ButtonPrimary from "@/components/ButtonPrimary";
-// import DashCard from "@/components/(dashboard)/DashCard";
-// import EventArt from "@/components/(eventSingleView)/EventArt";
-// import DropdownLocation from "@/components/(listeView)/DropdownLocation";
-// import DropdownSorter from "@/components/(listeView)/DropdownSorter";
-// import ListeCard from "@/components/(listeView)/ListeCard";
-// import ButtonSecondary from "@/components/ButtonSecondary";
-// import Kurv from "@/components/Basket";
-// import Popup from "@/components/Popup";
-// import Footer from "@/components/Footer";
+import Header from "@/components/Header";
+import ButtonPrimary from "@/components/ButtonPrimary";
+import DashCard from "@/components/(dashboard)/DashCard";
+import EventArt from "@/components/(eventSingleView)/EventArt";
+import DropdownLocation from "@/components/(listeView)/DropdownLocation";
+import DropdownSorter from "@/components/(listeView)/DropdownSorter";
+import ListeCard from "@/components/(listeView)/ListeCard";
+import ButtonSecondary from "@/components/ButtonSecondary";
+import Kurv from "@/components/Basket";
+import Popup from "@/components/Popup";
+import Footer from "@/components/Footer";
 import { SignUp, SignIn, UserButton  } from "@clerk/nextjs";
 
 
@@ -29,7 +29,7 @@ export default function Home() {
       <p>Dav</p>
        <SignIn />
       {/* <SignUp /> */}
-{/* 
+
 
       <ButtonPrimary variant="primary">Primær</ButtonPrimary>
       <ButtonPrimary variant="secondary">Sekundær</ButtonPrimary>
@@ -43,7 +43,7 @@ export default function Home() {
       <ButtonSecondary></ButtonSecondary>
       <Kurv></Kurv>
       <Popup></Popup>
-      <Footer></Footer> */}
+      <Footer></Footer>
     </div>
   );
 }
