@@ -14,7 +14,7 @@ export default function Home() {
     >
     <Header />
 
-      <h1 className="text-[#C4FF00] leading-relaxed">
+      <h1 className="text-[#C4FF00] leading-relaxed font-light">
         Oplev Storartet Kunst <br /> På Feler Måder
       </h1>
 
