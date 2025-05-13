@@ -8,7 +8,7 @@ import DropdownSorter from "@/components/(listeView)/DropdownSorter";
 import ButtonSecondary from "@/components/ButtonSecondary";
 import Kurv from "@/components/Basket";
 import Popup from "@/components/Popup";
-import {SignIn, UserButton } from "@clerk/nextjs";
+import { SignIn, UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (
@@ -27,16 +27,16 @@ export default function Home() {
       <SignIn />
       {/* <SignUp /> */}
 
-      <ButtonPrimary variant="primary">Primær</ButtonPrimary>
+      {/* <ButtonPrimary variant="primary">Primær</ButtonPrimary>
       <ButtonPrimary variant="secondary">Sekundær</ButtonPrimary>
       <ButtonPrimary variant="danger">Slet</ButtonPrimary>
-      <ButtonPrimary variant="ukendt">Fallback</ButtonPrimary>
-      <DashCard></DashCard>
-      <EventArt></EventArt>
-      <DropdownLocation></DropdownLocation>
-      <DropdownSorter></DropdownSorter>
+      <ButtonPrimary variant="ukendt">Fallback</ButtonPrimary> */}
+
+      <ButtonPrimary size="large">Button</ButtonPrimary>
+      <ButtonPrimary size="small">Button</ButtonPrimary>
+
       <ButtonSecondary></ButtonSecondary>
-      <Kurv></Kurv>
+
       <Popup></Popup>
     </div>
   );
