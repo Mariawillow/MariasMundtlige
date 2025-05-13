@@ -5,7 +5,6 @@ import DashCard from "@/components/(dashboard)/DashCard";
 import EventArt from "@/components/(eventSingleView)/EventArt";
 import DropdownLocation from "@/components/(listeView)/DropdownLocation";
 import DropdownSorter from "@/components/(listeView)/DropdownSorter";
-import ListeCard from "@/components/(listeView)/ListeCard";
 import ButtonSecondary from "@/components/ButtonSecondary";
 import Kurv from "@/components/Basket";
 import Popup from "@/components/Popup";
@@ -36,7 +35,6 @@ export default function Home() {
       <EventArt></EventArt>
       <DropdownLocation></DropdownLocation>
       <DropdownSorter></DropdownSorter>
-      <ListeCard></ListeCard>
       <ButtonSecondary></ButtonSecondary>
       <Kurv></Kurv>
       <Popup></Popup>
