@@ -23,7 +23,7 @@ export default function LocationDropdown() {
           med en <button> inde i en anden <button> – det giver en fejl i browseren og i Next.js (hydration error) */}
       <DropdownMenuTrigger asChild>
         <button
-          className="flex items-center gap-2 text-[32px] font-light text-black bg-transparent"
+          className="flex items-center gap-2 text-[32px] font-light text-black bg-transparent focus:outline-none"
         >
           Sorter
           {/* Pil der roterer når dropdown er åben */}
