@@ -8,7 +8,7 @@ import DropdownSorter from "@/components/(listeView)/DropdownSorter";
 import ButtonSecondary from "@/components/ButtonSecondary";
 import Kurv from "@/components/Basket";
 import Popup from "@/components/Popup";
-import { SignUp, SignIn, UserButton } from "@clerk/nextjs";
+import {SignIn, UserButton } from "@clerk/nextjs";
 
 export default function Home() {
   return (

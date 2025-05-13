@@ -1,9 +1,10 @@
-import ListeCard from "@/components/(listeView)/ListeCard";
+// import ListeCardClient from "@/components/(listeView)/ListeCard";
+import ListeCardClient from "@/components/(listeView)/ListeCardClient";
 import Header from "@/components/Header";
 import { getEvents } from "@/api/localhost";
 
 const listeView = async () => {
-  const eventsData = await getEvents;
+  const eventsData = await getEvents ();
   console.log(eventsData);
 
   return (
@@ -12,7 +13,7 @@ const listeView = async () => {
       <p>Lokation </p>
       <p>Sorter Efter </p>
 
-      <ListeCard events={eventsData} />
+      <ListeCardClient events={eventsData} />
     </div>
   );
 };
