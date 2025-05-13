@@ -11,7 +11,7 @@ import {
 import { IoIosArrowDown } from "react-icons/io";
 import React, { useState } from "react";
 
-export default function LocationDropdown() {
+export default function SortingDropdown() {
   // Her holder vi styr på, om dropdownen er åben eller lukket
   const [open, setOpen] = useState(false);
 

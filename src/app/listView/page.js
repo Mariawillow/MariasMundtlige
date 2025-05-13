@@ -2,6 +2,8 @@
 import ListeCardClient from "@/components/(listeView)/ListeCardClient";
 import Header from "@/components/Header";
 import { getEvents } from "@/api/localhost";
+import LocationDropdown from "@/components/(listeView)/DropdownLocation";
+import SortingDropdown from "@/components/(listeView)/DropDownSorter";
 
 const listeView = async () => {
   const eventsData = await getEvents ();
@@ -10,9 +12,11 @@ const listeView = async () => {
   return (
     <div>
       <Header />
-      <p>Lokation </p>
-      <p>Sorter Efter </p>
-
+      <div className="flex justify-end space-x-4">
+        <LocationDropdown />      
+        <SortingDropdown />
+        </div>
+        
       <ListeCardClient events={eventsData} />
     </div>
   );

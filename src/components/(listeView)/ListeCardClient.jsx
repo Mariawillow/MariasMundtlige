@@ -3,7 +3,7 @@ import ListeCard from "./ListeCard";
 
 const ListeCardClient = ({ events }) => {
   return (
-    <div className="flex gap-4 mt-4 flex-wrap justify-center items-center">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
       {events.map((event) => (
         <ListeCard key={event.id} event={event} />
       ))}
