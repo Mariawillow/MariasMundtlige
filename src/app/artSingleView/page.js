@@ -1,10 +1,12 @@
 import Image from "next/image";
+import Header from "@/components/Header";
 import StatuePic from "@/images/statuePic.svg";
 import { HiOutlineArrowLongLeft } from "react-icons/hi2";
 
 const artSingleView = () => {
   return (
     <div className="relative px-[var(--space-s)] py-[var(--space-l)] overflow-hidden">
+      <Header variant="black"></Header>
       {/* Tilbage-knap */}
       <div className="inline-block text-center mb-[var(--space-m)]">
         <p className="text-[#C4FF00] font-semibold inline-block">Tilbage</p>

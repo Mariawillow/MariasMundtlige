@@ -14,6 +14,7 @@ import { SignUp, SignIn, UserButton } from "@clerk/nextjs";
 export default function Home() {
   return (
     <div className="col-start-2">
+      <Header></Header>
       <header className="flex justify-between">
         <h1>Clover corp</h1>
         <UserButton showName />

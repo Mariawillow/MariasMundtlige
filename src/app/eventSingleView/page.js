@@ -1,10 +1,12 @@
 import ButtonSecondary from "@/components/ButtonSecondary";
+import Header from "@/components/Header";
 import EventArt from "@/components/(eventSingleView)/EventArt.jsx";
 import Stepper from "@/components/Stepper";
 
 const EventSingleView = () => {
   return (
     <div className="flex flex-col gap-6">
+      <Header variant="black"></Header>
       {/* Top: Titel og Dato */}
       <div>
         <h1 className=" font-semibold">Abstrakt Aften</h1>
