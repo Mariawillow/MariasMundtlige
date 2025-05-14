@@ -2,14 +2,12 @@ import ButtonSecondary from "@/components/ButtonSecondary";
 import Stepper from "@/components/Stepper";
 
 const SingleCard = ({ eventData }) => {
-  console.log("noget her", eventData);
-
   return (
     <section>
       {/* Top: Titel og Dato */}
       <div>
-        <h1 className=" font-semibold">{eventData.id}</h1>
-        <h3 className="font-light  ml-60">{}</h3>
+        <h1 className=" font-semibold">{eventData.title}</h1>
+        <h3 className="font-light  ml-60">{eventData.date}</h3>
       </div>
       {/* Nederste sektion i to kolonner */}
       <div className="grid grid-cols-2 gap-8">
@@ -17,13 +15,13 @@ const SingleCard = ({ eventData }) => {
         <section className="flex flex-col gap-4">
           <div>
             <h4 className="font-semibold">Om Eventet</h4>
-            <p className="font-light">{}</p>
-            <p className="font-light">Eventet er arrangeret af kurator {}</p>
+            <p className="font-light">{eventData.description}</p>
+            <p className="font-light">Eventet er arrangeret af kurator {eventData.curator}</p>
           </div>
           <div>
             <h4 className="font-semibold">Lokation</h4>
             <p>
-              {}, {}
+              {eventData.location.name}, {eventData.location.address}
             </p>
           </div>
         </section>
