@@ -50,6 +50,17 @@ const Header = ({ variant = "lime" }) => {
   </Link>
 )}
 
+ {/* Link til "Events"-siden */}
+ {user && (
+  <Link
+    href="/dashboard"
+    className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} ${pathname === "/events" ? "underline decoration-3 underline-offset-8" : ""}`}
+    onClick={() => router.push("/dashboard")}
+  >
+    Dashboard
+  </Link>
+)}
+
         {/* ✅ Vis kun "Log ind"-knappen hvis brugeren IKKE er logget ind */}
         {!user && (
           <button
@@ -90,6 +101,19 @@ const Header = ({ variant = "lime" }) => {
     }}
   >
     Events
+  </Link>
+)}
+
+{user && (
+  <Link
+    href="/dashboard"
+    className={`mobile_header_font_size ${textColor}`}
+    onClick={() => {
+      setIsOpen(false);
+      router.push("/dashboard");
+    }}
+  >
+    Dashboard
   </Link>
 )}
 
