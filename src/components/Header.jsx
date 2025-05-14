@@ -49,7 +49,7 @@ const Header = ({ variant = "lime" }) => {
         {!user && (
           <button
             onClick={() => setShowSignIn(!showSignIn)}
-            className={`desktop_header_font_size ${textColor} focus:outline-none`}
+            className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} focus:outline-none`}
           >
             Log ind
           </button>
