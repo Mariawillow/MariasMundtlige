@@ -1,13 +1,24 @@
 import Image from "next/image";
-import StatuePic from "@/images/statuePic.svg";
 import Link from "next/link";
 
 const EventArt = ({ art }) => {
+  // Hent den første titel fra 'titles' arrayet
+  const title = art?.titles?.[0]?.title || "Ukendt Titel"; // Fallback til "Ukendt Titel" hvis ikke findes
+
+  // Hent billede (hvis der findes et)
+  const imageUrl = art?.image_url || art?.image || "/images/statuePic.svg"; // Fallback til standard billede
+
   return (
-    <Link href={`/`} className="relative aspect-[3/2] group w-full cursor-pointer">
-      <Image src={StatuePic} alt="statuebillede" width={300} height={200} className="w-full h-full object-cover transition duration-300 group-hover:bg-[#DAD6DD] group-hover:opacity-40 group-hover:border group-hover:border-[#C4FF00]" />
+    <Link href={`/art/${art.object_number}`} className="relative aspect-[3/2] group w-full cursor-pointer">
+      <Image
+        src={imageUrl} // Brug kunstværkets billede
+        alt={title} // Brug kunstværkets titel som alt-tekst
+        width={300}
+        height={200}
+        className="w-full h-full object-cover transition duration-300 group-hover:bg-[#DAD6DD] group-hover:opacity-40 group-hover:border group-hover:border-[#C4FF00]"
+      />
       <div className="absolute inset-0 flex flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition duration-300">
-        <h4 className="text-black font-semibold">Kort</h4>
+        <h4 className="text-black font-semibold">{title}</h4>
       </div>
     </Link>
   );
