@@ -37,7 +37,7 @@ const Header = ({ variant = "lime" }) => {
       {/* Desktop-menuen (vises kun på større skærme, pga. 'sm:flex') */}
       <div className="hidden sm:flex gap-space-l items-center">
         {/* Link til "Events"-siden */}
-        <Link href="/listView" className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} ${pathname === "/listView" ? "underline decoration-3 underline-offset-8" : ""}`} onClick={() => router.push("/listView")}>
+        <Link href="/events" className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} ${pathname === "/events" ? "underline decoration-3 underline-offset-8" : ""}`} onClick={() => router.push("/events")}>
           Events
         </Link>
         {/* Log ind knap, der viser login-boksen når man klikker */}
@@ -68,11 +68,11 @@ const Header = ({ variant = "lime" }) => {
         <div className="absolute top-full left-0 w-full h-screen bg-[#bab0bc] sm:hidden flex flex-col items-center gap-space-xl z-10">
           {/* Link til events */}
           <Link
-            href="/listView"
+            href="/events"
             className={`mobile_header_font_size ${textColor}`}
             onClick={() => {
               setIsOpen(false); // Lukker menuen når man klikker
-              router.push("/listView");
+              router.push("/events");
             }}
           >
             Events
