@@ -40,10 +40,15 @@ const Header = ({ variant = "lime" }) => {
       {/* Desktop-menuen (vises kun på større skærme, pga. 'sm:flex') */}
       <div className="hidden sm:flex gap-space-l items-center">
         {/* Link til "Events"-siden */}
-        <Link href="/events" className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} ${pathname === "/events" ? "underline decoration-3 underline-offset-8" : ""}`} onClick={() => router.push("/events")}>
-          Events
-        </Link>
-
+        {!user && (
+  <Link
+    href="/events"
+    className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} ${pathname === "/events" ? "underline decoration-3 underline-offset-8" : ""}`}
+    onClick={() => router.push("/events")}
+  >
+    Events
+  </Link>
+)}
 
         {/* ✅ Vis kun "Log ind"-knappen hvis brugeren IKKE er logget ind */}
         {!user && (
@@ -75,16 +80,18 @@ const Header = ({ variant = "lime" }) => {
       {isOpen && (
         <div className="absolute top-full left-0 w-full h-screen bg-[#bab0bc] sm:hidden flex flex-col items-center gap-space-xl z-10">
           {/* Link til events */}
-          <Link
-            href="/events"
-            className={`mobile_header_font_size ${textColor}`}
-            onClick={() => {
-              setIsOpen(false); // Lukker menuen når man klikker
-              router.push("/events");
-            }}
-          >
-            Events
-          </Link>
+          {!user && (
+  <Link
+    href="/events"
+    className={`mobile_header_font_size ${textColor}`}
+    onClick={() => {
+      setIsOpen(false); // Lukker menuen når man klikker
+      router.push("/events");
+    }}
+  >
+    Events
+  </Link>
+)}
 
         {/* ✅ Kun vis hvis ikke logget ind */}
         {/* if-sætning med && - hvis det til venstre er sandt (user ikke er ligget ind) så fjernes knappen. */}
@@ -108,7 +115,7 @@ const Header = ({ variant = "lime" }) => {
       {/* Login-boksen fra Clerk. Vises kun hvis showSignIn er true */}
       {showSignIn && (
         <div className="absolute top-full right-4 mt-4 bg-white shadow-lg border border-gray-200 z-50 p-4 rounded-xl">
-          <SignIn afterSignInUrl="/" />
+          <SignIn />
         </div>
       )}
     </nav>
