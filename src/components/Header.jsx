@@ -1,4 +1,4 @@
-"use client"; 
+"use client";
 // Fortæller Next.js, at denne komponent skal køre i browseren (klientsiden).
 
 // Vi importerer nogle værktøjer og komponenter, som vi skal bruge i headeren
@@ -29,7 +29,6 @@ const Header = ({ variant = "lime" }) => {
   return (
     // Hele menuen (nav) - det øverste område af siden
     <nav className="relative z-50 flex flex-col sm:flex-row items-center justify-between mt-space-m px-4">
-
       {/* Logoet til venstre */}
       <Link href="/">
         <Image src={isLime ? logoLime : logoBlack} width={200} height={200} alt="SMK logo" />
@@ -38,14 +37,9 @@ const Header = ({ variant = "lime" }) => {
       {/* Desktop-menuen (vises kun på større skærme, pga. 'sm:flex') */}
       <div className="hidden sm:flex gap-space-l items-center">
         {/* Link til "Events"-siden */}
-        <Link
-          href="/listView"
-          className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} ${pathname === "/listView" ? "underline decoration-3 underline-offset-8" : ""}`}
-          onClick={() => router.push("/listView")}
-        >
+        <Link href="/listView" className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} ${pathname === "/listView" ? "underline decoration-3 underline-offset-8" : ""}`} onClick={() => router.push("/listView")}>
           Events
         </Link>
-
         {/* Log ind knap, der viser login-boksen når man klikker */}
         <button
           onClick={() => setShowSignIn(!showSignIn)} // Skifter mellem at vise og skjule login
@@ -53,7 +47,6 @@ const Header = ({ variant = "lime" }) => {
         >
           Log ind
         </button>
-
         {/* Kurv og brugerknap */}
         <Basket variant={variant} />
         <UserButton showName /> {/* Viser brugerens navn og menu, hvis man er logget ind */}
@@ -88,13 +81,11 @@ const Header = ({ variant = "lime" }) => {
           {/* Log ind-knap i mobilmenuen */}
           <button
             className={`mobile_header_font_size ${textColor}`}
-            
             onClick={() => {
               setShowSignIn(!showSignIn); // Viser login
               setIsOpen(false); // Lukker mobilmenuen
             }}
           >
-
             Log ind
           </button>
 

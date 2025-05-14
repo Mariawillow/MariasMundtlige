@@ -1,6 +1,6 @@
 import ButtonSecondary from "@/components/ButtonSecondary";
 import Header from "@/components/Header";
-import EventArt from "@/components/(eventSingleView)/EventArt.jsx";
+import EventArt from "@/components/(event)/EventArt.jsx";
 import Stepper from "@/components/Stepper";
 
 const EventSingleView = () => {
