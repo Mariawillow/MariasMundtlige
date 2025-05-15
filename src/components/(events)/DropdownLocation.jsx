@@ -1,5 +1,4 @@
-"use client";
-
+import React, { useState, useEffect } from "react";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -9,13 +8,11 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { IoIosArrowDown } from "react-icons/io";
-import React, { useState, useEffect } from "react";
 import { getLocations } from "@/api/localhost";
 
-// Liste over byer til dropdown
+// Definer listen af byer til dropdown
 const cities = ["Århus", "København", "Odense", "Køge"];
 
-// Alias navne der hjælper med at matche bynavne i forskellige formater
 const cityAliases = {
   "København": ["københavn", "kbh"],
   "Århus": ["århus", "aarhus"],
@@ -23,7 +20,8 @@ const cityAliases = {
   "Køge": ["køge"],
 };
 
-export default function LocationDropdown() {
+export default function LocationDropdown({ onSelectCity }) {
+  // resten af din kode...
   const [open, setOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState(null);
   const [locations, setLocations] = useState([]);
@@ -53,7 +51,12 @@ export default function LocationDropdown() {
       );
       setFilteredLocations(filtered);
     }
-  }, [selectedCity, locations]);
+
+    // Send den valgte by til parent-komponenten via callback
+    if (onSelectCity) {
+      onSelectCity(selectedCity);
+    }
+  }, [selectedCity, locations, onSelectCity]);
 
   return (
     <div className="space-y-4">
@@ -85,7 +88,6 @@ export default function LocationDropdown() {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      {/* Her vises lokationerne baseret på filter */}
       <div className="grid gap-2">
         {filteredLocations.length > 0 ? (
           filteredLocations.map((loc) => (
