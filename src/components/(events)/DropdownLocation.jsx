@@ -9,40 +9,94 @@ import {
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
 import { IoIosArrowDown } from "react-icons/io";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { getLocations } from "@/api/localhost";
+
+// Liste over byer til dropdown
+const cities = ["Århus", "København", "Odense", "Køge"];
+
+// Alias navne der hjælper med at matche bynavne i forskellige formater
+const cityAliases = {
+  "København": ["københavn", "kbh"],
+  "Århus": ["århus", "aarhus"],
+  "Odense": ["odense"],
+  "Køge": ["køge"],
+};
 
 export default function LocationDropdown() {
-  // Her holder vi styr på, om dropdownen er åben eller lukket
   const [open, setOpen] = useState(false);
+  const [selectedCity, setSelectedCity] = useState(null);
+  const [locations, setLocations] = useState([]);
+  const [filteredLocations, setFilteredLocations] = useState([]);
+
+  useEffect(() => {
+    const fetchLocations = async () => {
+      try {
+        const data = await getLocations();
+        setLocations(data);
+        setFilteredLocations(data);
+      } catch (error) {
+        console.error("Fejl ved hentning af lokationer:", error);
+      }
+    };
+
+    fetchLocations();
+  }, []);
+
+  useEffect(() => {
+    if (!selectedCity) {
+      setFilteredLocations(locations);
+    } else {
+      const aliases = cityAliases[selectedCity] || [selectedCity.toLowerCase()];
+      const filtered = locations.filter((loc) =>
+        aliases.some((alias) => loc.address.toLowerCase().includes(alias))
+      );
+      setFilteredLocations(filtered);
+    }
+  }, [selectedCity, locations]);
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
-      {/* Triggeren åbner/lukker menuen */}
-      {/* Vi bruger `asChild` for selv at kunne styre hvilket element der bruges som trigger.
-          Uden `asChild` ville DropdownMenuTrigger selv lave en <button>, og så får vi ulovlig HTML
-          med en <button> inde i en anden <button> – det giver en fejl i browseren og i Next.js (hydration error) */}
-      <DropdownMenuTrigger asChild>
-        <button
-          className="cursor-pointer flex items-center gap-2 text-[32px] font-light text-black bg-transparent border border-[#726572] focus:outline-none"
-        >
-          Lokation
-          {/* Pil der roterer når dropdown er åben */}
-          <IoIosArrowDown
-            className={`text-[32px] transition-transform duration-300 ${open ? "rotate-180" : "rotate-0"
+    <div className="space-y-4">
+      <DropdownMenu open={open} onOpenChange={setOpen}>
+        <DropdownMenuTrigger asChild>
+          <button
+            className="cursor-pointer flex items-center gap-2 text-[32px] font-light text-black bg-transparent border border-[#726572] px-4 py-2 focus:outline-none"
+          >
+            {selectedCity ?? "Lokation"}
+            <IoIosArrowDown
+              className={`text-[32px] transition-transform duration-300 ${
+                open ? "rotate-180" : "rotate-0"
               }`}
-          />
-        </button>
-      </DropdownMenuTrigger>
+            />
+          </button>
+        </DropdownMenuTrigger>
 
-      {/* Indholdet i dropdown-menuen */}
-      <DropdownMenuContent className="bg-white">
-        <DropdownMenuLabel className="text-black">Lokationer</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuItem>Århus</DropdownMenuItem>
-        <DropdownMenuItem>København</DropdownMenuItem>
-        <DropdownMenuItem>Køge</DropdownMenuItem>
-        <DropdownMenuItem>Odense</DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+        <DropdownMenuContent className="bg-white">
+          <DropdownMenuLabel className="text-black">Filtrer efter by</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          {cities.map((city) => (
+            <DropdownMenuItem key={city} onClick={() => setSelectedCity(city)}>
+              {city}
+            </DropdownMenuItem>
+          ))}
+          <DropdownMenuItem onClick={() => setSelectedCity(null)}>
+            Alle byer
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* Her vises lokationerne baseret på filter */}
+      <div className="grid gap-2">
+        {filteredLocations.length > 0 ? (
+          filteredLocations.map((loc) => (
+            <div key={loc.id} className="p-4 border rounded shadow-sm">
+              <div className="font-semibold">{loc.address}</div>
+            </div>
+          ))
+        ) : (
+          <div className="text-gray-500">Ingen lokationer fundet.</div>
+        )}
+      </div>
+    </div>
   );
 }
