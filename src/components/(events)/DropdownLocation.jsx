@@ -13,7 +13,7 @@ import { getLocations } from "@/api/localhost";
 // Definer listen af byer til dropdown
 const cities = ["Århus", "København", "Odense", "Køge"];
 
-const cityAliases = {
+const cityForkortelser = {
   "København": ["københavn", "kbh"],
   "Århus": ["århus", "aarhus"],
   "Odense": ["odense"],
@@ -45,9 +45,9 @@ export default function LocationDropdown({ onSelectCity }) {
     if (!selectedCity) {
       setFilteredLocations(locations);
     } else {
-      const aliases = cityAliases[selectedCity] || [selectedCity.toLowerCase()];
+      const forkortelser = cityForkortelser[selectedCity] || [selectedCity.toLowerCase()];
       const filtered = locations.filter((loc) =>
-        aliases.some((alias) => loc.address.toLowerCase().includes(alias))
+      forkortelser.some((forkortelser) => loc.address.toLowerCase().includes(forkortelser))
       );
       setFilteredLocations(filtered);
     }
