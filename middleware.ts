@@ -11,7 +11,6 @@ const isPublicRoute = createRouteMatcher([
   "/basket(.*)",
   "/art(.*)",
   "/event(.*)",
-  "/dashboard(.*)",
 
 ]);
 
