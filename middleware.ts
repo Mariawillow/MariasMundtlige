@@ -2,7 +2,6 @@
 import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
 
 // Liste over offentlige ruter
-// Her kan du tilføje flere ruter, som ikke skal beskyttes
 const isPublicRoute = createRouteMatcher([
   "/", // forside
   "/sign-in(.*)",
