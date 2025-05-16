@@ -20,7 +20,7 @@ const Basket = () => {
             <p className="font-light">Du modtager eventbilletten med det samme efter bestilling på din e-mail (Modtager du ikke en mail indenfor for 5 minutter, så tjek dit SPAM-filter) Børn under 18 år kommer gratis ind til events.</p>
           </div>
 
-          <div class=" w-100 h-1 bg-[#C4FF00] mx-auto mt-10 mb-10"></div>
+          <div className=" w-100 h-1 bg-[#C4FF00] mx-auto mt-10 mb-10"></div>
 
           <div className="flex items-center">
             <FaTicketAlt className="text-[#C4FF00] scale-x-[3] scale-y-[3] m-5" />
