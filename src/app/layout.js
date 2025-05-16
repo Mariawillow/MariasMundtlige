@@ -13,7 +13,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider>
       <html lang="da">
         <body className={`${montserrat.variable} antialiased`}>
-          {children}
+          <main>{children}</main>
           <Footer />
         </body>
       </html>
