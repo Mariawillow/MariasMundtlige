@@ -25,7 +25,7 @@ const EventSingleView = async ({ params }) => {
 
       <section>
         <h3 className="font-ligth">Oplev disse værker til eventet</h3>
-        <div className="grid grid-cols-3 gap-4 ">
+        <div>
           {/* Send de hentede kunstværker til EventArtClient */}
           <EventArtClient artworkIds={artworkIds} arts={arts} />
         </div>
