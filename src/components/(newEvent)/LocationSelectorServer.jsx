@@ -1,8 +1,10 @@
+"use server";
+
 import { getLocations } from "@/api/localhost";
-import MakeEventStepOneClient from "./MakeEventStepOne";
+import LocationSelector from "./LocationSelector";
 
 export default async function MakeEventStepOneWrapper() {
   const locations = await getLocations();
 
-  return <MakeEventStepOneClient locations={locations} />;
+  return <LocationSelector locations={locations} />;
 }
