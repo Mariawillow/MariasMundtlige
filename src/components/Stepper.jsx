@@ -15,7 +15,7 @@ export default function Stepper() {
       {count > 1 && (
         <button
           onClick={decrement}
-          className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition"
+          className="px-3 py-1  border border-black hover:border-lime-400 transition"
         >
           −
         </button>
@@ -23,8 +23,8 @@ export default function Stepper() {
       <span>{count}</span>
       <button
         onClick={increment}
-        className="px-3 py-1 bg-gray-200 rounded hover:bg-gray-300 transition"
-      >
+        className="px-3 py-1  border border-black hover:border-lime-400 transition"
+        >
         +
       </button>
     </div>
