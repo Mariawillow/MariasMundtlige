@@ -12,6 +12,10 @@ export async function getEvents() {
 
 //Denne henter dummy locations fra Dannie
 export async function getLocations() {
-  const locations = await fetch("http://localhost:8080/locations", {}).then((res) => res.json());
+  const locations = await fetch("http://localhost:8080/locations", {
+    next: {
+      revalidate: 3600,
+    },
+  }).then((res) => res.json());
   return locations;
 }
