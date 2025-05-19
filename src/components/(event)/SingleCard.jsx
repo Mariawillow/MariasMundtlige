@@ -31,14 +31,14 @@ const SingleCard = ({ eventData }) => {
           <h4 className="font-semibold">Billetter</h4>
           <div className="grid grid-cols-2">
             <div>
-              <p className="font-light">Voksen</p>
+              <p className="font-semibold">Voksen</p>
               <p className="font-light">Pris 170 DKK</p>
             </div>
             <Stepper />
           </div>
           <div className="grid grid-cols-2">
             <div>
-              <p className="font-light">Studenter</p>
+              <p className="font-semibold">Studenter</p>
               <p className="font-light">Pris 90 DKK</p>
             </div>
             <Stepper />
