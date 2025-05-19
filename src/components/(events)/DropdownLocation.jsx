@@ -88,7 +88,7 @@ export default function LocationDropdown({ onSelectCity }) {
         </DropdownMenuContent>
       </DropdownMenu>
 
-      <div className="grid gap-2">
+      {/* <div className="grid gap-2">
         {filteredLocations.length > 0 ? (
           filteredLocations.map((loc) => (
             <div key={loc.id} className="p-4 border rounded shadow-sm">
@@ -98,7 +98,7 @@ export default function LocationDropdown({ onSelectCity }) {
         ) : (
           <div className="text-gray-500">Ingen lokationer fundet.</div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }
