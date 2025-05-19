@@ -1,4 +1,8 @@
 "use client";
+import React, { useState, useEffect } from "react";
+import { getTickets } from "@/api/localhost";
+import { IoIosArrowDown } from "react-icons/io";
+
 
 import {
   DropdownMenu,
@@ -8,12 +12,32 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
 } from "@/components/ui/dropdown-menu";
-import { IoIosArrowDown } from "react-icons/io";
-import React, { useState } from "react";
+
+
+
 
 export default function SortingDropdown() {
   // Her holder vi styr på, om dropdownen er åben eller lukket
   const [open, setOpen] = useState(false);
+
+
+  useEffect(() => {
+    const fetchTickets = async () => {
+      try {
+        const data = await getTickets();
+        setTickets(data);
+        setFilteredTickets(data);
+      } catch (error) {
+        console.error("Fejl ved hentning af lokationer:", error);
+      }
+    };
+    fetchTickets();
+  }, []);
+  
+
+  
+  
+
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
@@ -39,9 +63,7 @@ export default function SortingDropdown() {
         <DropdownMenuLabel className="text-black">Kategorier</DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuItem>Popularitet</DropdownMenuItem>
-        <DropdownMenuItem>Pris</DropdownMenuItem>
-        <DropdownMenuItem>??</DropdownMenuItem>
-        <DropdownMenuItem>??</DropdownMenuItem>
+        <DropdownMenuItem>A-Å</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
