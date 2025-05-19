@@ -64,8 +64,6 @@ export default function SortingDropdown() {
         <DropdownMenuSeparator />
         <DropdownMenuItem>Popularitet</DropdownMenuItem>
         <DropdownMenuItem>A-Å</DropdownMenuItem>
-        <DropdownMenuItem>??</DropdownMenuItem>
-        <DropdownMenuItem>??</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );
