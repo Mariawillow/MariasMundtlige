@@ -12,6 +12,8 @@ import logoBlack from "../logos/smk_logo_sort.png"; // Vi henter et sort logo
 import Basket from "./Basket"; // Kurv-komponent, som du selv har lavet
 import { UserButton, SignIn, useUser } from "@clerk/nextjs"; // Clerk giver login-funktionalitet
 
+
+
 // Selve header-komponenten
 const Header = ({ variant = "lime" }) => {
   // Her gemmer vi information om:
@@ -19,21 +21,22 @@ const Header = ({ variant = "lime" }) => {
   const [showSignIn, setShowSignIn] = useState(false); // Om login-boksen vises
   const router = useRouter(); // Bruges til at navigere til andre sider
   const pathname = usePathname(); // Finder ud af hvilken side vi er på
-
   const { user } = useUser(); // Checker om en bruger er logget ind
-
   // Hvis brugeren har valgt 'lime' som variant, så skal tekst og streg være grønne
   const isLime = variant === "lime";
   const textColor = isLime ? "text-lime-400" : "text-black";
   const lineColor = isLime ? "bg-lime-400" : "bg-black";
 
+
   return (
     // Hele menuen (nav) - det øverste område af siden
     <nav className="relative z-50 flex flex-col sm:flex-row items-center justify-between mt-space-m px-4">
+
       {/* Logoet til venstre */}
       <Link href="/">
         <Image src={isLime ? logoLime : logoBlack} width={200} height={200} alt="SMK logo" />
       </Link>
+
 
       {/* Desktop-menuen (vises kun på større skærme, pga. 'sm:flex') */}
       <div className="hidden sm:flex gap-space-l items-center">
@@ -43,22 +46,26 @@ const Header = ({ variant = "lime" }) => {
             Events
           </Link>
         )}
-        {/* Link til "Events"-siden */}
+
+        {/* Link til "Dashboard"-siden */}
         {user && (
           <Link href="/dashboard" className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} ${pathname === "/events" ? "underline decoration-3 underline-offset-8" : ""}`} onClick={() => router.push("/dashboard")}>
             Dashboard
           </Link>
         )}
+
         {/* ✅ Vis kun "Log ind"-knappen hvis brugeren IKKE er logget ind */}
         {!user && (
           <button onClick={() => setShowSignIn(!showSignIn)} className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} focus:outline-none`}>
             Log ind
           </button>
         )}
+
         {/* Kurv og brugerknap */}
         <Basket variant={variant} />
         <UserButton showName /> {/* Viser brugerens navn og menu, hvis man er logget ind */}
       </div>
+
 
       {/* "Burger"-ikonet til mobilmenuen */}
       <button
@@ -71,6 +78,7 @@ const Header = ({ variant = "lime" }) => {
         <span className={`h-0.75 w-full ${lineColor} transition-transform duration-200 ease-linear ${isOpen ? "-rotate-45 -translate-y-2.5" : ""}`} />
       </button>
 
+
       {/* Mobilmenuen (vises kun hvis isOpen er true) */}
       {isOpen && (
         <div className="absolute top-full left-0 w-full h-screen bg-[#bab0bc] sm:hidden flex flex-col items-center gap-space-xl z-10">
@@ -82,12 +90,12 @@ const Header = ({ variant = "lime" }) => {
               onClick={() => {
                 setIsOpen(false); // Lukker menuen når man klikker
                 router.push("/events");
-              }}
-            >
+              }}>
               Events
             </Link>
           )}
 
+          {/* Link til Dashboard */}
           {user && (
             <Link
               href="/dashboard"
@@ -95,22 +103,20 @@ const Header = ({ variant = "lime" }) => {
               onClick={() => {
                 setIsOpen(false);
                 router.push("/dashboard");
-              }}
-            >
+              }}>
               Dashboard
             </Link>
           )}
 
-          {/* ✅ Kun vis hvis ikke logget ind */}
-          {/* if-sætning med && - hvis det til venstre er sandt (user ikke er ligget ind) så fjernes knappen. */}
+          {/*  Kun vis hvis ikke logget ind */}
+          {/* if-sætning med && - hvis det til venstre er sandt (user ikke er logget ind) så fjernes knappen. */}
           {!user && (
             <button
               className={`mobile_header_font_size ${textColor}`}
               onClick={() => {
                 setShowSignIn(!showSignIn);
                 setIsOpen(false);
-              }}
-            >
+              }}>
               Log ind
             </button>
           )}
