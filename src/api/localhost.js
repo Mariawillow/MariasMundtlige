@@ -19,3 +19,13 @@ export async function getLocations() {
   }).then((res) => res.json());
   return locations;
 }
+
+//Denne henter dummy locations fra Dannie
+export async function getTickets() {
+  const tickets = await fetch("http://localhost:8080/totalTickets", {
+    next: {
+      revalidate: 3600,
+    },
+  }).then((res) => res.json());
+  return tickets;
+}
