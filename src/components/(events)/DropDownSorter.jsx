@@ -69,6 +69,9 @@ export default function SortingDropdown({ onSortChange }) {
         <DropdownMenuItem onClick={() => onSortChange("alphabetical")}>
   A-Å
 </DropdownMenuItem>
+<DropdownMenuItem className="mt-5 italic" onClick={() => onSortChange(null)}>
+  Nulstil sortering
+</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

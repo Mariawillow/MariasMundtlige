@@ -52,6 +52,8 @@ export default function ListeView() {
     return forkortelse.some((forkortelse) => location.address.toLowerCase().includes(forkortelse));
   });
 
+
+  //Vi sortere nu bogsternverne alfabetisk fra a-å.
   const sortedEvents = [...filteredEvents].sort((a, b) => {
     if (sortOrder === "alphabetical") {
       return a.title.localeCompare(b.title, "da");
