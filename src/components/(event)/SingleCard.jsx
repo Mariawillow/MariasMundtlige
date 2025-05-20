@@ -1,7 +1,32 @@
+"use client";
+
+
 import ButtonSecondary from "@/components/ButtonSecondary";
 import Stepper from "@/components/Stepper";
+import useCartStore from "@/app/store/cartStore"
+
 
 const SingleCard = ({ eventData }) => {
+  const { updateItemQuantity } = useCartStore((state) => state);
+
+//Funktion kaldes ved klik på minus
+const handleDecrement = () => {
+  //Tjekker om quantity er større end 1 – så den ALDRIG går ned på 0 eller negative tal.
+  // Hvis betingelsen er opfyldt reduceres mængden med 1
+  if (eventData.quantity > 1) {
+    updateItemQuantity(eventData.id, eventData.quantity - 1);
+  }
+};
+
+//Funktion kaldes ved klik på plus
+const handleIncrement = () => {
+  //Øger quantity med 1
+  updateItemQuantity(eventData.id, eventData.quantity + 1);
+};
+
+
+
+
   return (
     <section>
       {/* Top: Titel og Dato */}

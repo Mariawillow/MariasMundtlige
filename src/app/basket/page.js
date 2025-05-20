@@ -2,8 +2,7 @@ import Image from "next/image";
 import Header from "@/components/Header";
 import StatuePic from "@/images/statuePic.svg";
 import { FaTicketAlt } from "react-icons/fa";
-import Stepper from "@/components/Stepper";
-import ButtonSecondary from "@/components/ButtonSecondary";
+import Price from "@/components/(kurv)/Price";
 
 const Basket = () => {
   return (
@@ -28,52 +27,8 @@ const Basket = () => {
           </div>
 
           {/* Billetter */}
-          <section className="flex flex-col gap-4">
-            <h4 className="font-semibold mt-5">Abstrakt Aften</h4>
-            <div className="grid grid-cols-2">
-              <div>
-                <p className="font-semibold">Voksen</p>
-                <p className="font-light">Pris 170 DKK</p>
-              </div>
-              <div className="justify-self-end">
-                <Stepper />
-              </div>{" "}
-            </div>
-            <div className="grid grid-cols-2">
-              <div>
-                <p className="font-semibold">Studenter</p>
-                <p className="font-light">Pris 90 DKK</p>
-              </div>
-              <div className="justify-self-end">
-                <Stepper />
-              </div>
-            </div>
+          <Price />
 
-            <h4 className="font-semibold mt-10">Den Gyldne Dag</h4>
-            <div className="grid grid-cols-2">
-              <div>
-                <p className="font-semibold">Voksen</p>
-                <p className="font-light">Pris 170 DKK</p>
-              </div>
-              <div className="justify-self-end">
-                <Stepper />
-              </div>
-            </div>
-            <div className="grid grid-cols-2">
-              <div>
-                <p className="font-semibold">Studenter</p>
-                <p className="font-light">Pris 90 DKK</p>
-              </div>
-              <div className="justify-self-end">
-                <Stepper />
-              </div>
-            </div>
-
-            <div className="flex items-center gap-4 mt-5">
-              <h4 className="font-semibold">Total: 549 DKK</h4>
-              <ButtonSecondary />
-            </div>
-          </section>
         </div>
       </section>
     </div>
