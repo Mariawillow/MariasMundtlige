@@ -4,12 +4,18 @@ import { getArts } from "@/api/smk";
 import { makeNewEvent } from "@/api/localhost";
 import ButtonPrimary from "../ButtonPrimary";
 import ArtworkGrid from "./ArtWorkGrid";
+import { useRouter } from "next/navigation";
+
 
 export default function ArtworkSelection({ date, location }) {
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [artworks, setArtworks] = useState([]);
   const [selectedArtworks, setSelectedArtworks] = useState([]);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const router = useRouter();
+
+
 
   useEffect(() => {
     getArts().then(setArtworks).catch(console.error);
@@ -42,7 +48,14 @@ export default function ArtworkSelection({ date, location }) {
       });
 
       console.log("Event oprettet:", res);
-      alert("Eventet blev oprettet!");
+      setShowSuccess(true);
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 800); // tid det går før kurator bliver sendt til dashboard
+      setTimeout(() => setShowSuccess(false), 5000); // Skjul efter 5 sekunder
+
+
+
       // Her kan du evt. redirecte eller nulstille formen
     } catch (error) {
       console.error(error);
@@ -83,6 +96,11 @@ export default function ArtworkSelection({ date, location }) {
       <ButtonPrimary variant="default" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
         Opret event
       </ButtonPrimary>
+      {showSuccess && (
+        <div className="fixed top-6 right-6 bg-lime-400 text-white px-4 py-2 rounded shadow-lg transition-all z-50">
+          Eventet blev oprettet!
+        </div>
+      )}
     </div>
   );
 }
