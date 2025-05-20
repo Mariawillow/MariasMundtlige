@@ -23,6 +23,15 @@ export default function DatePicker({ date, setDate }) {
       });
   }, []);
 
+  useEffect(() => {
+    console.log("🟢 Dato valgt i DatePicker:", date);
+  }, [date]);
+
+  const handleSelect = (day) => {
+    console.log("📤 Dato sendt op:", day);
+    setDate(day);
+  };
+
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -32,7 +41,7 @@ export default function DatePicker({ date, setDate }) {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        <Calendar mode="single" selected={date} onSelect={setDate} initialFocus disabled={(day) => !availableDates.some((dateStr) => isSameDay(day, parseISO(dateStr)))} />
+        <Calendar className="bg-amber-500" mode="single" selected={date} onSelect={handleSelect} initialFocus disabled={(day) => !availableDates.some((dateStr) => isSameDay(day, parseISO(dateStr)))} />
       </PopoverContent>
     </Popover>
   );

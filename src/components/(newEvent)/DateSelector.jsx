@@ -1,11 +1,8 @@
 "use client";
 
-import { useState } from "react";
-import DatePicker from "./DatePicker";
+import DatePicker from "@/components/(newEvent)/DatePicker";
 
-export default function DateSelector() {
-  const [date, setDate] = useState(null);
-
+export default function DateSelector({ date, setDate }) {
   return (
     <div className="flex flex-col gap-2">
       <label className="text-sm font-medium">Dato</label>

@@ -10,21 +10,6 @@ export default function newEvent() {
       <Header />
       <h1 className="text-center">Opret Event</h1>
       <MakeNewEvent />
-      {/* <MakeEventLocationServer /> */}
-      {/* Knap */}
-      {/* {date && selectedLocation && step === 1 && (
-        <ButtonPrimary onClick={() => setStep(2)} className="mt-4 px-4 py-2 bg-lime-500 text-white rounded">
-          Næste
-        </ButtonPrimary>
-      )} */}
-
-      {/* Værkvalg */}
-      {/* {step === 2 && (
-        <section className="mt-6 space-y-4">
-          <h2 className="text-lg font-semibold">Vælg værker til eventet</h2>
-          <p className="text-sm text-gray-600">(Her indsætter du en liste eller søgefelt til værker)</p>
-        </section>
-      )}*/}
     </div>
   );
 }
