@@ -12,13 +12,21 @@ export default function LocationSelector({ location, setLocation }) {
   return (
     <div className="flex flex-col gap-2">
       <label className="text-sm font-medium">Lokation</label>
-      <select value={location || ""} onChange={(e) => setLocation(e.target.value)} className="border rounded px-3 py-2">
+      <select
+        value={location?.id || ""}
+        onChange={(e) => {
+          const selectedId = e.target.value;
+          const selectedLocation = locations.find((loc) => loc.id === selectedId);
+          setLocation(selectedLocation);
+        }}
+        className="border rounded px-3 py-2"
+      >
         <option value="" disabled>
           Vælg lokation
         </option>
-        {locations.map((location) => (
-          <option key={location.id} value={location.id}>
-            {location.address}
+        {locations.map((loc) => (
+          <option key={loc.id} value={loc.id}>
+            {loc.address}
           </option>
         ))}
       </select>

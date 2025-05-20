@@ -25,15 +25,15 @@ export default function ArtworkSelection({ date, location }) {
   const toggleArtwork = (id) => {
     setSelectedArtworks((prev) => {
       if (prev.includes(id)) {
-        // Fjern hvis det allerede er valgt
         return prev.filter((i) => i !== id);
       } else {
-        // Tilføj kun hvis der er plads
-        if (prev.length >= 3) return prev;
+        const maxArtwork = location?.maxArtworks || 3;
+        if (prev.length >= maxArtwork) return prev;
         return [...prev, id];
       }
     });
   };
+
 
   //Funktion som håndterer opret event
   const handleMakeNewEvent = async () => {
@@ -43,7 +43,7 @@ export default function ArtworkSelection({ date, location }) {
         title: eventName,
         description: eventDescription,
         date,
-        locationId: location,
+        locationId: location.id,
         artworkIds: selectedArtworks,
       });
 
@@ -71,8 +71,15 @@ export default function ArtworkSelection({ date, location }) {
       <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2" />
 
       {/* Status */}
-      <p className="text-sm text-gray-600">{selectedArtworks.length}/3 værker valgt</p>
-      {selectedArtworks.length === 3 && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>}
+      <p className="text-sm text-gray-600">
+        {selectedArtworks.length}/{location?.maxArtworks || 3} værker valgt
+      </p>
+
+      {selectedArtworks.length === (location?.maxArtworks || 3) && (
+        <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>
+      )}
+      {/* <p className="text-sm text-gray-600">{selectedArtworks.length}/3 værker valgt</p>
+      {selectedArtworks.length === 3 && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>} */}
 
       {/* Værk grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
