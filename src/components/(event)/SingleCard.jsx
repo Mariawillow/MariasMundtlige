@@ -4,6 +4,8 @@
 import ButtonSecondary from "@/components/ButtonSecondary";
 import Stepper from "@/components/Stepper";
 import useCartStore from "@/app/store/cartStore"
+import Price from "@/components/(kurv)/Price";
+
 
 
 const SingleCard = ({ eventData }) => {
@@ -23,6 +25,7 @@ const handleIncrement = () => {
   //Øger quantity med 1
   updateItemQuantity(eventData.id, eventData.quantity + 1);
 };
+
 
 
 
