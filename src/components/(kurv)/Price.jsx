@@ -1,3 +1,6 @@
+"use client";
+
+
 import useCartStore from "@/app/store/cartStore"
 import Stepper from "@/components/Stepper";
 import ButtonSecondary from "@/components/ButtonSecondary";
