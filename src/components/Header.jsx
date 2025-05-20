@@ -9,7 +9,7 @@ import Link from "next/link"; // En Next.js måde at lave links, som ikke genind
 import Image from "next/image"; // Bruges til billeder, optimeret af Next.js
 import logoLime from "../logos/smk_logo_lime.png"; // Vi henter et grønt logo
 import logoBlack from "../logos/smk_logo_sort.png"; // Vi henter et sort logo
-import Basket from "./Basket"; // Kurv-komponent, som du selv har lavet
+import Basket from "./(kurv)/Basket"; // Kurv-komponent, som du selv har lavet
 import { UserButton, SignIn, useUser } from "@clerk/nextjs"; // Clerk giver login-funktionalitet
 
 

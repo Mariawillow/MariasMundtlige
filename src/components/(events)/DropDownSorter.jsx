@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { getTickets } from "@/api/localhost";
+// import { getTickets } from "@/api/localhost";
 import { IoIosArrowDown } from "react-icons/io";
 
 
@@ -16,23 +16,25 @@ import {
 
 
 
-export default function SortingDropdown() {
-  // Her holder vi styr på, om dropdownen er åben eller lukket
+export default function SortingDropdown({ onSortChange }) {
   const [open, setOpen] = useState(false);
 
 
-  useEffect(() => {
-    const fetchTickets = async () => {
-      try {
-        const data = await getTickets();
-        setTickets(data);
-        setFilteredTickets(data);
-      } catch (error) {
-        console.error("Fejl ved hentning af lokationer:", error);
-      }
-    };
-    fetchTickets();
-  }, []);
+
+
+
+  // useEffect(() => {
+  //   const fetchTickets = async () => {
+  //     try {
+  //       const data = await getTickets();
+  //       setTickets(data);
+  //       setFilteredTickets(data);
+  //     } catch (error) {
+  //       console.error("Fejl ved hentning af lokationer:", error);
+  //     }
+  //   };
+  //   fetchTickets();
+  // }, []);
   
 
   
@@ -58,12 +60,18 @@ export default function SortingDropdown() {
         </button>
       </DropdownMenuTrigger>
 
-      {/* Indholdet i dropdown-menuen */}
       <DropdownMenuContent className="bg-white">
         <DropdownMenuLabel className="text-black">Kategorier</DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>Popularitet</DropdownMenuItem>
-        <DropdownMenuItem>A-Å</DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onSortChange("popularity")}>
+          Popularitet
+        </DropdownMenuItem>
+        <DropdownMenuItem onClick={() => onSortChange("alphabetical")}>
+  A-Å
+</DropdownMenuItem>
+<DropdownMenuItem className="mt-5 italic" onClick={() => onSortChange(null)}>
+  Nulstil sortering
+</DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   );

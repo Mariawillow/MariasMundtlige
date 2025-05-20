@@ -22,7 +22,8 @@ export default function ListeView() {
     const [events, setEvents] = useState([]); // Alle events hentet fra API
     const [locations, setLocations] = useState([]); // Alle lokationer hentet fra API
     const [selectedCity, setSelectedCity] = useState(null); // Den by(city) brugeren vælger i dropdown
-  
+    const [sortOrder, setSortOrder] = useState(null); 
+
 
     // useEffect kører kun én gang, når komponenten loader
   // Her henter vi både events og lokationer fra API og gemmer i state
@@ -51,6 +52,15 @@ export default function ListeView() {
     return forkortelse.some((forkortelse) => location.address.toLowerCase().includes(forkortelse));
   });
 
+
+  //Vi sortere nu bogsternverne alfabetisk fra a-å.
+  const sortedEvents = [...filteredEvents].sort((a, b) => {
+    if (sortOrder === "alphabetical") {
+      return a.title.localeCompare(b.title, "da");
+    }
+    return 0;
+  });
+
   return (
     <div>
       <Header />
@@ -58,11 +68,11 @@ export default function ListeView() {
         {/* Dropdown menu til at vælge by, sender valgt by op via onSelectCity */}
         <LocationDropdown onSelectCity={setSelectedCity} />
                 {/* Dropdown til at sortere events */}
-        <SortingDropdown />
+       <SortingDropdown onSortChange={setSortOrder} /> 
       </div>
 
       {/* Vis events som kort - kun de filtrerede events */}
-      <ListeCardClient events={filteredEvents} />
+      <ListeCardClient events={sortedEvents} />
     </div>
   );
 }
