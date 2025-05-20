@@ -8,7 +8,7 @@ const montserrat = Montserrat({
   subsets: ["latin"],
 });
 
-const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY; // ← denne linje mangler
+const publishableKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 export default function RootLayout({ children }) {
   return (
