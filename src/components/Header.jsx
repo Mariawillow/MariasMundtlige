@@ -24,8 +24,8 @@ const Header = ({ variant = "lime" }) => {
   const { user } = useUser(); // Checker om en bruger er logget ind
   // Hvis brugeren har valgt 'lime' som variant, så skal tekst og streg være grønne
   const isLime = variant === "lime";
-  const textColor = isLime ? "text-lime-400" : "text-black";
-  const lineColor = isLime ? "bg-lime-400" : "bg-black";
+  const textColor = isLime ? "text-[#C4FF00]" : "text-black";
+  const lineColor = isLime ? "bg-[#C4FF00]" : "bg-black";
 
 
   return (
