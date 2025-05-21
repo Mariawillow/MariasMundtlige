@@ -127,8 +127,11 @@ const Header = ({ variant = "lime" }) => {
           )}
 
           {/* Kurv vises også i mobilmenuen */}
-          <Basket variant={variant} />
-        </div>
+<div className="relative">
+        <Link href="/basket">
+          <BasketIcon />
+        </Link>
+        </div>        </div>
       )}
 
       {/* Login-boksen fra Clerk. Vises kun hvis showSignIn er true */}
