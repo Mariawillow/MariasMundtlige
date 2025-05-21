@@ -1,10 +1,19 @@
+"use client";
+
+
 import Image from "next/image";
 import Header from "@/components/(header)/Header";
 import StatuePic from "@/images/statuePic.svg";
 import { FaTicketAlt } from "react-icons/fa";
 import Price from "@/components/(kurv)/Price";
+import useCartStore from "@/app/store/cartStore"
+
 
 const Basket = () => {
+
+  const items = useCartStore((state) => state.items);
+
+
   return (
     <div>
       <Header variant="black"></Header>
@@ -25,6 +34,8 @@ const Basket = () => {
             <FaTicketAlt className="text-[#C4FF00] scale-x-[3] scale-y-[3] m-5" />
             <h2 className="font-light">Billetter</h2>
           </div>
+
+          <div>{items && items.length > 0 ? items.map((item) => <CartCard key={item.id} item={item} />) : <p>Du har ikke valgt nogle billetter.. </p>}</div>
 
           {/* Billetter */}
           <Price />
