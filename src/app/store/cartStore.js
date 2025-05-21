@@ -3,59 +3,57 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-// const cartStore = create(
-//   persist(
-//     (set) => ({
-//       items: [
-        
-            // {
-            //   id: "1",
-            //   name: "Voksne",
-            //   price: 170,
-            //   quantity: 0
-            // },
-            // {
-            //   id: "2",
-            //   name: "Studerende",
-            //   price: 90,
-            //   quantity: 0
-            // }
-        //   ],
-
           const cartStore = create(
             persist(
               (set, get) => ({
                 items: [],
           
+                // addItem: (item) => {
+                //   const existingItem = get().items.find((i) => i.id === item.id);
+          
+                //   if (existingItem) {
+                //     return set({
+                //       items: get().items.map((i) =>
+                //         i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
+                //       ),
+                //     });
+                //   } else {
+                //     return set({
+                //       items: [...get().items, { ...item, quantity: 1 }],
+                //     });
+                //   }
+                // },
+
                 addItem: (item) => {
-                  const existingItem = get().items.find((i) => i.id === item.id);
+                    const existingItem = get().items.find(
+                      (i) => i.id === item.id && i.eventId === item.eventId
+                    );
+                  
+                    if (existingItem) {
+                      return set({
+                        items: get().items.map((i) =>
+                          i.id === item.id && i.eventId === item.eventId
+                            ? { ...i, quantity: i.quantity + 1 }
+                            : i
+                        ),
+                      });
+                    } else {
+                      return set({
+                        items: [...get().items, { ...item, quantity: 1 }],
+                      });
+                    }
+                  },
           
-                  if (existingItem) {
-                    return set({
-                      items: get().items.map((i) =>
-                        i.id === item.id ? { ...i, quantity: i.quantity + 1 } : i
-                      ),
-                    });
-                  } else {
-                    return set({
-                      items: [...get().items, { ...item, quantity: 1 }],
-                    });
-                  }
-                },
-          
-                removeItem: (itemToRemove) =>
-                  set((state) => ({
-                    items: state.items.filter((item) => item.id !== itemToRemove.id),
-                  })),
-          
-                updateItemQuantity: (id, newQuantity) => {
-                  const updatedItems = get().items
-                    .map((item) =>
-                      item.id === id ? { ...item, quantity: newQuantity } : item
-                    )
-                    .filter((item) => item.quantity > 0); // Fjern items med 0 igen
-          
-                  set({ items: updatedItems });
+                  updateItemQuantity: (id, eventId, newQuantity) => {
+                    const updatedItems = get().items
+                      .map((item) =>
+                        item.id === id && item.eventId === eventId
+                          ? { ...item, quantity: newQuantity }
+                          : item
+                      )
+                      .filter((item) => item.quantity > 0);
+                  
+                    set({ items: updatedItems });
                 },
               }),
               { name: "storage" }

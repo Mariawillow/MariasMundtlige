@@ -5,20 +5,20 @@ import useCartStore from '@/app/store/cartStore';
 export default function Stepper({ itemId, quantity, item }) {
   const updateItemQuantity = useCartStore((state) => state.updateItemQuantity);
   const addItem = useCartStore((state) => state.addItem);
-
+  
   const increment = () => {
     if (quantity === 0) {
-      addItem(item); // Tilføj nyt item
+      addItem(item); // Har eventId med
     } else {
-      updateItemQuantity(itemId, quantity + 1);
+      updateItemQuantity(itemId, item.eventId, quantity + 1); // Tilføj eventId
     }
   };
 
   const decrement = () => {
     if (quantity > 1) {
-      updateItemQuantity(itemId, quantity - 1);
+      updateItemQuantity(itemId, item.eventId, quantity - 1); // Tilføj eventId
     } else if (quantity === 1) {
-      updateItemQuantity(itemId, 0); // Fjerner det helt (automatisk pga. filter i store)
+      updateItemQuantity(itemId, item.eventId, 0);
     }
   };
 

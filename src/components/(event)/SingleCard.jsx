@@ -10,6 +10,7 @@ const SingleCard = ({ eventData }) => {
     { id: "1", name: "Voksne", price: 170 },
     { id: "2", name: "Studerende", price: 90 },
   ];
+  
 
   return (
     <section>
@@ -38,9 +39,11 @@ const SingleCard = ({ eventData }) => {
 
         {/* Billetter */}
         <section className="flex flex-col gap-4">
-          {availableTickets.map((ticket) => {
-            const cartItem = items.find((i) => i.id === ticket.id);
-            const quantity = cartItem?.quantity || 0;
+        {availableTickets.map((ticket) => {
+          const cartItem = items.find(
+            (i) => i.id === ticket.id && i.eventId === eventData.id 
+          );
+          const quantity = cartItem?.quantity || 0;
 
             return (
               <div key={ticket.id} className="grid grid-cols-2">
@@ -49,8 +52,18 @@ const SingleCard = ({ eventData }) => {
                   <p className="font-light">Pris {ticket.price} DKK</p>
                 </div>
                 <div className="justify-self-end">
-                  <Stepper itemId={ticket.id} quantity={quantity} item={ticket} />
-                </div>
+                <Stepper
+          itemId={ticket.id}
+          quantity={quantity}
+          item={{
+            id: ticket.id,
+            name: ticket.name,
+            price: ticket.price,
+            eventId: eventData.id, // 💡 Her tilføjes det!
+            eventTitle: eventData.title,
+          }}
+        />
+            </div>
               </div>
             );
           })}
