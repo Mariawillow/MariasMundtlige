@@ -3,6 +3,8 @@
 import useCartStore from "@/app/store/cartStore"
 import Stepper from "@/components/Stepper";
 import ButtonSecondary from "@/components/ButtonSecondary";
+import Link from "next/link";
+
 
 const Price = () => {
       // Henter arrayet 'items' (varer i kurven) fra Zustand-staten
@@ -44,9 +46,13 @@ const Price = () => {
                 </div>
               </div>
             ))}
+<Link href={`/events/${eventId}`}>
+  <button className="mt-2 text-sm text-[#C4FF00] underline hover:opacity-80">
+    Gå til event
+  </button>
+</Link>
           </div>
         ))}
-
         <div className="flex items-center gap-4 mt-5">
           <h4 className="font-semibold">Total: {getTotalPrice()} DKK</h4>
           <ButtonSecondary />
