@@ -3,7 +3,7 @@
 
 // Importer komponenter og funktioner vi skal bruge
 import ListeCardClient from "@/components/(events)/ListeCardClient"; // Viser events som kort
-import Header from "@/components/Header"; // Side-header
+import Header from "@/components/(header)/Header"; // Side-header
 import { useEffect, useState } from "react"; // React hooks til state og sideeffekter
 import { getEvents, getLocations } from "@/api/localhost"; // Funktioner til at hente data fra API
 import LocationDropdown from "@/components/(events)/DropdownLocation"; // Dropdown-menu til valg af by

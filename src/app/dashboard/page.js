@@ -1,5 +1,5 @@
 import DashCard from "@/components/(dashboard)/DashCard";
-import Header from "@/components/Header";
+import Header from "@/components/(header)/Header";
 
 
 const Dashboard = () => {

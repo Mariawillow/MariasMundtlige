@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Header from "@/components/Header";
+import Header from "@/components/(header)/Header";
 import StatuePic from "@/images/statuePic.svg";
 import { FaTicketAlt } from "react-icons/fa";
 import Price from "@/components/(kurv)/Price";

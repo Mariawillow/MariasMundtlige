@@ -7,11 +7,10 @@ import { useRouter } from "next/navigation"; // Bruges til at skifte side ved kl
 import { usePathname } from "next/navigation"; // Bruges til at finde ud af hvilken side vi er på
 import Link from "next/link"; // En Next.js måde at lave links, som ikke genindlæser hele siden
 import Image from "next/image"; // Bruges til billeder, optimeret af Next.js
-import logoLime from "../logos/smk_logo_lime.png"; // Vi henter et grønt logo
-import logoBlack from "../logos/smk_logo_sort.png"; // Vi henter et sort logo
-import Basket from "./(kurv)/Basket"; // Kurv-komponent, som du selv har lavet
+import logoLime from "@/logos/smk_logo_lime.png"
+import logoBlack from "@/logos/smk_logo_sort.png"; // Vi henter et sort logo
 import { UserButton, SignIn, useUser } from "@clerk/nextjs"; // Clerk giver login-funktionalitet
-
+import BasketIcon from "./BasketIcon";
 
 
 // Selve header-komponenten
@@ -26,6 +25,7 @@ const Header = ({ variant = "lime" }) => {
   const isLime = variant === "lime";
   const textColor = isLime ? "text-[#C4FF00]" : "text-black";
   const lineColor = isLime ? "bg-[#C4FF00]" : "bg-black";
+
 
 
   return (
@@ -62,10 +62,12 @@ const Header = ({ variant = "lime" }) => {
         )}
 
         {/* Kurv og brugerknap */}
-
+        <div className="relative">
         <Link href="/basket">
-        <Basket variant={variant} />
+          <BasketIcon />
         </Link>
+        </div>
+
         <UserButton showName /> {/* Viser brugerens navn og menu, hvis man er logget ind */}
       </div>
 

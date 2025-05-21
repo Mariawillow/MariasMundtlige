@@ -1,6 +1,6 @@
 import { HiOutlineArrowLongLeft } from "react-icons/hi2";
 import Image from "next/image";
-import Header from "@/components/Header";
+import Header from "@/components/(header)/Header";
 import { getArtDetails } from "@/api/smk";
 
 //Hjælpe-funktion som bruges senere til at omsætte fødsels- og dødsdato fra ISO-format til dansk dato

@@ -1,4 +1,4 @@
-import Header from "@/components/Header";
+import Header from "@/components/(header)/Header";
 import SingleCard from "@/components/(event)/SingleCard";
 import EventArtClient from "@/components/(event)/EventArtClient";
 import { getArtDetails } from "@/api/smk";
