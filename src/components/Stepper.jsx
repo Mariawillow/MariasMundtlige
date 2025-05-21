@@ -2,27 +2,39 @@
 
 import useCartStore from '@/app/store/cartStore';
 
-export default function Stepper({ itemId, quantity }) {
+export default function Stepper({ itemId, quantity, item }) {
   const updateItemQuantity = useCartStore((state) => state.updateItemQuantity);
+  const addItem = useCartStore((state) => state.addItem);
 
-  const increment = () => updateItemQuantity(itemId, quantity + 1);
-  const decrement = () => {
-    if (quantity > 1) updateItemQuantity(itemId, quantity - 1);
+  const increment = () => {
+    if (quantity === 0) {
+      addItem(item); // Tilføj nyt item
+    } else {
+      updateItemQuantity(itemId, quantity + 1);
+    }
   };
 
-  
+  const decrement = () => {
+    if (quantity > 1) {
+      updateItemQuantity(itemId, quantity - 1);
+    } else if (quantity === 1) {
+      updateItemQuantity(itemId, 0); // Fjerner det helt (automatisk pga. filter i store)
+    }
+  };
 
   return (
     <div className="flex items-center gap-4 text-2xl">
-      {quantity > 1 && (
-        <button
-          onClick={decrement}
-          className="px-3 py-1 border border-black hover:border-lime-400 transition"
-        >
-          −
-        </button>
+      {quantity > 0 && (
+        <>
+          <button
+            onClick={decrement}
+            className="px-3 py-1 border border-black hover:border-lime-400 transition"
+          >
+            −
+          </button>
+          <span>{quantity}</span>
+        </>
       )}
-      <span>{quantity}</span>
       <button
         onClick={increment}
         className="px-3 py-1 border border-black hover:border-lime-400 transition"
@@ -32,3 +44,41 @@ export default function Stepper({ itemId, quantity }) {
     </div>
   );
 }
+
+
+
+
+// 'use client';
+
+// import useCartStore from '@/app/store/cartStore';
+
+// export default function Stepper({ itemId, quantity }) {
+//   const updateItemQuantity = useCartStore((state) => state.updateItemQuantity);
+
+//   const increment = () => updateItemQuantity(itemId, quantity + 1);
+//   const decrement = () => {
+//     if (quantity > 0) updateItemQuantity(itemId, quantity - 1);
+//   };
+
+  
+
+//   return (
+//     <div className="flex items-center gap-4 text-2xl">
+//       {quantity > 0 && (
+//         <button
+//           onClick={decrement}
+//           className="px-3 py-1 border border-black hover:border-lime-400 transition"
+//         >
+//           −
+//         </button>
+//       )}
+//       <span>{quantity}</span>
+//       <button
+//         onClick={increment}
+//         className="px-3 py-1 border border-black hover:border-lime-400 transition"
+//       >
+//         +
+//       </button>
+//     </div>
+//   );
+// }

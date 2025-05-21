@@ -1,20 +1,22 @@
 "use client";
 
-
 import ButtonSecondary from "@/components/ButtonSecondary";
 import Stepper from "@/components/Stepper";
 import useCartStore from "@/app/store/cartStore";
 
-
 const SingleCard = ({ eventData }) => {
   const { items } = useCartStore((state) => state);
+  const availableTickets = [
+    { id: "1", name: "Voksne", price: 170 },
+    { id: "2", name: "Studerende", price: 90 },
+  ];
 
   return (
     <section>
       {/* Top: Titel og Dato */}
       <div>
-        <h1 className=" font-semibold">{eventData.title}</h1>
-        <h3 className="font-light  ml-60">{eventData.date}</h3>
+        <h1 className="font-semibold">{eventData.title}</h1>
+        <h3 className="font-light ml-60">{eventData.date}</h3>
       </div>
 
       {/* Nederste sektion i to kolonner */}
@@ -34,25 +36,29 @@ const SingleCard = ({ eventData }) => {
           </div>
         </section>
 
-
-        {/* Billetter */}        
+        {/* Billetter */}
         <section className="flex flex-col gap-4">
-        {/* Map over items */}
-        {items.map((item) => (
-  <div key={item.id} className="grid grid-cols-2">
-    <div>
-      <p className="font-semibold">{item.name}</p>
-      <p className="font-light">Pris {item.price} DKK</p>
-    </div>
-    <div className="justify-self-end">
-      <Stepper itemId={item.id} quantity={item.quantity} />
-    </div>
-  </div>
-))}
-    <ButtonSecondary />
-      </section>
-        </div>
-          </section>
+          {availableTickets.map((ticket) => {
+            const cartItem = items.find((i) => i.id === ticket.id);
+            const quantity = cartItem?.quantity || 0;
+
+            return (
+              <div key={ticket.id} className="grid grid-cols-2">
+                <div>
+                  <p className="font-semibold">{ticket.name}</p>
+                  <p className="font-light">Pris {ticket.price} DKK</p>
+                </div>
+                <div className="justify-self-end">
+                  <Stepper itemId={ticket.id} quantity={quantity} item={ticket} />
+                </div>
+              </div>
+            );
+          })}
+
+          <ButtonSecondary />
+        </section>
+      </div>
+    </section>
   );
 };
 
