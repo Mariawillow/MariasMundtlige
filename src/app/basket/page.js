@@ -35,7 +35,7 @@ const Basket = () => {
             <h2 className="font-light">Billetter</h2>
           </div>
 
-          <div>{items && items.length > 0 ? items.map((item) => <CartCard key={item.id} item={item} />) : <p>Du har ikke valgt nogle billetter.. </p>}</div>
+          <div>{items && items.length > 0 ? items.map((item) => <useCartStore key={item.id} item={item} />) : <p>Du har ikke valgt nogle billetter.. </p>}</div>
 
           {/* Billetter */}
           <Price />
