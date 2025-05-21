@@ -6,7 +6,21 @@ import { persist } from "zustand/middleware";
 const cartStore = create(
   persist(
     (set) => ({
-      items: [],
+      items: [
+        
+            {
+              id: "1",
+              name: "Voksne",
+              price: 170,
+              quantity: 1
+            },
+            {
+              id: "2",
+              name: "Studerende",
+              price: 90,
+              quantity: 1
+            }
+          ],
 
       //Tilføjelse af item
       addItem: (item) =>
