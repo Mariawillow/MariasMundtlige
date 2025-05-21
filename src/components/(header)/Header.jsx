@@ -1,32 +1,54 @@
-"use client";
-// Fortæller Next.js, at denne komponent skal køre i browseren (klientsiden).
+// "use client";
+// // Fortæller Next.js, at denne komponent skal køre i browseren (klientsiden).
 
-// Vi importerer nogle værktøjer og komponenter, som vi skal bruge i headeren
-import { useState } from "react"; // Bruges til at gemme og ændre "tilstand" i komponenten (f.eks. om noget er åbent eller ej)
-import { useRouter } from "next/navigation"; // Bruges til at skifte side ved klik
-import { usePathname } from "next/navigation"; // Bruges til at finde ud af hvilken side vi er på
-import Link from "next/link"; // En Next.js måde at lave links, som ikke genindlæser hele siden
+// // Vi importerer nogle værktøjer og komponenter, som vi skal bruge i headeren
+// import { useState } from "react"; // Bruges til at gemme og ændre "tilstand" i komponenten (f.eks. om noget er åbent eller ej)
+// import { useRouter } from "next/navigation"; // Bruges til at skifte side ved klik
+// import { usePathname } from "next/navigation"; // Bruges til at finde ud af hvilken side vi er på
+// import Link from "next/link"; // En Next.js måde at lave links, som ikke genindlæser hele siden
+// import Image from "next/image"; // Bruges til billeder, optimeret af Next.js
+// import logoLime from "@/logos/smk_logo_lime.png"
+// import logoBlack from "@/logos/smk_logo_sort.png"; // Vi henter et sort logo
+// import { UserButton, SignIn, useUser } from "@clerk/nextjs"; // Clerk giver login-funktionalitet
+// import BasketIcon from "./BasketIcon";
+
+
+"use client";
 import Image from "next/image"; // Bruges til billeder, optimeret af Next.js
 import logoLime from "@/logos/smk_logo_lime.png"
 import logoBlack from "@/logos/smk_logo_sort.png"; // Vi henter et sort logo
-import { UserButton, SignIn, useUser } from "@clerk/nextjs"; // Clerk giver login-funktionalitet
-import BasketIcon from "./BasketIcon";
+import Link from "next/link";
+import { useState } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useUser } from "@clerk/nextjs";
+import DesktopMenu from "./DesktopMenu";
+import MobileMenu from "./MobileMenu";
+
+// // Selve header-komponenten
+// const Header = ({ variant = "lime" }) => {
+//   // Her gemmer vi information om:
+//   const [isOpen, setIsOpen] = useState(false); // Om mobil-menuen er åben
+//   const [showSignIn, setShowSignIn] = useState(false); // Om login-boksen vises
+//   const router = useRouter(); // Bruges til at navigere til andre sider
+//   const pathname = usePathname(); // Finder ud af hvilken side vi er på
+//   const { user } = useUser(); // Checker om en bruger er logget ind
+//   // Hvis brugeren har valgt 'lime' som variant, så skal tekst og streg være grønne
+//   const isLime = variant === "lime";
+//   const textColor = isLime ? "text-[#C4FF00]" : "text-black";
+//   const lineColor = isLime ? "bg-[#C4FF00]" : "bg-black";
 
 
-// Selve header-komponenten
+
 const Header = ({ variant = "lime" }) => {
-  // Her gemmer vi information om:
-  const [isOpen, setIsOpen] = useState(false); // Om mobil-menuen er åben
-  const [showSignIn, setShowSignIn] = useState(false); // Om login-boksen vises
-  const router = useRouter(); // Bruges til at navigere til andre sider
-  const pathname = usePathname(); // Finder ud af hvilken side vi er på
-  const { user } = useUser(); // Checker om en bruger er logget ind
-  // Hvis brugeren har valgt 'lime' som variant, så skal tekst og streg være grønne
+  const [isOpen, setIsOpen] = useState(false);
+  const [showSignIn, setShowSignIn] = useState(false);
+  const { user } = useUser();
+  const pathname = usePathname();
+  const router = useRouter();
+
   const isLime = variant === "lime";
   const textColor = isLime ? "text-[#C4FF00]" : "text-black";
   const lineColor = isLime ? "bg-[#C4FF00]" : "bg-black";
-
-
 
   return (
     // Hele menuen (nav) - det øverste område af siden
@@ -37,39 +59,14 @@ const Header = ({ variant = "lime" }) => {
         <Image src={isLime ? logoLime : logoBlack} width={200} height={200} alt="SMK logo" />
       </Link>
 
+      <DesktopMenu
+        user={user}
+        pathname={pathname}
+        router={router}
+        textColor={textColor}
+        setShowSignIn={setShowSignIn}
+      />
 
-      {/* Desktop-menuen (vises kun på større skærme, pga. 'sm:flex') */}
-      <div className="hidden sm:flex gap-space-l items-center">
-        {/* Link til "Events"-siden */}
-        {!user && (
-          <Link href="/events" className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} ${pathname === "/events" ? "underline decoration-3 underline-offset-8" : ""}`} onClick={() => router.push("/events")}>
-            Events
-          </Link>
-        )}
-
-        {/* Link til "Dashboard"-siden */}
-        {user && (
-          <Link href="/dashboard" className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} ${pathname === "/events" ? "underline decoration-3 underline-offset-8" : ""}`} onClick={() => router.push("/dashboard")}>
-            Dashboard
-          </Link>
-        )}
-
-        {/* ✅ Vis kun "Log ind"-knappen hvis brugeren IKKE er logget ind */}
-        {!user && (
-          <button onClick={() => setShowSignIn(!showSignIn)} className={`desktop_header_font_size hover:underline hover:decoration-3 hover:underline-offset-8 ${textColor} focus:outline-none`}>
-            Log ind
-          </button>
-        )}
-
-        {/* Kurv og brugerknap */}
-        <div className="relative">
-        <Link href="/basket">
-          <BasketIcon />
-        </Link>
-        </div>
-
-        <UserButton showName /> {/* Viser brugerens navn og menu, hvis man er logget ind */}
-      </div>
 
 
       {/* "Burger"-ikonet til mobilmenuen */}
@@ -83,56 +80,13 @@ const Header = ({ variant = "lime" }) => {
         <span className={`h-0.75 w-full ${lineColor} transition-transform duration-200 ease-linear ${isOpen ? "-rotate-45 -translate-y-2.5" : ""}`} />
       </button>
 
-
-      {/* Mobilmenuen (vises kun hvis isOpen er true) */}
-      {isOpen && (
-        <div className="absolute top-full left-0 w-full h-screen bg-[#bab0bc] sm:hidden flex flex-col items-center gap-space-xl z-10">
-          {/* Link til events */}
-          {!user && (
-            <Link
-              href="/events"
-              className={`mobile_header_font_size ${textColor}`}
-              onClick={() => {
-                setIsOpen(false); // Lukker menuen når man klikker
-                router.push("/events");
-              }}>
-              Events
-            </Link>
-          )}
-
-          {/* Link til Dashboard */}
-          {user && (
-            <Link
-              href="/dashboard"
-              className={`mobile_header_font_size ${textColor}`}
-              onClick={() => {
-                setIsOpen(false);
-                router.push("/dashboard");
-              }}>
-              Dashboard
-            </Link>
-          )}
-
-          {/*  Kun vis hvis ikke logget ind */}
-          {/* if-sætning med && - hvis det til venstre er sandt (user ikke er logget ind) så fjernes knappen. */}
-          {!user && (
-            <button
-              className={`mobile_header_font_size ${textColor}`}
-              onClick={() => {
-                setShowSignIn(!showSignIn);
-                setIsOpen(false);
-              }}>
-              Log ind
-            </button>
-          )}
-
-          {/* Kurv vises også i mobilmenuen */}
-<div className="relative">
-        <Link href="/basket">
-          <BasketIcon />
-        </Link>
-        </div>        </div>
-      )}
+      <MobileMenu
+        isOpen={isOpen}
+        user={user}
+        setIsOpen={setIsOpen}
+        textColor={textColor}
+        setShowSignIn={setShowSignIn}
+      />
 
       {/* Login-boksen fra Clerk. Vises kun hvis showSignIn er true */}
       {showSignIn && (
