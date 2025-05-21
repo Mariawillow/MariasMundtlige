@@ -62,7 +62,10 @@ const Header = ({ variant = "lime" }) => {
         )}
 
         {/* Kurv og brugerknap */}
+
+        <Link href="/basket">
         <Basket variant={variant} />
+        </Link>
         <UserButton showName /> {/* Viser brugerens navn og menu, hvis man er logget ind */}
       </div>
 

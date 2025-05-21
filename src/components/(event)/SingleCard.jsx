@@ -3,32 +3,11 @@
 
 import ButtonSecondary from "@/components/ButtonSecondary";
 import Stepper from "@/components/Stepper";
-import useCartStore from "@/app/store/cartStore"
-import Price from "@/components/(kurv)/Price";
-
+import useCartStore from "@/app/store/cartStore";
 
 
 const SingleCard = ({ eventData }) => {
-  const { updateItemQuantity } = useCartStore((state) => state);
-
-//Funktion kaldes ved klik på minus
-const handleDecrement = () => {
-  //Tjekker om quantity er større end 1 – så den ALDRIG går ned på 0 eller negative tal.
-  // Hvis betingelsen er opfyldt reduceres mængden med 1
-  if (eventData.quantity > 1) {
-    updateItemQuantity(eventData.id, eventData.quantity - 1);
-  }
-};
-
-//Funktion kaldes ved klik på plus
-const handleIncrement = () => {
-  //Øger quantity med 1
-  updateItemQuantity(eventData.id, eventData.quantity + 1);
-};
-
-
-
-
+  const { items } = useCartStore((state) => state);
 
   return (
     <section>
@@ -37,6 +16,7 @@ const handleIncrement = () => {
         <h1 className=" font-semibold">{eventData.title}</h1>
         <h3 className="font-light  ml-60">{eventData.date}</h3>
       </div>
+
       {/* Nederste sektion i to kolonner */}
       <div className="grid grid-cols-2 gap-8">
         {/* Om Eventet */}
@@ -54,28 +34,25 @@ const handleIncrement = () => {
           </div>
         </section>
 
-        {/* Billetter */}
-        <section className="flex flex-col gap-4">
-          <h4 className="font-semibold">Billetter</h4>
-          <div className="grid grid-cols-2">
-            <div>
-              <p className="font-semibold">Voksen</p>
-              <p className="font-light">Pris 170 DKK</p>
-            </div>
-            <Stepper />
-          </div>
-          <div className="grid grid-cols-2">
-            <div>
-              <p className="font-semibold">Studenter</p>
-              <p className="font-light">Pris 90 DKK</p>
-            </div>
-            <Stepper />
-          </div>
 
-          <ButtonSecondary />
-        </section>
-      </div>
-    </section>
+        {/* Billetter */}        
+        <section className="flex flex-col gap-4">
+        {/* Map over items */}
+        {items.map((item) => (
+  <div key={item.id} className="grid grid-cols-2">
+    <div>
+      <p className="font-semibold">{item.name}</p>
+      <p className="font-light">Pris {item.price} DKK</p>
+    </div>
+    <div className="justify-self-end">
+      <Stepper itemId={item.id} quantity={item.quantity} />
+    </div>
+  </div>
+))}
+    <ButtonSecondary />
+      </section>
+        </div>
+          </section>
   );
 };
 
