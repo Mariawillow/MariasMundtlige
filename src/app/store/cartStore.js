@@ -12,13 +12,13 @@ const cartStore = create(
               id: "1",
               name: "Voksne",
               price: 170,
-              quantity: 1
+              quantity: 0
             },
             {
               id: "2",
               name: "Studerende",
               price: 90,
-              quantity: 1
+              quantity: 0
             }
           ],
 
@@ -36,7 +36,7 @@ const cartStore = create(
           } else {
             // Hvis produktet ikke findes, tilføj det til arrayet (kurven)
             return {
-              items: state.items.concat({ ...item, quantity: 1 }),
+              items: state.items.concat({ ...item, quantity: 0 }),
             };
           }
         }),
