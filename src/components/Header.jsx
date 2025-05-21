@@ -132,7 +132,7 @@ const Header = ({ variant = "lime" }) => {
       {/* Login-boksen fra Clerk. Vises kun hvis showSignIn er true */}
       {showSignIn && (
         <div className="absolute top-full right-4 mt-4 bg-white shadow-lg border border-gray-200 z-50 p-4 rounded-xl">
-          <SignIn />
+<SignIn routing="hash" />
         </div>
       )}
     </nav>
