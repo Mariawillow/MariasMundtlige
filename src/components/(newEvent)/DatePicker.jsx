@@ -12,6 +12,8 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover
 
 export default function DatePicker({ date, setDate }) {
   const [availableDates, setAvailableDates] = useState([]);
+  const [open, setOpen] = useState(false);
+
 
   useEffect(() => {
     getDates()
@@ -28,12 +30,13 @@ export default function DatePicker({ date, setDate }) {
   }, [date]);
 
   const handleSelect = (day) => {
-    console.log("📤 Dato sendt op:", day);
-    setDate(day);
+    setDate(day);      // sender dato op
+    setOpen(false);    // lukker popover
   };
 
+
   return (
-    <Popover>
+    <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" className={cn("w-[280px] justify-start text-left font-normal", !date && "text-muted-foreground")}>
           {date ? format(date, "PPP") : <span>Vælg dato</span>}

@@ -4,12 +4,18 @@ import { getArts } from "@/api/smk";
 import { makeNewEvent } from "@/api/localhost";
 import ButtonPrimary from "../ButtonPrimary";
 import ArtworkGrid from "./ArtWorkGrid";
+import { useRouter } from "next/navigation";
+
 
 export default function ArtworkSelection({ date, location }) {
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [artworks, setArtworks] = useState([]);
   const [selectedArtworks, setSelectedArtworks] = useState([]);
+  const [showSuccess, setShowSuccess] = useState(false);
+  const router = useRouter();
+
+
 
   useEffect(() => {
     getArts().then(setArtworks).catch(console.error);
@@ -19,15 +25,15 @@ export default function ArtworkSelection({ date, location }) {
   const toggleArtwork = (id) => {
     setSelectedArtworks((prev) => {
       if (prev.includes(id)) {
-        // Fjern hvis det allerede er valgt
         return prev.filter((i) => i !== id);
       } else {
-        // Tilføj kun hvis der er plads
-        if (prev.length >= 3) return prev;
+        const maxArtwork = location?.maxArtworks || 3;
+        if (prev.length >= maxArtwork) return prev;
         return [...prev, id];
       }
     });
   };
+
 
   //Funktion som håndterer opret event
   const handleMakeNewEvent = async () => {
@@ -37,12 +43,19 @@ export default function ArtworkSelection({ date, location }) {
         title: eventName,
         description: eventDescription,
         date,
-        locationId: location,
+        locationId: location.id,
         artworkIds: selectedArtworks,
       });
 
       console.log("Event oprettet:", res);
-      alert("Eventet blev oprettet!");
+      setShowSuccess(true);
+      setTimeout(() => {
+        router.push("/dashboard");
+      }, 800); // tid det går før kurator bliver sendt til dashboard
+      setTimeout(() => setShowSuccess(false), 5000); // Skjul efter 5 sekunder
+
+
+
       // Her kan du evt. redirecte eller nulstille formen
     } catch (error) {
       console.error(error);
@@ -58,8 +71,15 @@ export default function ArtworkSelection({ date, location }) {
       <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2" />
 
       {/* Status */}
-      <p className="text-sm text-gray-600">{selectedArtworks.length}/3 værker valgt</p>
-      {selectedArtworks.length === 3 && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>}
+      <p className="text-sm text-gray-600">
+        {selectedArtworks.length}/{location?.maxArtworks || 3} værker valgt
+      </p>
+
+      {selectedArtworks.length === (location?.maxArtworks || 3) && (
+        <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>
+      )}
+      {/* <p className="text-sm text-gray-600">{selectedArtworks.length}/3 værker valgt</p>
+      {selectedArtworks.length === 3 && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>} */}
 
       {/* Værk grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -83,6 +103,11 @@ export default function ArtworkSelection({ date, location }) {
       <ButtonPrimary variant="default" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
         Opret event
       </ButtonPrimary>
+      {showSuccess && (
+        <div className="fixed top-6 right-6 bg-lime-400 text-white px-4 py-2 rounded shadow-lg transition-all z-50">
+          Eventet blev oprettet!
+        </div>
+      )}
     </div>
   );
 }

@@ -47,7 +47,7 @@ export default function LocationDropdown({ onSelectCity }) {
     } else {
       const forkortelser = cityForkortelser[selectedCity] || [selectedCity.toLowerCase()];
       const filtered = locations.filter((loc) =>
-      forkortelser.some((forkortelser) => loc.address.toLowerCase().includes(forkortelser))
+        forkortelser.some((forkortelser) => loc.address.toLowerCase().includes(forkortelser))
       );
       setFilteredLocations(filtered);
     }
@@ -63,13 +63,12 @@ export default function LocationDropdown({ onSelectCity }) {
       <DropdownMenu open={open} onOpenChange={setOpen}>
         <DropdownMenuTrigger asChild>
           <button
-            className="cursor-pointer flex items-center gap-2 text-[32px] font-light text-black bg-transparent border border-[#726572] px-4 py-2 focus:outline-none"
+            className="cursor-pointer flex items-center gap-2 text-[32px] font-light text-black bg-transparent px-4 py-2 focus:outline-none"
           >
             {selectedCity ?? "Lokation"}
             <IoIosArrowDown
-              className={`text-[32px] transition-transform duration-300 ${
-                open ? "rotate-180" : "rotate-0"
-              }`}
+              className={`text-[32px] transition-transform duration-300 ${open ? "rotate-180" : "rotate-0"
+                }`}
             />
           </button>
         </DropdownMenuTrigger>
@@ -87,18 +86,6 @@ export default function LocationDropdown({ onSelectCity }) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      {/* <div className="grid gap-2">
-        {filteredLocations.length > 0 ? (
-          filteredLocations.map((loc) => (
-            <div key={loc.id} className="p-4 border rounded shadow-sm">
-              <div className="font-semibold">{loc.address}</div>
-            </div>
-          ))
-        ) : (
-          <div className="text-gray-500">Ingen lokationer fundet.</div>
-        )}
-      </div> */}
     </div>
   );
 }
