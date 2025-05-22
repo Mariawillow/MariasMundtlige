@@ -2,6 +2,7 @@ import { Montserrat } from "next/font/google";
 import "./globals.css";
 import { ClerkProvider } from "@clerk/nextjs";
 import Footer from "@/components/Footer";
+import LoadingSpinnerWrapper from "@/components/LoadingSpinnerWrapper";
 
 const montserrat = Montserrat({
   variable: "--font-montserrat-sans",
@@ -15,8 +16,10 @@ export default function RootLayout({ children }) {
     <ClerkProvider publishableKey={publishableKey}>
       <html lang="da">
         <body className={`${montserrat.variable} antialiased`}>
-          <main>{children}</main>
-          <Footer />
+          <LoadingSpinnerWrapper>
+            <main>{children}</main>
+            <Footer />
+          </LoadingSpinnerWrapper>
         </body>
       </html>
     </ClerkProvider>
