@@ -11,8 +11,6 @@ const SingleCard = ({ eventData }) => {
     { id: "2", name: "Studerende", price: 90 },
   ];
   
-  const remainingTickets = eventData.totalTickets - eventData.bookedTickets;
-
   return (
     <section>
       {/* Top: Titel og Dato */}
@@ -63,7 +61,7 @@ const SingleCard = ({ eventData }) => {
     eventId: eventData.id,
     eventTitle: eventData.title,
   }}
-  remainingTickets={remainingTickets}
+  remainingTickets={ticket.remainingTickets} // Tilføj denne linje
 />
             </div>
               </div>
