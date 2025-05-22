@@ -5,37 +5,35 @@ import { makeNewEvent } from "@/api/localhost";
 import ButtonPrimary from "../ButtonPrimary";
 import ArtworkGrid from "./ArtWorkGrid";
 import { useRouter } from "next/navigation";
+import { filterArtworksByPeriod } from "@/api/periods";
 
 export default function ArtworkSelection({ date, location, period }) {
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
-  const [artworks, setArtworks] = useState([]);
+  const [allArtworks, setAllArtworks] = useState([]);
+  const [filteredArtworks, setFilteredArtworks] = useState([]);
   const [selectedArtworks, setSelectedArtworks] = useState([]);
-  const [filteredArtworks, setFilteredArtworks] = useState([]); // Filtrerede værker
+  const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const router = useRouter();
 
-  // Hent værkerne når komponenten mountes
+  // Hent alle værker én gang
   useEffect(() => {
-    getArts().then(setArtworks).catch(console.error);
+    setLoading(true);
+    getArts()
+      .then((data) => setAllArtworks(data))
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, []);
 
-  // Når periodens værdi ændres, filtrer værkerne
+  // Filtrer værker, når perioden ændrer sig
   useEffect(() => {
-    if (period) {
-      // Hvis der er en periode, filtrer kunstværkerne
-      const filtered = artworks.filter((art) => {
-        const [startYear, endYear] = art.production_date?.[0]?.period.split("-").map(Number);
-        return startYear >= period.from && endYear <= period.to;
-      });
-      setFilteredArtworks(filtered);
-    } else {
-      // Hvis ingen periode er valgt, vis alle værker
-      setFilteredArtworks(artworks);
-    }
-  }, [period, artworks]); // Lyt på ændringer i period og artworks
+    if (!period || allArtworks.length === 0) return;
 
-  // Funktion til at vælge/deselevere et værk
+    const filtered = filterArtworksByPeriod(allArtworks, period);
+    setFilteredArtworks(filtered);
+  }, [period, allArtworks]);
+
   const toggleArtwork = (id) => {
     setSelectedArtworks((prev) => {
       if (prev.includes(id)) {
@@ -50,19 +48,17 @@ export default function ArtworkSelection({ date, location, period }) {
 
   const handleMakeNewEvent = async () => {
     try {
-      const res = await makeNewEvent({
+      await makeNewEvent({
         title: eventName,
         description: eventDescription,
         date,
         locationId: location.id,
         artworkIds: selectedArtworks,
-        period: period?.id, // Brug den valgte periode
+        period: period?.id,
       });
 
       setShowSuccess(true);
-      setTimeout(() => {
-        router.push("/dashboard");
-      }, 800);
+      setTimeout(() => router.push("/dashboard"), 800);
       setTimeout(() => setShowSuccess(false), 5000);
     } catch (error) {
       console.error(error);
@@ -74,36 +70,63 @@ export default function ArtworkSelection({ date, location, period }) {
     <div className="space-y-8 mt-8">
       <h3 className="text-center">STEP 2: Information om dit event</h3>
 
-      <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2" />
+      {loading ? (
+        <p className="text-center text-gray-400">Henter værker...</p>
+      ) : (
+        <>
+          <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2" />
 
-      <p className="text-sm text-gray-600">
-        {selectedArtworks.length}/{location?.maxArtworks || 3} værker valgt
-      </p>
+          <p className="text-sm text-gray-600">
+            {selectedArtworks.length}/{location?.maxArtworks || 3} værker valgt
+          </p>
 
-      {selectedArtworks.length === (location?.maxArtworks || 3) && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>}
+          {selectedArtworks.length === (location?.maxArtworks || 3) && (
+            <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>
+          )}
 
-      {/* Værk grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <ArtworkGrid artworks={filteredArtworks} selectedArtworks={selectedArtworks} toggleArtwork={toggleArtwork} />
-      </div>
+          <ArtworkGrid
+            artworks={filteredArtworks}
+            selectedArtworks={selectedArtworks}
+            toggleArtwork={toggleArtwork}
+          />
+        </>
+      )}
 
-      {/* Event detaljer */}
       <div className="space-y-4">
         <form>
           <label className="text-sm font-medium">Eventnavn</label>
-          <input type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} className="w-full border rounded px-3 py-2" />
+          <input
+            type="text"
+            value={eventName}
+            onChange={(e) => setEventName(e.target.value)}
+            className="w-full border rounded px-3 py-2"
+          />
         </form>
 
         <form>
           <label className="text-sm font-medium">Beskrivelse</label>
-          <textarea value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} className="w-full border rounded px-3 py-2" rows={4} />
+          <textarea
+            value={eventDescription}
+            onChange={(e) => setEventDescription(e.target.value)}
+            className="w-full border rounded px-3 py-2"
+            rows={4}
+          />
         </form>
       </div>
 
-      <ButtonPrimary variant="default" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
+      <ButtonPrimary
+        variant="default"
+        onClick={handleMakeNewEvent}
+        disabled={!eventName || !eventDescription || selectedArtworks.length === 0}
+      >
         Opret event
       </ButtonPrimary>
-      {showSuccess && <div className="fixed top-6 right-6 bg-lime-400 text-white px-4 py-2 rounded shadow-lg transition-all z-50">Eventet blev oprettet!</div>}
+
+      {showSuccess && (
+        <div className="fixed top-6 right-6 bg-lime-400 text-white px-4 py-2 rounded shadow-lg transition-all z-50">
+          Eventet blev oprettet!
+        </div>
+      )}
     </div>
   );
 }
