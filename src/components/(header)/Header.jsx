@@ -15,6 +15,7 @@
 
 "use client";
 import Image from "next/image"; // Bruges til billeder, optimeret af Next.js
+import { UserButton, SignIn, useUser } from "@clerk/nextjs"; // Clerk giver login-funktionalitet
 import logoLime from "@/logos/smk_logo_lime.png"
 import logoBlack from "@/logos/smk_logo_sort.png"; // Vi henter et sort logo
 import Link from "next/link";
@@ -45,7 +46,6 @@ const Header = ({ variant = "lime" }) => {
   const { user } = useUser();
   const pathname = usePathname();
   const router = useRouter();
-
   const isLime = variant === "lime";
   const textColor = isLime ? "text-[#C4FF00]" : "text-black";
   const lineColor = isLime ? "bg-[#C4FF00]" : "bg-black";
