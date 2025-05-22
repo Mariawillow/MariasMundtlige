@@ -18,7 +18,7 @@ import { UserButton, SignIn, useUser } from "@clerk/nextjs"; // Clerk giver logi
 import logoLime from "@/logos/smk_logo_lime.png";
 import logoBlack from "@/logos/smk_logo_sort.png"; // Vi henter et sort logo
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import DesktopMenu from "./DesktopMenu";
 import MobileMenu from "./MobileMenu";
@@ -46,6 +46,30 @@ const Header = ({ variant = "lime" }) => {
   const textColor = isLime ? "text-[#C4FF00]" : "text-black";
   const lineColor = isLime ? "bg-[#C4FF00]" : "bg-black";
 
+// Ref for SignIn-box
+const signInRef = useRef(null);
+
+
+// Luk SignIn hvis man klikker udenfor
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (
+        signInRef.current &&
+        !signInRef.current.contains(event.target)
+      ) {
+        setShowSignIn(false);
+      }
+    };
+
+    if (showSignIn) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [showSignIn]);
+
   return (
     // Hele menuen (nav) - det øverste område af siden
     <nav className="relative z-50 flex flex-col sm:flex-row items-center justify-between mt-space-m px-4">
@@ -71,7 +95,10 @@ const Header = ({ variant = "lime" }) => {
 
       {/* Login-boksen fra Clerk. Vises kun hvis showSignIn er true */}
       {showSignIn && (
-        <div className="absolute top-full right-4 mt-4 bg-white shadow-lg border border-gray-200 z-50 p-4 rounded-xl">
+        <div
+          ref={signInRef}
+          className="absolute top-full right-4 mt-4 bg-white shadow-lg border border-gray-200 z-50 p-4 rounded-xl"
+        >
           <SignIn routing="hash" />
         </div>
       )}
