@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 // components/Popup.js
 const Popup = ({ onClose }) => {
   return (
@@ -10,12 +12,15 @@ const Popup = ({ onClose }) => {
   ">
         <h2 className="text-xl font-bold mb-4">Tak for din booking!</h2>
         <p className="mb-6">Vi glæder os til at se dig</p>
+        
+        <Link href="/">
         <button
           onClick={onClose}
           className="bg-[#C4FF00] px-4 py-2 rounded text-black font-semibold"
         >
           Luk
         </button>
+        </Link>
       </div>
     </div>
   );
