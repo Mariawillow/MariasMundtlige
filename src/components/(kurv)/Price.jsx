@@ -2,7 +2,6 @@
 
 import useCartStore from "@/app/store/cartStore"
 import Stepper from "@/components/Stepper";
-import ButtonSecondary from "@/components/ButtonSecondary";
 import Link from "next/link";
 
 
@@ -56,7 +55,6 @@ const Price = () => {
         ))}
         <div className="flex items-center gap-4 mt-5">
           <h4 className="font-semibold">Total: {getTotalPrice()} DKK</h4>
-          <ButtonSecondary />
         </div>
       </section>
     </article>

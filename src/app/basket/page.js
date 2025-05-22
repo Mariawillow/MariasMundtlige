@@ -7,20 +7,51 @@ import StatuePic from "@/images/statuePic.svg";
 import { FaTicketAlt } from "react-icons/fa";
 import Price from "@/components/(kurv)/Price";
 import useCartStore from "@/app/store/cartStore"
+import { useState } from "react";
+import Popup from "@/components/Popup"; // Husk at oprette denne
+import ButtonTertiary from "@/components/ButtonTertiary";
+
 
 
 const Basket = () => {
 
   const items = useCartStore((state) => state.items);
+  const [showPopup, setShowPopup] = useState(false);
+
+
+  const handleBuyClick = () => {
+    setShowPopup(true);
+  };
 
 
   return (
-    <div>
-      <Header variant="black"></Header>
-      <section className="grid grid-cols-2 gap-4">
-        <div>
-          <Image src={StatuePic} alt="statuebillede" width={300} height={200} className="w-full h-full object-cover" />
-        </div>
+    <div className="bg-[url('/images/statuePic.svg')] bg-cover bg-no-repeat md:bg-none relative min-h-screen w-full">
+  {/* Dette Image er kun til små skærme - fylder hele div'en */}
+  <div className="block md:hidden absolute inset-0 -z-10">
+    <Image
+      src={StatuePic}
+      alt="Statue"
+      layout="fill"
+      objectFit="cover"
+      className="scale-x-[-1]"
+      priority
+    />
+  </div>
+
+  <div className="relative z-10 w-full">
+  <Header variant="black" />    
+        
+<section className="grid md:grid-cols-2 gap-4 min-h-[200px]">
+      {/* Medium og op: normal billede */}
+      <div className="hidden md:block">
+        <Image
+          src={StatuePic}
+          alt="statuebillede"
+          width={300}
+          height={200}
+          className="w-full h-full object-cover"
+        />
+      </div>
 
         <div>
           <div className="text-center">
@@ -40,9 +71,17 @@ const Basket = () => {
           {/* Billetter */}
           <Price />
 
+        {/* Køb Billet knap */}
+          <div className="mt-6 text-center">
+            <ButtonTertiary onClick={handleBuyClick} />
+          </div>
         </div>
       </section>
+
+      {showPopup && <Popup onClose={() => setShowPopup(false)} />}
     </div>
+    </div>
+
   );
 };
 
