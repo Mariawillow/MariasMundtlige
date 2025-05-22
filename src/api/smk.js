@@ -1,6 +1,16 @@
 // Henter alle kunstværker fra SMK, som har billede og ikke er udstillet
+// export async function getArts() {
+//   const res = await fetch("https://api.smk.dk/api/v1/art/search/?keys=*&filters=[has_image:true],[on_display:false],[public_domain:true]&offset=0&rows=2000");
+//   const data = await res.json();
+//   return data.items || [];
+// }
+
 export async function getArts() {
-  const res = await fetch("https://api.smk.dk/api/v1/art/search/?keys=*&filters=[has_image:true],[on_display:false],[public_domain:true]&offset=0&rows=200");
+  const baseFilters = ["has_image:true", "on_display:false", "public_domain:true"];
+  const filterString = baseFilters.map((f) => `[${f}]`).join(",");
+  const url = `https://api.smk.dk/api/v1/art/search/?keys=maleri&filters=${filterString}&offset=0&rows=2000`;
+
+  const res = await fetch(url);
   const data = await res.json();
   return data.items || [];
 }
