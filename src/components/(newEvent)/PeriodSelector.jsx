@@ -1,19 +1,7 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { periods } from "@/api/periods";
 
-// Kunstperioder (kan flyttes ud i separat fil senere hvis ønsket)
-const periods = [
-  { id: "barok", name: "Barok", from: 1600, to: 1750 },
-  { id: "guldalder", name: "Guldalder", from: 1800, to: 1850 },
-  { id: "modernisme", name: "Modernisme", from: 1900, to: 1950 },
-  { id: "samtidskunst", name: "Samtidskunst", from: 1950, to: 2025 },
-];
-
-// Gør perioden tilgængelig udenfor komponent
-export function getPeriodById(id) {
-  return periods.find((p) => p.id === id);
-}
 
 export default function PeriodSelector({ period, setPeriod }) {
   return (
