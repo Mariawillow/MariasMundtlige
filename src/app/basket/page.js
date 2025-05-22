@@ -25,7 +25,7 @@ const Basket = () => {
 
 
   return (
-    <div className="bg-[url('/images/statuePic.svg')] bg-cover bg-no-repeat md:bg-none relative min-h-screen w-full">
+    <div className="bg-[url('/images/statuePic.svg')] bg-cover bg-no-repeat md:bg-none relative min-h-screen w-full ">
   {/* Dette Image er kun til små skærme - fylder hele div'en */}
   <div className="block md:hidden absolute inset-0 -z-10">
     <Image
