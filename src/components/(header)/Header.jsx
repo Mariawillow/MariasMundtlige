@@ -46,11 +46,11 @@ const Header = ({ variant = "lime" }) => {
   const textColor = isLime ? "text-[#C4FF00]" : "text-black";
   const lineColor = isLime ? "bg-[#C4FF00]" : "bg-black";
 
-// Ref for SignIn-box
-const signInRef = useRef(null);
+  // Ref for SignIn-box
+  const signInRef = useRef(null);
 
 
-// Luk SignIn hvis man klikker udenfor
+  // Luk SignIn hvis man klikker udenfor
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -72,7 +72,7 @@ const signInRef = useRef(null);
 
   return (
     // Hele menuen (nav) - det øverste område af siden
-    <nav className="relative z-50 flex flex-col sm:flex-row items-center justify-between mt-space-m px-4">
+    <nav className="mb-4 relative z-50 flex flex-col sm:flex-row items-center justify-between mt-space-m px-4">
       {/* Logoet til venstre */}
       <Link href="/">
         <Image src={isLime ? logoLime : logoBlack} width={200} height={200} alt="SMK logo" />
