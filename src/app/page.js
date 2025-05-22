@@ -1,23 +1,26 @@
 import Image from "next/image";
 import Header from "@/components/(header)/Header";
 import ButtonPrimary from "@/components/ButtonPrimary";
-import StatuePic from "@/images/statuePic.svg";
+import statuePic from "@/images/statuePic.svg"; // Importer billedet som modul
 import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className="col-start-2 h-[800px] bg-[url(/images/statuePic.jpg)]  bg-cover bg-no-repeat bg-center relative">
-      <Header />
+    <div className="bg-[url('/images/statuePic.svg')] bg-cover bg-no-repeat">
+      <Image src={statuePic} alt="Statue" layout="fill" objectFit="cover" className="scale-x-[-1]" />
+      <div className="col-start-2 bg-cover bg-no-repeat bg-center relative">
+        <Header className="relative z-10" />
 
-      <h1 className="text-[#C4FF00] leading-relaxed font-light">
-        Oplev Storartet Kunst <br /> På Feler Måder
-      </h1>
+        <h1 className="text-[#C4FF00] leading-relaxed font-light mt-space-2xl">
+          Oplev Storartet Kunst <br /> På Flere Måder
+        </h1>
 
-      <Link href="/events">
-        <ButtonPrimary size="small" className="absolute bottom-4 right-4">
-          Events
-        </ButtonPrimary>
-      </Link>
+        <Link href="/events">
+          <ButtonPrimary size="small" className="">
+            Events
+          </ButtonPrimary>
+        </Link>
+      </div>
     </div>
   );
 }
