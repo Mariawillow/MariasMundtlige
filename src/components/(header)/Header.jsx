@@ -14,7 +14,7 @@
 
 "use client";
 import Image from "next/image"; // Bruges til billeder, optimeret af Next.js
-import { UserButton, SignIn, useUser } from "@clerk/nextjs"; // Clerk giver login-funktionalitet
+import { SignIn, useUser } from "@clerk/nextjs"; // Clerk giver login-funktionalitet
 import logoLime from "@/logos/smk_logo_lime.png";
 import logoBlack from "@/logos/smk_logo_sort.png"; // Vi henter et sort logo
 import Link from "next/link";
