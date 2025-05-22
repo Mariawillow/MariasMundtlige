@@ -15,11 +15,13 @@ export default function Home() {
           Oplev Storartet Kunst <br /> På Flere Måder
         </h1>
 
-        <Link href="/events">
-          <ButtonPrimary size="small" className="">
-            Events
-          </ButtonPrimary>
-        </Link>
+        <ButtonPrimary href="/events" size="large">
+          Se events
+        </ButtonPrimary>
+
+        <ButtonPrimary href="/events" size="small">
+          Se events
+        </ButtonPrimary>
       </div>
     </div>
   );
