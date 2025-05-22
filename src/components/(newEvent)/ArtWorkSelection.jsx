@@ -114,7 +114,7 @@ export default function ArtworkSelection({ date, location, period }) {
         </form>
       </div>
 
-      <ButtonPrimary
+      <ButtonPrimary href="/dashboard"
         variant="default"
         onClick={handleMakeNewEvent}
         disabled={!eventName || !eventDescription || selectedArtworks.length === 0}
