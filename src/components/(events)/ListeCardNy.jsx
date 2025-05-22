@@ -21,7 +21,7 @@ const ListeCardNy = ({ event }) => {
 
  {/* BADGE: Vis kun hvis < 10 billetter */}
  {remainingTickets < 10 && (
-          <div className="absolute top-2 right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full z-10 shadow-md">
+          <div className="absolute top-2 right-2 bg-gray-50 text-black text-xs font-bold px-2 py-1 z-10">
             Få billetter tilbage
           </div>
         )}
