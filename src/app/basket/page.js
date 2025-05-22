@@ -7,16 +7,26 @@ import StatuePic from "@/images/statuePic.svg";
 import { FaTicketAlt } from "react-icons/fa";
 import Price from "@/components/(kurv)/Price";
 import useCartStore from "@/app/store/cartStore"
+import { useState } from "react";
+import Popup from "@/components/Popup"; // Husk at oprette denne
+import ButtonTertiary from "@/components/ButtonTertiary";
+
 
 
 const Basket = () => {
 
   const items = useCartStore((state) => state.items);
+  const [showPopup, setShowPopup] = useState(false);
+
+
+  const handleBuyClick = () => {
+    setShowPopup(true);
+  };
 
 
   return (
     <div>
-      <Header variant="black"></Header>
+      <Header variant="black" />
       <section className="grid grid-cols-2 gap-4">
         <div>
           <Image src={StatuePic} alt="statuebillede" width={300} height={200} className="w-full h-full object-cover" />
@@ -40,8 +50,14 @@ const Basket = () => {
           {/* Billetter */}
           <Price />
 
+        {/* Køb Billet knap */}
+          <div className="mt-6 text-center">
+            <ButtonTertiary onClick={handleBuyClick} />
+          </div>
         </div>
       </section>
+
+      {showPopup && <Popup onClose={() => setShowPopup(false)} />}
     </div>
   );
 };
