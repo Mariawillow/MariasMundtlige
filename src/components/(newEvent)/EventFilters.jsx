@@ -1,12 +1,14 @@
 //Samler location og pick a date
 import DateSelector from "@/components/(newEvent)/DateSelector";
 import LocationSelector from "@/components/(newEvent)/LocationSelector";
+import PeriodSelector from "@/components/(newEvent)/PeriodSelector";
 
-export default function EventFilters({ date, setDate, location, setLocation }) {
+export default function EventFilters({ date, setDate, location, setLocation, period, setPeriod }) {
   return (
     <article>
       <DateSelector date={date} setDate={setDate} />
       <LocationSelector location={location} setLocation={setLocation} />
+      <PeriodSelector period={period} setPeriod={setPeriod}></PeriodSelector>
     </article>
   );
 }

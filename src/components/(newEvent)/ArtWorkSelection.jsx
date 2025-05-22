@@ -6,22 +6,36 @@ import ButtonPrimary from "../ButtonPrimary";
 import ArtworkGrid from "./ArtWorkGrid";
 import { useRouter } from "next/navigation";
 
-
-export default function ArtworkSelection({ date, location }) {
+export default function ArtworkSelection({ date, location, period }) {
   const [eventName, setEventName] = useState("");
   const [eventDescription, setEventDescription] = useState("");
   const [artworks, setArtworks] = useState([]);
   const [selectedArtworks, setSelectedArtworks] = useState([]);
+  const [filteredArtworks, setFilteredArtworks] = useState([]); // Filtrerede værker
   const [showSuccess, setShowSuccess] = useState(false);
   const router = useRouter();
 
-
-
+  // Hent værkerne når komponenten mountes
   useEffect(() => {
     getArts().then(setArtworks).catch(console.error);
   }, []);
 
-  //Funktion som håndterer maks grænse for valg af værker (taller 3 skal skiftes ud senere)
+  // Når periodens værdi ændres, filtrer værkerne
+  useEffect(() => {
+    if (period) {
+      // Hvis der er en periode, filtrer kunstværkerne
+      const filtered = artworks.filter((art) => {
+        const [startYear, endYear] = art.production_date?.[0]?.period.split("-").map(Number);
+        return startYear >= period.from && endYear <= period.to;
+      });
+      setFilteredArtworks(filtered);
+    } else {
+      // Hvis ingen periode er valgt, vis alle værker
+      setFilteredArtworks(artworks);
+    }
+  }, [period, artworks]); // Lyt på ændringer i period og artworks
+
+  // Funktion til at vælge/deselevere et værk
   const toggleArtwork = (id) => {
     setSelectedArtworks((prev) => {
       if (prev.includes(id)) {
@@ -34,10 +48,7 @@ export default function ArtworkSelection({ date, location }) {
     });
   };
 
-
-  //Funktion som håndterer opret event
   const handleMakeNewEvent = async () => {
-    console.log("forsøg på at ...", handleMakeNewEvent);
     try {
       const res = await makeNewEvent({
         title: eventName,
@@ -45,45 +56,35 @@ export default function ArtworkSelection({ date, location }) {
         date,
         locationId: location.id,
         artworkIds: selectedArtworks,
+        period: period?.id, // Brug den valgte periode
       });
 
-      console.log("Event oprettet:", res);
       setShowSuccess(true);
       setTimeout(() => {
         router.push("/dashboard");
-      }, 800); // tid det går før kurator bliver sendt til dashboard
-      setTimeout(() => setShowSuccess(false), 5000); // Skjul efter 5 sekunder
-
-
-
-      // Her kan du evt. redirecte eller nulstille formen
+      }, 800);
+      setTimeout(() => setShowSuccess(false), 5000);
     } catch (error) {
       console.error(error);
-      alert("Noget gik galt under oprettelsen");
+      alert("Noget gik galt under oprettelsen af eventet");
     }
   };
 
   return (
     <div className="space-y-8 mt-8">
-      <h2 className="text-xl font-semibold">Vælg værker</h2>
+      <h3 className="text-center">STEP 2: Information om dit event</h3>
 
-      {/* Søge-felt */}
       <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2" />
 
-      {/* Status */}
       <p className="text-sm text-gray-600">
         {selectedArtworks.length}/{location?.maxArtworks || 3} værker valgt
       </p>
 
-      {selectedArtworks.length === (location?.maxArtworks || 3) && (
-        <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>
-      )}
-      {/* <p className="text-sm text-gray-600">{selectedArtworks.length}/3 værker valgt</p>
-      {selectedArtworks.length === 3 && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>} */}
+      {selectedArtworks.length === (location?.maxArtworks || 3) && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>}
 
       {/* Værk grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <ArtworkGrid artworks={artworks} selectedArtworks={selectedArtworks} toggleArtwork={toggleArtwork} />
+        <ArtworkGrid artworks={filteredArtworks} selectedArtworks={selectedArtworks} toggleArtwork={toggleArtwork} />
       </div>
 
       {/* Event detaljer */}
@@ -99,15 +100,10 @@ export default function ArtworkSelection({ date, location }) {
         </form>
       </div>
 
-      {/* Knap */}
       <ButtonPrimary variant="default" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
         Opret event
       </ButtonPrimary>
-      {showSuccess && (
-        <div className="fixed top-6 right-6 bg-lime-400 text-white px-4 py-2 rounded shadow-lg transition-all z-50">
-          Eventet blev oprettet!
-        </div>
-      )}
+      {showSuccess && <div className="fixed top-6 right-6 bg-lime-400 text-white px-4 py-2 rounded shadow-lg transition-all z-50">Eventet blev oprettet!</div>}
     </div>
   );
 }

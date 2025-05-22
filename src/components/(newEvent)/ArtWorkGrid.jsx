@@ -1,4 +1,4 @@
-import ArtworkCard from './ArtWorkCard';
+import ArtworkCard from "./ArtWorkCard";
 
 export default function ArtworkGrid({ artworks, selectedArtworks, toggleArtwork }) {
   return (

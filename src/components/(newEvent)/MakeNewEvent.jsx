@@ -11,8 +11,9 @@ export default function MakeNewEvent() {
   const [date, setDate] = useState(null);
   const [formattedDate, setFormattedDate] = useState(null); // String
   const [location, setLocation] = useState(null);
+  const [period, setPeriod] = useState(null);
 
-  const isReady = date && location;
+  const isReady = date && location && period;
 
   useEffect(() => {
     if (date) {
@@ -23,7 +24,8 @@ export default function MakeNewEvent() {
 
   return (
     <section>
-      <EventFilters date={date} setDate={setDate} location={location} setLocation={setLocation} /> {/* Vi sender dato og location med videre til komponentet */}
+      <h3 className="text-center">STEP 1: Praktiske informationer</h3>
+      <EventFilters date={date} setDate={setDate} location={location} setLocation={setLocation} period={period} setPeriod={setPeriod} /> {/* Vi sender dato og location med videre til komponentet */}
       {isReady && <ArtworkSelection date={formattedDate} location={location} />}
     </section>
   );

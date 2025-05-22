@@ -14,7 +14,6 @@ export default function DatePicker({ date, setDate }) {
   const [availableDates, setAvailableDates] = useState([]);
   const [open, setOpen] = useState(false);
 
-
   useEffect(() => {
     getDates()
       .then((data) => {
@@ -25,22 +24,19 @@ export default function DatePicker({ date, setDate }) {
       });
   }, []);
 
-  useEffect(() => {
-    console.log("🟢 Dato valgt i DatePicker:", date);
-  }, [date]);
+  useEffect(() => {}, [date]);
 
   const handleSelect = (day) => {
-    setDate(day);      // sender dato op
-    setOpen(false);    // lukker popover
+    setDate(day); // sender dato op
+    setOpen(false); // lukker popover
   };
-
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" className={cn("w-[280px] justify-start text-left font-normal", !date && "text-muted-foreground")}>
           {date ? format(date, "PPP") : <span>Vælg dato</span>}
-          <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+          <CalendarIcon className="ml-auto h-4 w-4" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
