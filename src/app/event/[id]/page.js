@@ -3,8 +3,7 @@ import SingleCard from "@/components/(event)/SingleCard";
 import EventArtClient from "@/components/(event)/EventArtClient";
 import { getArtDetails } from "@/api/smk";
 import { HiOutlineArrowLongLeft } from "react-icons/hi2";
-import Link from 'next/link';
-
+import Link from "next/link";
 
 const EventSingleView = async ({ params }) => {
   //Denne første del burde vi overveje at flytte til API-side (localhost.js) – meeeen vi kan ikke lige finde ud af hvordan
@@ -24,19 +23,17 @@ const EventSingleView = async ({ params }) => {
     <div className="flex flex-col gap-6">
       <Header variant="black"></Header>
 
-      
-     {/* Tilbage-knap */}
-     <div className="inline-block text-center mb-[var(--space-m)]">
-  <Link href="/events" className="inline-block text-[#C4FF00] font-semibold">
-    Tilbage
-    <div className="relative h-6 mt-1">
-      <HiOutlineArrowLongLeft className="text-[#C4FF00] absolute left-0 top-0 w-full scale-x-100 scale-y-200" />
-    </div>
-  </Link>
-</div>
+      {/* Tilbage-knap */}
+      <div className="inline-block text-center mb-[var(--space-m)]">
+        <Link href="/events" className="inline-block text-[#C4FF00] font-semibold">
+          Tilbage
+          <div className="relative h-6 mt-1">
+            <HiOutlineArrowLongLeft className="text-[#C4FF00] absolute left-0 top-0 w-full scale-x-100 scale-y-200" />
+          </div>
+        </Link>
+      </div>
 
       <SingleCard eventData={eventData}></SingleCard>
-
 
       <section>
         <h3 className="font-ligth">Oplev disse værker til eventet</h3>
