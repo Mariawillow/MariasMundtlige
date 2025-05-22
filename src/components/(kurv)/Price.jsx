@@ -38,11 +38,12 @@ const Price = () => {
                   <p className="font-light">Pris {item.price} DKK</p>
                 </div>
                 <div className="justify-self-end">
-                  <Stepper
-                    itemId={item.id}
-                    quantity={item.quantity}
-                    item={item}
-                  />
+                <Stepper
+  itemId={item.id}
+  quantity={item.quantity}
+  item={item}
+  remainingTickets={item.remainingTickets} // Tilføj denne linje
+/>
                 </div>
               </div>
             ))}

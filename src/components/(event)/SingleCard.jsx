@@ -12,6 +12,9 @@ const SingleCard = ({ eventData }) => {
   ];
   
 
+  const remainingTickets = eventData.totalTickets - eventData.bookedTickets;
+
+
   return (
     <section>
       {/* Top: Titel og Dato */}
@@ -53,16 +56,17 @@ const SingleCard = ({ eventData }) => {
                 </div>
                 <div className="justify-self-end">
                 <Stepper
-          itemId={ticket.id}
-          quantity={quantity}
-          item={{
-            id: ticket.id,
-            name: ticket.name,
-            price: ticket.price,
-            eventId: eventData.id, // 💡 Her tilføjes det!
-            eventTitle: eventData.title,
-          }}
-        />
+  itemId={ticket.id}
+  quantity={quantity}
+  item={{
+    id: ticket.id,
+    name: ticket.name,
+    price: ticket.price,
+    eventId: eventData.id,
+    eventTitle: eventData.title,
+  }}
+  remainingTickets={remainingTickets} // 💡 RIGTIG værdi!
+/>
             </div>
               </div>
             );
