@@ -71,7 +71,7 @@ export default function ArtworkSelection({ date, location, period }) {
       <h3 className="text-center">STEP 2: Information om dit event</h3>
 
       {loading ? (
-        <p className="text-center text-gray-400">🔄 Henter værker...</p>
+        <p className="text-center text-gray-400">Henter værker...</p>
       ) : (
         <>
           <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2" />
