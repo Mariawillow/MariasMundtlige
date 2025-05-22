@@ -22,8 +22,18 @@ import { persist } from "zustand/middleware";
                         ),
                       });
                     } else {
+                      // 👇 Sørger for at remainingTickets følger med
+                      const newItem = {
+                        id: item.id,
+                        eventId: item.eventId,
+                        name: item.name,
+                        price: item.price,
+                        eventTitle: item.eventTitle,
+                        remainingTickets: item.remainingTickets,
+                        quantity: 1,
+                      };
                       return set({
-                        items: [...get().items, { ...item, quantity: 1 }],
+                        items: [...get().items, newItem],
                       });
                     }
                   },
