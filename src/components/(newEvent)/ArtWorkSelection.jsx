@@ -8,16 +8,22 @@ import { filterArtworksByPeriod } from "@/api/periods";
 import { IoIosSearch } from "react-icons/io";
 import Image from "next/image";
 import arrowLong from "@/images/arrowLong.svg";
+import { useUser } from "@clerk/nextjs";
 
-export default function ArtworkSelection({ date, location, period }) {
-  const [eventName, setEventName] = useState("");
-  const [eventDescription, setEventDescription] = useState("");
+export default function ArtworkSelection({ date, location, period, defaultData = {}, mode = "create", onSubmit }) {
+  // const [eventName, setEventName] = useState("");
+  // const [eventDescription, setEventDescription] = useState("");
   const [allArtworks, setAllArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
-  const [selectedArtworks, setSelectedArtworks] = useState([]);
+  // const [selectedArtworks, setSelectedArtworks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const router = useRouter();
+  const { user } = useUser(); //giver adgang til allerede loggede ind brugere.
+  const [eventName, setEventName] = useState(defaultData.title || "");
+  const [eventDescription, setEventDescription] = useState(defaultData.description || "");
+  const [selectedArtworks, setSelectedArtworks] = useState(defaultData.artworkIds || []);
+
 
   // Hent alle værker én gang
   useEffect(() => {
@@ -48,25 +54,56 @@ export default function ArtworkSelection({ date, location, period }) {
     });
   };
 
-  const handleMakeNewEvent = async () => {
-    try {
-      await makeNewEvent({
-        title: eventName,
-        description: eventDescription,
-        date,
-        locationId: location.id,
-        artworkIds: selectedArtworks,
-        period: period?.id,
-      });
+  // const handleMakeNewEvent = async () => {
+  //   try {
+  //     await makeNewEvent({
+  //       title: eventName,
+  //       description: eventDescription,
+  //       date,
+  //       locationId: location.id,
+  //       artworkIds: selectedArtworks,
+  //       period: period?.id,
+  //       userId: user?.id,
+  //     });
 
+  //     setShowSuccess(true);
+  //     setTimeout(() => router.push("/dashboard"), 800);
+  //     setTimeout(() => setShowSuccess(false), 5000);
+  //   } catch (error) {
+  //     console.error(error);
+  //     alert("Noget gik galt under oprettelsen af eventet");
+  //   }
+  // };
+
+  const handleMakeNewEvent = async () => {
+    const payload = {
+      title: eventName,
+      description: eventDescription,
+      date,
+      locationId: location.id,
+      artworkIds: selectedArtworks,
+      period: period?.id,
+    };
+
+    try {
+      if (mode === "edit" && onSubmit) {
+        await onSubmit(payload); // PATCH – redigering
+        setShowSuccess(true);
+        setTimeout(() => router.push("/dashboard"), 800);
+        return;
+      }
+
+      // Opret nyt event
+      await makeNewEvent({ ...payload, userId: user?.id });
       setShowSuccess(true);
       setTimeout(() => router.push("/dashboard"), 800);
       setTimeout(() => setShowSuccess(false), 5000);
     } catch (error) {
-      console.error(error);
-      alert("Noget gik galt under oprettelsen af eventet");
+      console.error("Fejl:", error);
+      alert("Noget gik galt under oprettelsen/redigeringen af eventet");
     }
   };
+
 
   return (
     <div className="space-y-8 mt-8">
@@ -117,7 +154,10 @@ export default function ArtworkSelection({ date, location, period }) {
       <div className="flex justify-end">
         <button className="group inline-block text-[#C4FF00] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
           <span className="inline-flex flex-col">
-            <span className="text-4xl font-bold px-8">Opret event</span>
+            {/* <span className="text-4xl font-bold px-8">Opret event</span> */}
+            <span className="text-4xl font-bold px-8">
+              {mode === "edit" ? "Gem ændringer" : "Opret event"}
+            </span>
             <Image src={arrowLong} alt="pil" className="self-end transition-transform group-hover:translate-x-1 group-disabled:translate-x-0" />
           </span>
         </button>

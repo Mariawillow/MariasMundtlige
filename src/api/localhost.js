@@ -26,13 +26,13 @@ export async function getDates() {
   return dates;
 }
 
-export async function makeNewEvent({ title, description, date, locationId, artworkIds }) {
+export async function makeNewEvent({ title, description, date, locationId, artworkIds, userId }) {
   const response = await fetch("http://localhost:8080/events", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ title, description, date, locationId, artworkIds }),
+    body: JSON.stringify({ title, description, date, locationId, artworkIds, userId }),
   });
 
   if (!response.ok) {
@@ -52,6 +52,38 @@ export async function updateTickets({ id, bookedTickets }) {
     },
     body: JSON.stringify({ bookedTickets }),
   });
+  return response.json();
+}
+
+export async function updateEvent({ id, ...updatedFields }) {
+  const response = await fetch(`http://localhost:8080/events/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedFields),
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("Fejl ved opdatering:", errorText);
+    throw new Error("Event kunne ikke opdateres");
+  }
+
+  return response.json();
+}
+
+export async function deleteEvent(id) {
+  const response = await fetch(`http://localhost:8080/events/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("Fejl ved sletning:", errorText);
+    throw new Error("Event kunne ikke slettes");
+  }
+
   return response.json();
 }
 
