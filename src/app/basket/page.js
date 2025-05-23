@@ -10,7 +10,7 @@ import useCartStore from "@/app/store/cartStore"
 import { useState } from "react";
 import Popup from "@/components/Popup"; // Husk at oprette denne
 import ButtonTertiary from "@/components/ButtonTertiary";
-
+import { updateTickets } from "@/api/localhost";
 
 
 const Basket = () => {
@@ -19,9 +19,43 @@ const Basket = () => {
   const [showPopup, setShowPopup] = useState(false);
 
 
-  const handleBuyClick = () => {
+  // const handleBuyClick = () => {
+  //   setShowPopup(true);
+  // };
+
+  const handleBuyClick = async () => {
     setShowPopup(true);
+
+    try {
+      // For hvert item i kurven, send en patch
+      for (const item of items) {
+      // ✅ Beregn den nye mængde bookede billetter
+      const updatedBooked = item.bookedTickets + item.quantity;
+
+        await updateTickets({
+          id: item.eventId, // du skal sørge for at eventId er tilgængelig
+          bookedTickets: updatedBooked,
+        });
+
+        if (items.length === 0) return alert("Du har ikke valgt nogen billetter!");
+
+
+        // if (item.quantity > item.remainingTickets) {
+        //   console.warn("Forsøger at købe flere billetter end der er tilbage");
+        //   continue; // eller vis fejl til brugeren
+        // }
+      }
+  
+      setShowPopup(true);
+    } catch (error) {
+      console.error("Fejl ved opdatering af billetter:", error);
+      // Du kan vise en fejlbesked her hvis ønsket
+    }
+
+
   };
+
+
 
 
   return (
