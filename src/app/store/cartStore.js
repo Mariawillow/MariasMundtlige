@@ -22,7 +22,6 @@ import { persist } from "zustand/middleware";
                         ),
                       });
                     } else {
-                      // 👇 Sørger for at remainingTickets følger med
                       const newItem = {
                         id: item.id,
                         eventId: item.eventId,
@@ -30,6 +29,7 @@ import { persist } from "zustand/middleware";
                         price: item.price,
                         eventTitle: item.eventTitle,
                         remainingTickets: item.remainingTickets,
+                        bookedTickets: item.bookedTickets,
                         quantity: 1,
                       };
                       return set({

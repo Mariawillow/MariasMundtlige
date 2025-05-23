@@ -42,6 +42,18 @@ export async function makeNewEvent({ title, description, date, locationId, artwo
   return response.json();
 }
 
+
+export async function updateTickets({ id, bookedTickets }) {
+  const response = await fetch(`http://localhost:8080/events/${id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ bookedTickets }),
+  });
+  return response.json();
+}
+
 // ********* RENDER ***********
 
 //Denne henter events fra vores fjernserver på Render
