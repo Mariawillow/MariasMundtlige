@@ -121,7 +121,6 @@ export default function ArtworkSelection({ date, location, period }) {
       >
         Opret event
       </ButtonPrimary>
-
       {showSuccess && (
         <div className="fixed top-6 right-6 bg-lime-400 text-white px-4 py-2 rounded shadow-lg transition-all z-50">
           Eventet blev oprettet!

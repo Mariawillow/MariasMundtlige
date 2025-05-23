@@ -3,6 +3,8 @@
 import * as React from "react"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { DayPicker } from "react-day-picker"
+import { da } from "date-fns/locale";
+
 
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -15,6 +17,7 @@ function Calendar({
 }) {
   return (
     <DayPicker
+      locale={da}
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{
@@ -30,9 +33,8 @@ function Calendar({
         nav_button_previous: "absolute left-1",
         nav_button_next: "absolute right-1",
         table: "w-full border-collapse space-x-1",
-        head_row: "flex",
-        head_cell:
-          "text-muted-foreground rounded-md w-8 font-normal text-[0.8rem]",
+        head_row: "grid grid-cols-7 gap-1",
+        head_cell: "text-muted-foreground w-full h-8 flex items-center justify-center text-sm font-medium",
         row: "flex w-full mt-2",
         cell: cn(
           "relative p-0 text-center text-sm focus-within:relative focus-within:z-20 [&:has([aria-selected])]:bg-accent [&:has([aria-selected].day-range-end)]:rounded-r-md",
@@ -53,7 +55,7 @@ function Calendar({
         day_today: "bg-accent text-accent-foreground",
         day_outside:
           "day-outside text-muted-foreground aria-selected:text-muted-foreground",
-        day_disabled: "text-muted-foreground opacity-50",
+        day_disabled: "text-gray-400 opacity-20 pointer-events-none select-none hover:bg-transparent",
         day_range_middle:
           "aria-selected:bg-accent aria-selected:text-accent-foreground",
         day_hidden: "invisible",

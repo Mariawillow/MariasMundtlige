@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { getDates } from "@/api/localhost";
 import { format, isSameDay, parseISO } from "date-fns";
+import { da } from "date-fns/locale";
+
 
 import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -24,7 +26,7 @@ export default function DatePicker({ date, setDate }) {
       });
   }, []);
 
-  useEffect(() => {}, [date]);
+  useEffect(() => { }, [date]);
 
   const handleSelect = (day) => {
     setDate(day); // sender dato op
@@ -35,12 +37,12 @@ export default function DatePicker({ date, setDate }) {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button variant="outline" className={cn("w-[280px] justify-start text-left font-normal", !date && "text-muted-foreground")}>
-          {date ? format(date, "PPP") : <span>Vælg dato</span>}
+          {date ? format(date, "PPP", { locale: da }) : <span>Vælg dato</span>}
           <CalendarIcon className="ml-auto h-4 w-4" />
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        <Calendar className="bg-amber-500" mode="single" selected={date} onSelect={handleSelect} initialFocus disabled={(day) => !availableDates.some((dateStr) => isSameDay(day, parseISO(dateStr)))} />
+        <Calendar className="bg-neutral-100 rounded-md" mode="single" selected={date} onSelect={handleSelect} initialFocus disabled={(day) => !availableDates.some((dateStr) => isSameDay(day, parseISO(dateStr)))} />
       </PopoverContent>
     </Popover>
   );
