@@ -8,7 +8,7 @@ const MobileMenu = ({ isOpen, user, setIsOpen, textColor, setShowSignIn }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="absolute top-full left-0 w-full h-screen bg-[#bab0bc] sm:hidden flex flex-col items-center gap-space-xl z-10">
+<div className="absolute top-full right-0 bg-[#bab0bc] flex flex-col gap-4 z-10 py-4 px-10 items-center ">
       {!user && (
         <Link
           href="/events"

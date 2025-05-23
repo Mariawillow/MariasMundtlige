@@ -72,7 +72,7 @@ const Header = ({ variant = "lime" }) => {
 
   return (
     // Hele menuen (nav) - det øverste område af siden
-    <nav className="mb-4 relative z-50 flex flex-col sm:flex-row items-center justify-between mt-space-m px-4">
+    <nav className="mb-4 relative z-50 flex sm:flex-row items-center justify-between mt-space-m px-4">
       {/* Logoet til venstre */}
       <Link href="/">
         <Image src={isLime ? logoLime : logoBlack} width={200} height={200} alt="SMK logo" />
@@ -81,6 +81,7 @@ const Header = ({ variant = "lime" }) => {
       <DesktopMenu user={user} pathname={pathname} router={router} textColor={textColor} setShowSignIn={setShowSignIn} />
 
       {/* "Burger"-ikonet til mobilmenuen */}
+      <div className="relative sm:hidden">
       <button
         className="flex flex-col justify-between w-8 h-6 sm:hidden"
         onClick={() => setIsOpen(!isOpen)} // Skifter om mobilmenuen er åben eller ej
@@ -92,6 +93,8 @@ const Header = ({ variant = "lime" }) => {
       </button>
 
       <MobileMenu isOpen={isOpen} user={user} setIsOpen={setIsOpen} textColor={textColor} setShowSignIn={setShowSignIn} />
+      </div>
+
 
       {/* Login-boksen fra Clerk. Vises kun hvis showSignIn er true */}
       {showSignIn && (
