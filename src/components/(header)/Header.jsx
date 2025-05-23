@@ -72,7 +72,7 @@ const Header = ({ variant = "lime" }) => {
 
   return (
     // Hele menuen (nav) - det øverste område af siden
-    <nav className="mb-4 relative z-50 flex flex-col sm:flex-row items-center justify-between mt-space-m px-4">
+    <nav className="mb-4 relative z-50 flex sm:flex-row items-center justify-between mt-space-m px-4">
       {/* Logoet til venstre */}
       <Link href="/">
         <Image src={isLime ? logoLime : logoBlack} width={200} height={200} alt="SMK logo" />
