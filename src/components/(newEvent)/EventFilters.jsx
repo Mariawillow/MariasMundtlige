@@ -6,7 +6,7 @@ import PeriodSelector from "@/components/(newEvent)/PeriodSelector";
 export default function EventFilters({ date, setDate, location, setLocation, period, setPeriod }) {
   return (
     <article>
-      <DateSelector date={date} setDate={setDate} />
+      <DateSelector date={date} setDate={setDate} location={location} />
       <LocationSelector location={location} setLocation={setLocation} />
       <PeriodSelector period={period} setPeriod={setPeriod}></PeriodSelector>
     </article>

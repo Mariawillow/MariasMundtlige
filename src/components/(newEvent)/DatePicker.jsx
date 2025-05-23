@@ -1,10 +1,9 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { getDates } from "@/api/localhost";
+import { use, useEffect, useState } from "react";
+import { getDates, getEvents } from "@/api/localhost";
 import { format, isSameDay, parseISO } from "date-fns";
 import { da } from "date-fns/locale";
-
 
 import { Calendar as CalendarIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
@@ -12,10 +11,12 @@ import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 
-export default function DatePicker({ date, setDate }) {
-  const [availableDates, setAvailableDates] = useState([]);
+export default function DatePicker({ date, setDate, location }) {
+  const [availableDates, setAvailableDates] = useState([]); //Ledige datoer fra API'et
+  const [disabledDates, setDisabledDates] = useState([]); //Optaget datoer ud fra location (API)
   const [open, setOpen] = useState(false);
 
+  //Henter ledige datoer
   useEffect(() => {
     getDates()
       .then((data) => {
@@ -26,7 +27,16 @@ export default function DatePicker({ date, setDate }) {
       });
   }, []);
 
-  useEffect(() => { }, [date]);
+  useEffect(() => {
+    if (!location?.id) return;
+
+    getEvents().then((events) => {
+      const booked = events.filter((event) => event.locationId === location.id || event.location?.id === location.id).map((event) => event.date);
+      setDisabledDates(booked);
+    });
+  }, [location]);
+
+  useEffect(() => {}, [date]); //Hvad gør du ??
 
   const handleSelect = (day) => {
     setDate(day); // sender dato op
@@ -42,8 +52,21 @@ export default function DatePicker({ date, setDate }) {
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
-        <Calendar className="bg-neutral-100 rounded-md" mode="single" selected={date} onSelect={handleSelect} initialFocus disabled={(day) => !availableDates.some((dateStr) => isSameDay(day, parseISO(dateStr)))} />
+        <Calendar
+          className="bg-neutral-100 rounded-md"
+          mode="single"
+          selected={date}
+          onSelect={handleSelect}
+          initialFocus
+          disabled={(day) => {
+            const isNotAvailable = !availableDates.some((dateStr) => isSameDay(day, parseISO(dateStr)));
+            const isBooked = disabledDates.some((bookedStr) => isSameDay(day, parseISO(bookedStr)));
+            return isNotAvailable || isBooked;
+          }}
+        />
       </PopoverContent>
     </Popover>
   );
 }
+
+// => !availableDates.some((dateStr) => isSameDay(day, parseISO(dateStr)))}
