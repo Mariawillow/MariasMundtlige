@@ -115,13 +115,14 @@ export default function ArtworkSelection({ date, location, period }) {
       </div>
 
       <div className="flex justify-end">
-        <button className="group inline-block text-[#C4FF00] cursor-pointer" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
+        <button className="group inline-block text-[#C4FF00] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
           <span className="inline-flex flex-col">
-            <span className="text-4xl font-bold px-8"> Opret event</span>
-            <Image src={arrowLong} alt="pil" className="self-end transition-transform group-hover:translate-x-1"></Image>
+            <span className="text-4xl font-bold px-8">Opret event</span>
+            <Image src={arrowLong} alt="pil" className="self-end transition-transform group-hover:translate-x-1 group-disabled:translate-x-0" />
           </span>
         </button>
       </div>
+
       {showSuccess && <div className="fixed top-6 right-6 bg-lime-400 text-white px-4 py-2 rounded shadow-lg transition-all z-50">Eventet blev oprettet!</div>}
     </div>
   );
