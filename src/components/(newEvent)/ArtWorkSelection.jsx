@@ -6,6 +6,8 @@ import ArtworkGrid from "./ArtWorkGrid";
 import { useRouter } from "next/navigation";
 import { filterArtworksByPeriod } from "@/api/periods";
 import { IoIosSearch } from "react-icons/io";
+import Image from "next/image";
+import arrowLong from "@/images/arrowLong.svg";
 
 export default function ArtworkSelection({ date, location, period }) {
   const [eventName, setEventName] = useState("");
