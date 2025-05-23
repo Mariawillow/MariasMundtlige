@@ -10,7 +10,7 @@ const SingleCard = ({ eventData }) => {
     { id: "1", name: "Voksne", price: 170 },
     { id: "2", name: "Studerende", price: 90 },
   ];
-  
+
 
   const remainingTickets = eventData.totalTickets - eventData.bookedTickets;
 
@@ -30,7 +30,6 @@ const SingleCard = ({ eventData }) => {
           <div>
             <h4 className="font-semibold">Om Eventet</h4>
             <p className="font-light">{eventData.description}</p>
-            <p className="font-light">Eventet er arrangeret af kurator {eventData.curator}</p>
           </div>
           <div>
             <h4 className="font-semibold">Lokation</h4>
@@ -42,11 +41,11 @@ const SingleCard = ({ eventData }) => {
 
         {/* Billetter */}
         <section className="flex flex-col gap-4">
-        {availableTickets.map((ticket) => {
-          const cartItem = items.find(
-            (i) => i.id === ticket.id && i.eventId === eventData.id 
-          );
-          const quantity = cartItem?.quantity || 0;
+          {availableTickets.map((ticket) => {
+            const cartItem = items.find(
+              (i) => i.id === ticket.id && i.eventId === eventData.id
+            );
+            const quantity = cartItem?.quantity || 0;
 
             return (
               <div key={ticket.id} className="grid grid-cols-2">
@@ -55,19 +54,19 @@ const SingleCard = ({ eventData }) => {
                   <p className="font-light">Pris {ticket.price} DKK</p>
                 </div>
                 <div className="justify-self-end">
-                <Stepper
-  itemId={ticket.id}
-  quantity={quantity}
-  item={{
-    id: ticket.id,
-    name: ticket.name,
-    price: ticket.price,
-    eventId: eventData.id,
-    eventTitle: eventData.title,
-  }}
-  remainingTickets={remainingTickets} // 💡 RIGTIG værdi!
-/>
-            </div>
+                  <Stepper
+                    itemId={ticket.id}
+                    quantity={quantity}
+                    item={{
+                      id: ticket.id,
+                      name: ticket.name,
+                      price: ticket.price,
+                      eventId: eventData.id,
+                      eventTitle: eventData.title,
+                    }}
+                    remainingTickets={remainingTickets} // 💡 RIGTIG værdi!
+                  />
+                </div>
               </div>
             );
           })}
