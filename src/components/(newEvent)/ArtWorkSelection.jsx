@@ -80,53 +80,28 @@ export default function ArtworkSelection({ date, location, period }) {
             {selectedArtworks.length}/{location?.maxArtworks || 3} værker valgt
           </p>
 
-          {selectedArtworks.length === (location?.maxArtworks || 3) && (
-            <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>
-          )}
+          {selectedArtworks.length === (location?.maxArtworks || 3) && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>}
 
-          <ArtworkGrid
-            artworks={filteredArtworks}
-            selectedArtworks={selectedArtworks}
-            toggleArtwork={toggleArtwork}
-          />
+          <ArtworkGrid artworks={filteredArtworks} selectedArtworks={selectedArtworks} toggleArtwork={toggleArtwork} />
         </>
       )}
 
       <div className="space-y-4">
         <form>
           <label className="text-sm font-medium">Eventnavn</label>
-          <input
-            type="text"
-            value={eventName}
-            onChange={(e) => setEventName(e.target.value)}
-            className="w-full border rounded px-3 py-2"
-          />
+          <input type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} className="w-full border rounded px-3 py-2" />
         </form>
 
         <form>
           <label className="text-sm font-medium">Beskrivelse</label>
-          <textarea
-            value={eventDescription}
-            onChange={(e) => setEventDescription(e.target.value)}
-            className="w-full border rounded px-3 py-2"
-            rows={4}
-          />
+          <textarea value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} className="w-full border rounded px-3 py-2" rows={4} />
         </form>
       </div>
 
-      <ButtonPrimary href="/dashboard"
-        variant="default"
-        onClick={handleMakeNewEvent}
-        disabled={!eventName || !eventDescription || selectedArtworks.length === 0}
-      >
+      <button variant="default" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
         Opret event
-      </ButtonPrimary>
-
-      {showSuccess && (
-        <div className="fixed top-6 right-6 bg-lime-400 text-white px-4 py-2 rounded shadow-lg transition-all z-50">
-          Eventet blev oprettet!
-        </div>
-      )}
+      </button>
+      {showSuccess && <div className="fixed top-6 right-6 bg-lime-400 text-white px-4 py-2 rounded shadow-lg transition-all z-50">Eventet blev oprettet!</div>}
     </div>
   );
 }

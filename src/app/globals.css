@@ -112,3 +112,18 @@ p {
   font-size: var(--step-3);
   font-weight: 600;
 }
+
+@layer base {
+  .rdp-disabled {
+    @apply text-gray-500 opacity-50 pointer-events-none;
+  }
+
+  .rdp-weekday {
+    @apply w-10 h-8 text-sm font-medium flex items-center justify-center;
+  }
+
+  .rdp-weekdays {
+    display: grid;
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+}
