@@ -8,7 +8,7 @@ import { FaTicketAlt } from "react-icons/fa";
 import Price from "@/components/(kurv)/Price";
 import useCartStore from "@/app/store/cartStore"
 import { useState } from "react";
-import Popup from "@/components/Popup"; // Husk at oprette denne
+import Popup from "@/components/Popup";
 import ButtonTertiary from "@/components/ButtonTertiary";
 import { updateTickets } from "@/api/localhost";
 
