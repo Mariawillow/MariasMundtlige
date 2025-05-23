@@ -59,9 +59,11 @@ const Basket = () => {
 
 
   return (
-    <div className="bg-[url('/images/statuePic.svg')] bg-cover bg-no-repeat md:bg-none relative min-h-screen w-full ">
+    <div className="bg-[url('/images/statuePic.svg')] bg-cover bg-no-repeat">
+      
   {/* Dette Image er kun til små skærme - fylder hele div'en */}
   <div className="block md:hidden absolute inset-0 -z-10">
+    
     <Image
       src={StatuePic}
       alt="Statue"
@@ -71,6 +73,7 @@ const Basket = () => {
       priority
     />
   </div>
+  
 
   <div className="relative z-10 w-full">
   <Header variant="black" />    

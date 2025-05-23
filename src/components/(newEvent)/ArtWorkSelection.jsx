@@ -6,6 +6,8 @@ import ArtworkGrid from "./ArtWorkGrid";
 import { useRouter } from "next/navigation";
 import { filterArtworksByPeriod } from "@/api/periods";
 import { IoIosSearch } from "react-icons/io";
+import Image from "next/image";
+import arrowLong from "@/images/arrowLong.svg";
 
 export default function ArtworkSelection({ date, location, period }) {
   const [eventName, setEventName] = useState("");
@@ -70,40 +72,56 @@ export default function ArtworkSelection({ date, location, period }) {
     <div className="space-y-8 mt-8">
       <h3 className="text-center">STEP 2: Information om dit event</h3>
 
-      {loading ? (
-        <p className="text-center text-gray-400">Henter værker...</p>
-      ) : (
-        <>
-          <div className="relative w-full">
-            <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2 pr-10" />
-            <IoIosSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
-          </div>
+      <div className="md:grid md:grid-cols-[1fr_2fr] gap-space-l">
+        <div>
+          <form>
+            <label className="text-sm font-medium">Eventnavn</label>
+            <input type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} className="w-full border rounded px-3 py-2" />
+          </form>
 
-          <p className="text-sm text-gray-600">
-            {selectedArtworks.length}/{location?.maxArtworks || 3} værker valgt
+          <form>
+            <label className="text-sm font-medium">Beskrivelse</label>
+            <textarea value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} className="w-full border rounded px-3 py-2" rows={4} />
+          </form>
+
+          <label>Vælg værker</label>
+          <p>
+            For valgte lokation kan du maks vælge <span className="font-bold">{location?.maxArtworks}</span> værker
           </p>
+          <p className="mt-8">
+            <span className="font-bold">
+              {selectedArtworks.length}/{location?.maxArtworks}
+            </span>{" "}
+            værker valgt
+          </p>
+        </div>
 
-          {selectedArtworks.length === (location?.maxArtworks || 3) && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>}
+        <div>
+          {loading ? (
+            <p className="text-center text-gray-400">Henter værker...</p>
+          ) : (
+            <>
+              <div className="relative w-[400px] my-4 md:place-self-end">
+                <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2 pr-10" />
+                <IoIosSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+              </div>
 
-          <ArtworkGrid artworks={filteredArtworks} selectedArtworks={selectedArtworks} toggleArtwork={toggleArtwork} />
-        </>
-      )}
+              {selectedArtworks.length === location?.maxArtworks && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>}
 
-      <div className="space-y-4">
-        <form>
-          <label className="text-sm font-medium">Eventnavn</label>
-          <input type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} className="w-full border rounded px-3 py-2" />
-        </form>
-
-        <form>
-          <label className="text-sm font-medium">Beskrivelse</label>
-          <textarea value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} className="w-full border rounded px-3 py-2" rows={4} />
-        </form>
+              <ArtworkGrid artworks={filteredArtworks} selectedArtworks={selectedArtworks} toggleArtwork={toggleArtwork} />
+            </>
+          )}
+        </div>
       </div>
 
-      <button variant="default" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
-        Opret event
-      </button>
+      <div className="flex justify-end">
+        <button className="group inline-block text-[#C4FF00] cursor-pointer" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
+          <span className="inline-flex flex-col">
+            <span className="text-4xl font-bold px-8"> Opret event</span>
+            <Image src={arrowLong} alt="pil" className="self-end transition-transform group-hover:translate-x-1"></Image>
+          </span>
+        </button>
+      </div>
       {showSuccess && <div className="fixed top-6 right-6 bg-lime-400 text-white px-4 py-2 rounded shadow-lg transition-all z-50">Eventet blev oprettet!</div>}
     </div>
   );
