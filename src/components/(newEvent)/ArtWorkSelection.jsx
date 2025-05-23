@@ -6,6 +6,7 @@ import ButtonPrimary from "../ButtonPrimary";
 import ArtworkGrid from "./ArtWorkGrid";
 import { useRouter } from "next/navigation";
 import { filterArtworksByPeriod } from "@/api/periods";
+import { IoIosSearch } from "react-icons/io";
 
 export default function ArtworkSelection({ date, location, period }) {
   const [eventName, setEventName] = useState("");
@@ -74,7 +75,10 @@ export default function ArtworkSelection({ date, location, period }) {
         <p className="text-center text-gray-400">Henter værker...</p>
       ) : (
         <>
-          <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2" />
+          <div className="relative w-full">
+            <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2 pr-10" />
+            <IoIosSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
+          </div>
 
           <p className="text-sm text-gray-600">
             {selectedArtworks.length}/{location?.maxArtworks || 3} værker valgt
