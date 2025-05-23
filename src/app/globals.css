@@ -50,6 +50,9 @@
 }
 
 /* Gap klasser til tailwind */
+.gap-space-s {
+  gap: var(--space-s);
+}
 .gap-space-l {
   gap: var(--space-l);
 }
