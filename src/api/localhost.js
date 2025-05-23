@@ -36,12 +36,13 @@ export async function makeNewEvent({ title, description, date, locationId, artwo
   });
 
   if (!response.ok) {
-    throw new Error("Event could not be created");
+    const errorText = await response.text();
+    console.error("Fejlstatus:", response.status, errorText);
+    throw new Error(errorText); // sender den rigtige besked videre
   }
 
   return response.json();
 }
-
 
 export async function updateTickets({ id, bookedTickets }) {
   const response = await fetch(`http://localhost:8080/events/${id}`, {

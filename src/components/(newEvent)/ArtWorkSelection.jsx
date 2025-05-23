@@ -6,7 +6,6 @@ import ArtworkGrid from "./ArtWorkGrid";
 import { useRouter } from "next/navigation";
 import { filterArtworksByPeriod } from "@/api/periods";
 import { IoIosSearch } from "react-icons/io";
-import { format } from "date-fns";
 
 export default function ArtworkSelection({ date, location, period }) {
   const [eventName, setEventName] = useState("");
@@ -49,11 +48,10 @@ export default function ArtworkSelection({ date, location, period }) {
 
   const handleMakeNewEvent = async () => {
     try {
-      const formattedDate = typeof date === "string" ? date : format(date, "yyyy-MM-dd");
       await makeNewEvent({
         title: eventName,
         description: eventDescription,
-        date: formattedDate,
+        date,
         locationId: location.id,
         artworkIds: selectedArtworks,
         period: period?.id,
