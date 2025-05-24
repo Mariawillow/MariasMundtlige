@@ -26,7 +26,7 @@ const SingleCard = ({ eventData }) => {
       </div>
 
       {/* Nederste sektion i to kolonner */}
-      <div className="grid grid-cols-2 gap-8">
+      <div className="grid grid-cols-[3fr_2fr] gap-20">
         {/* Om Eventet */}
         <section className="flex flex-col gap-4">
           <div>
@@ -74,7 +74,9 @@ const SingleCard = ({ eventData }) => {
             );
           })}
 
-          <ButtonSecondary />
+          <div className="flex justify-end">
+            <ButtonSecondary />
+          </div>
         </section>
       </div>
     </section>
