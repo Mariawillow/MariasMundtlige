@@ -7,27 +7,24 @@ import useCartStore from "@/app/store/cartStore";
 const SingleCard = ({ eventData }) => {
   const { items } = useCartStore((state) => state);
 
-  // Tilgængelige billettyper
   const availableTickets = [
     { id: "1", name: "Voksne", price: 170 },
     { id: "2", name: "Studerende", price: 90 },
   ];
 
-  // Udregn hvor mange billetter der stadig kan bookes
   const remainingTickets = eventData.totalTickets - eventData.bookedTickets;
 
-
   return (
-    <section>
-      {/* Top: Titel og Dato */}
-      <div>
-        <h1 className="font-semibold">{eventData.title}</h1>
-        <h3 className="font-light ml-60">{eventData.date}</h3>
+    <section className="px-4">
+      {/* Titel og dato */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+        <h1 className="font-semibold text-2xl">{eventData.title}</h1>
+        <h3 className="font-light text-lg">{eventData.date}</h3>
       </div>
 
-      {/* Nederste sektion i to kolonner */}
-      <div className="grid grid-cols-[3fr_2fr] gap-20 mt-10">
-        {/* Om Eventet */}
+      {/* Info + billetter */}
+      <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-10 mt-10">
+        {/* Om eventet */}
         <section className="flex flex-col gap-4">
           <div>
             <h4 className="font-semibold">Om Eventet</h4>
@@ -42,34 +39,31 @@ const SingleCard = ({ eventData }) => {
         </section>
 
         {/* Billetter */}
-        <section className="flex flex-col gap-4">
+        <section className="flex flex-col gap-6">
           {availableTickets.map((ticket) => {
-            // Find det matchende item i kurven for dette event og billettype
             const cartItem = items.find(
               (i) => i.id === ticket.id && i.eventId === eventData.id
             );
             const quantity = cartItem?.quantity || 0;
 
             return (
-              <div key={ticket.id} className="grid grid-cols-2">
+              <div key={ticket.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
                 <div>
                   <p className="font-semibold">{ticket.name}</p>
                   <p className="font-light">Pris {ticket.price} DKK</p>
                 </div>
-                <div className="justify-self-end">
-                  <Stepper
-                    itemId={ticket.id}
-                    quantity={quantity}
-                    item={{
-                      id: ticket.id,
-                      name: ticket.name,
-                      price: ticket.price,
-                      eventId: eventData.id,
-                      eventTitle: eventData.title,
-                    }}
-                    remainingTickets={remainingTickets}
-                  />
-                </div>
+                <Stepper
+                  itemId={ticket.id}
+                  quantity={quantity}
+                  item={{
+                    id: ticket.id,
+                    name: ticket.name,
+                    price: ticket.price,
+                    eventId: eventData.id,
+                    eventTitle: eventData.title,
+                  }}
+                  remainingTickets={remainingTickets}
+                />
               </div>
             );
           })}
