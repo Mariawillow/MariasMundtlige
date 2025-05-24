@@ -23,13 +23,10 @@ const EventSingleView = async ({ params }) => {
     <div className="flex flex-col gap-6">
       <Header variant="black"></Header>
 
-      {/* Tilbage-knap */}
-      <div className="inline-block text-center mb-[var(--space-m)]">
-        <Link href="/events" className="inline-block text-[#C4FF00] font-semibold">
-          Tilbage
-          <div className="relative h-6 mt-1">
-            <HiOutlineArrowLongLeft className="text-[#C4FF00] absolute left-0 top-0 w-full scale-x-100 scale-y-200" />
-          </div>
+      <div className="mb-[var(--space-m)] px-4 md:px-8">
+        <Link href="/events" className="flex items-center gap-2 text-[#C4FF00] font-semibold hover:underline">
+          <HiOutlineArrowLongLeft className="text-xl" />
+          <span>Tilbage</span>
         </Link>
       </div>
 
