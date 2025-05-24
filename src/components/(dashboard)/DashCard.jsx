@@ -93,7 +93,9 @@ const DashCard = ({ event }) => {
       {/* Indhold der må fange klik */}
       <div className="mt-4 px-2 space-y-1">
         <div className="flex justify-between items-center">
-          <h4 className="text-black font-semibold">{event.title}</h4>
+          <h4 className="text-black font-semibold break-words hyphens-auto">
+            {event.title}
+          </h4>
           <div className="flex gap-4">
             <button onClick={handleDelete} className="text-red-600 hover:text-red-800">
               <FaTrashCan size={20} />
