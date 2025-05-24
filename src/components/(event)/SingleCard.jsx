@@ -6,12 +6,14 @@ import useCartStore from "@/app/store/cartStore";
 
 const SingleCard = ({ eventData }) => {
   const { items } = useCartStore((state) => state);
+
+  // Tilgængelige billettyper
   const availableTickets = [
     { id: "1", name: "Voksne", price: 170 },
     { id: "2", name: "Studerende", price: 90 },
   ];
 
-
+  // Udregn hvor mange billetter der stadig kan bookes
   const remainingTickets = eventData.totalTickets - eventData.bookedTickets;
 
 
@@ -42,6 +44,7 @@ const SingleCard = ({ eventData }) => {
         {/* Billetter */}
         <section className="flex flex-col gap-4">
           {availableTickets.map((ticket) => {
+            // Find det matchende item i kurven for dette event og billettype
             const cartItem = items.find(
               (i) => i.id === ticket.id && i.eventId === eventData.id
             );
@@ -64,7 +67,7 @@ const SingleCard = ({ eventData }) => {
                       eventId: eventData.id,
                       eventTitle: eventData.title,
                     }}
-                    remainingTickets={remainingTickets} // 💡 RIGTIG værdi!
+                    remainingTickets={remainingTickets}
                   />
                 </div>
               </div>
