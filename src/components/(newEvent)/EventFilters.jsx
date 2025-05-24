@@ -7,7 +7,7 @@ export default function EventFilters({ date, setDate, location, setLocation, per
   return (
     <article>
       <DateSelector date={date} setDate={setDate} location={location} />
-      <LocationSelector location={location} setLocation={setLocation} />
+      <LocationSelector location={location} setLocation={setLocation} date={date} />
       <PeriodSelector period={period} setPeriod={setPeriod}></PeriodSelector>
     </article>
   );
