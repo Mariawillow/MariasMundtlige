@@ -8,14 +8,7 @@ import SortingDropdown from "@/components/(events)/DropDownSorter";
 import { useEffect, useState } from "react";
 import { getEvents, getLocations } from "@/api/localhost"; // Henter event data
 import { getArtDetails } from "@/api/smk"; //Henter værk data
-
-// Objekt over bynavne forkortelser – bruges til at oversætte/forstå varianter af bynavne
-const cityAbbreviation = {
-  København: ["københavn", "kbh"],
-  Århus: ["århus", "aarhus"],
-  Odense: ["odense"],
-  Køge: ["køge"],
-};
+import { cityAbbreviation } from "@/lib/cityHelpers";
 
 export default function ListeView() {
   const [events, setEvents] = useState([]); // Gemmer events
