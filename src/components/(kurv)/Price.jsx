@@ -1,18 +1,14 @@
 "use client";
 
-import useCartStore from "@/app/store/cartStore"
+import useCartStore from "@/app/store/cartStore";
 import Stepper from "@/components/Stepper";
 import Link from "next/link";
 
-
 const Price = () => {
-      // Henter arrayet 'items' (varer i kurven) fra Zustand-staten
   const { items } = useCartStore((state) => state);
 
-  // Funktion der beregner den samlede pris for alle items i arrayet (kurven)
   const getTotalPrice = () => {
-    return items
-      .reduce((totalPrice, item) => totalPrice + item.price * item.quantity, 0);// Beregner den totale pris baseret på prisen på varen og antal af varen. Starter med 0 som udgangspunkt
+    return items.reduce((totalPrice, item) => totalPrice + item.price * item.quantity, 0);
   };
 
   const groupedItems = items.reduce((acc, item) => {
@@ -37,20 +33,26 @@ const Price = () => {
                   <p className="font-light">Pris {item.price} DKK</p>
                 </div>
                 <div className="justify-self-end">
-                <Stepper
-  itemId={item.id}
-  quantity={item.quantity}
-  item={item}
-  remainingTickets={item.remainingTickets} // Tilføj denne linje
-/>
+                  <Stepper
+                    itemId={item.id}
+                    quantity={item.quantity}
+                    item={{
+                      id: item.id,
+                      name: item.name,
+                      price: item.price,
+                      eventId: item.eventId,
+                      eventTitle: item.eventTitle,
+                      remainingTickets: item.remainingTickets,
+                      bookedTickets: item.bookedTickets,
+                    }}
+                    remainingTickets={item.remainingTickets}
+                  />
                 </div>
               </div>
             ))}
-<Link href={`/events/${eventId}`}>
-  <button className="mt-2 text-sm text-[#C4FF00] underline hover:opacity-80">
-    Gå til event
-  </button>
-</Link>
+            <Link href={`/events/${eventId}`}>
+              <button className="mt-2 text-sm text-[#C4FF00] underline hover:opacity-80">Gå til event</button>
+            </Link>
           </div>
         ))}
         <div className="flex items-center gap-4 mt-5">

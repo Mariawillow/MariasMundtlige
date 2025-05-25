@@ -11,9 +11,7 @@ const SingleCard = ({ eventData }) => {
     { id: "2", name: "Studerende", price: 90 },
   ];
 
-
   const remainingTickets = eventData.totalTickets - eventData.bookedTickets;
-
 
   return (
     <section>
@@ -42,9 +40,7 @@ const SingleCard = ({ eventData }) => {
         {/* Billetter */}
         <section className="flex flex-col gap-4">
           {availableTickets.map((ticket) => {
-            const cartItem = items.find(
-              (i) => i.id === ticket.id && i.eventId === eventData.id
-            );
+            const cartItem = items.find((i) => i.id === ticket.id && i.eventId === eventData.id);
             const quantity = cartItem?.quantity || 0;
 
             return (
@@ -63,8 +59,8 @@ const SingleCard = ({ eventData }) => {
                       price: ticket.price,
                       eventId: eventData.id,
                       eventTitle: eventData.title,
+                      remainingTickets: eventData.totalTickets - eventData.bookedTickets,
                     }}
-                    remainingTickets={remainingTickets} // 💡 RIGTIG værdi!
                   />
                 </div>
               </div>
