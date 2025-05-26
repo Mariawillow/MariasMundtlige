@@ -16,32 +16,40 @@ const Basket = () => {
   const clearCart = useCartStore((state) => state.clearCart);
   const [showPopup, setShowPopup] = useState(false);
 
-  const handleBuyClick = async () => {
+  //funktionen der fortæller hvad der sker når brugeren klikker på "køb"-knappen.
+  const handleBuyClick = async () => { 
+    //først tjekkes om der er billetter i kurven. alert(besked) vises hvis ikke.
     if (items.length === 0) {
       alert("Du har ikke valgt nogen billetter!");
       return;
     }
-
+  
+    //Ny funktion "try" der håndtere fejl. 
     try {
+      //En Løkke som går igennem hvert enkelt element i items-arrayet (hver billet-type eller event)
       for (const item of items) {
-        const booked = Number(item.bookedTickets) || 0;
+
+        //Henter antallet (quantity) af billetter brugeren vil købe for den aktuelle item og konverterer det til et tal. 
+        //Hvis quantity er falsy (fx undefined eller tom), sættes det til 0
         const qty = Number(item.quantity) || 0;
-        const updatedBooked = booked + qty;
-
-        console.log(`Opdaterer eventId ${item.eventId} med bookedTickets: ${updatedBooked}`);
-
+  
+        //Laver en console, så vi kan dobbelttjekke hvad der ændres, og qty af det (antal)
+        console.log(`Opdaterer eventId ${item.eventId} med tickets: ${qty}`);
+  
+        //Kalder funktionen "updatedTickets"
+        //opdatere serverens data med det antal billetter (qty) der skal bookes til eventet med ID item.eventId
         await updateTickets({
           id: item.eventId,
-          bookedTickets: updatedBooked,
+          tickets: qty,
         });
       }
-
+  //If-statement til at tjekke om clearCart virker og er en function.
       if (typeof clearCart === "function") {
-        clearCart(); // Ryd kurven efter køb
-      } else {
-        console.warn("clearCart findes ikke som funktion i useCartStore");
+        //Kør funktionen (rydder basket)
+        clearCart();
       }
-
+  
+   //Popup af "tak for køb" funktion.    
       setShowPopup(true);
     } catch (error) {
       console.error("Fejl ved opdatering af billetter:", error);
