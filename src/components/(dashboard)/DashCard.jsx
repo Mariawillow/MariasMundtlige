@@ -44,7 +44,7 @@ const DashCard = ({ event }) => {
             <button onClick={handleDelete} className="text-red-600 hover:text-red-800" aria-label="Slet event">
               <FaTrashCan size={20} />
             </button>
-            <Link href={`/editEvent/${event.id}`} className="text-black hover:text-lime-500" aria-label="Rediger event">
+            <Link href={`/editEvent/${event.id}`} className="text-black hover:text-[#C4FF00]" aria-label="Rediger event">
               <FaPen size={20} />
             </Link>
           </div>

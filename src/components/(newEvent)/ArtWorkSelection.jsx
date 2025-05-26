@@ -139,7 +139,7 @@ export default function ArtworkSelection({ date, location, period, defaultData =
         </button>
       </div>
 
-      {showSuccess && <div className="fixed top-6 right-6 bg-lime-400 text-white px-4 py-2 rounded shadow-lg transition-all z-50">Eventet blev oprettet!</div>}
+      {showSuccess && <div className="fixed top-6 right-6 bg-[#C4FF00] text-white px-4 py-2 rounded shadow-lg transition-all z-50">Eventet blev oprettet!</div>}
     </div>
   );
 }
