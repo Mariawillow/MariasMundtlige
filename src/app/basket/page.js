@@ -4,7 +4,7 @@ import Image from "next/image";
 import Header from "@/components/(header)/Header";
 import StatuePic from "@/images/statuePic.svg";
 import { FaTicketAlt } from "react-icons/fa";
-import Price from "@/components/(kurv)/Price";
+import Price from "@/components/(basket)/Price";
 import useCartStore from "@/app/store/cartStore";
 import { useState } from "react";
 import Popup from "@/components/Popup";
@@ -17,25 +17,24 @@ const Basket = () => {
   const [showPopup, setShowPopup] = useState(false);
 
   //funktionen der fortæller hvad der sker når brugeren klikker på "køb"-knappen.
-  const handleBuyClick = async () => { 
+  const handleBuyClick = async () => {
     //først tjekkes om der er billetter i kurven. alert(besked) vises hvis ikke.
     if (items.length === 0) {
       alert("Du har ikke valgt nogen billetter!");
       return;
     }
-  
-    //Ny funktion "try" der håndtere fejl. 
+
+    //Ny funktion "try" der håndtere fejl.
     try {
       //En Løkke som går igennem hvert enkelt element i items-arrayet (hver billet-type eller event)
       for (const item of items) {
-
-        //Henter antallet (quantity) af billetter brugeren vil købe for den aktuelle item og konverterer det til et tal. 
+        //Henter antallet (quantity) af billetter brugeren vil købe for den aktuelle item og konverterer det til et tal.
         //Hvis quantity er falsy (fx undefined eller tom), sættes det til 0
         const qty = Number(item.quantity) || 0;
-  
+
         //Laver en console, så vi kan dobbelttjekke hvad der ændres, og qty af det (antal)
         console.log(`Opdaterer eventId ${item.eventId} med tickets: ${qty}`);
-  
+
         //Kalder funktionen "updatedTickets"
         //opdatere serverens data med det antal billetter (qty) der skal bookes til eventet med ID item.eventId
         await updateTickets({
@@ -43,13 +42,13 @@ const Basket = () => {
           tickets: qty,
         });
       }
-  //If-statement til at tjekke om clearCart virker og er en function.
+      //If-statement til at tjekke om clearCart virker og er en function.
       if (typeof clearCart === "function") {
         //Kør funktionen (rydder basket)
         clearCart();
       }
-  
-   //Popup af "tak for køb" funktion.    
+
+      //Popup af "tak for køb" funktion.
       setShowPopup(true);
     } catch (error) {
       console.error("Fejl ved opdatering af billetter:", error);
@@ -59,8 +58,9 @@ const Basket = () => {
 
   return (
     <div className="bg-[url('/images/statuePic.svg')] bg-cover bg-no-repeat">
-      <div className="block md:hidden absolute inset-0 -z-10">
-        <Image src={StatuePic} alt="Statue" layout="fill" objectFit="cover" className="scale-x-[-1]" priority />
+      <div className="block md:hidden absolute inset-0">
+        <Image src={StatuePic} alt="Statue" layout="fill" objectFit="cover" priority />
+        <div className="absolute inset-0 bg-white opacity-60"></div>
       </div>
 
       <div className="relative z-10 w-full">
