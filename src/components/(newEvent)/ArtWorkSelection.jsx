@@ -5,10 +5,11 @@ import { makeNewEvent } from "@/api/localhost";
 import ArtworkGrid from "./ArtworkGrid";
 import { useRouter } from "next/navigation";
 import { filterArtworksByPeriod } from "@/api/periods";
-import { IoIosSearch } from "react-icons/io";
 import Image from "next/image";
 import arrowLong from "@/images/arrowLong.svg";
 import { useUser } from "@clerk/nextjs";
+import { SearchBar } from "./SearchBar";
+import SearchResultsList from "./SearchResultsList";
 
 export default function ArtworkSelection({ date, location, period, defaultData = {}, mode = "create", onSubmit }) {
   // const [eventName, setEventName] = useState("");
@@ -74,6 +75,8 @@ export default function ArtworkSelection({ date, location, period, defaultData =
   //     alert("Noget gik galt under oprettelsen af eventet");
   //   }
   // };
+  
+  const [results, setResults] = useState ([]);
 
   const handleMakeNewEvent = async () => {
     const payload = {
@@ -84,6 +87,7 @@ export default function ArtworkSelection({ date, location, period, defaultData =
       artworkIds: selectedArtworks,
       period: period?.id,
     };
+
 
     try {
       if (mode === "edit" && onSubmit) {
@@ -138,10 +142,16 @@ export default function ArtworkSelection({ date, location, period, defaultData =
             <p className="text-center text-gray-400">Henter værker...</p>
           ) : (
             <>
-              <div className="relative w-[400px] my-4 md:place-self-end">
+              {/* <div className="relative w-[400px] my-4 md:place-self-end">
                 <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2 pr-10" />
                 <IoIosSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
-              </div>
+              </div> */}
+ 
+ <div className="relative w-[400px] my-4 md:place-self-end">
+  <SearchBar setResults={setResults} />
+  <SearchResultsList results={results} />
+ </div>
+
 
               {selectedArtworks.length === location?.maxArtworks && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>}
 
