@@ -1,23 +1,8 @@
-// import DashCard from "@/components/(dashboard)/DashCard";
-// import Header from "@/components/(header)/Header";
-
-// const Dashboard = () => {
-//     return (
-//         <article>
-//                   <Header variant="black"></Header>
-
-//             <h1>Dine oprettede events</h1>
-//             <DashCard />
-//         </article>
-//      );
-// }
-
-// export default Dashboard;
-
 "use client";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { getEvents } from "@/api/localhost";
+import { getArtDetails } from "@/api/smk";
 import DashCard from "@/components/(dashboard)/DashCard";
 import Header from "@/components/(header)/Header";
 import ButtonPrimary from "@/components/ButtonPrimary";
@@ -29,10 +14,35 @@ const Dashboard = () => {
   useEffect(() => {
     if (!user?.id) return;
 
-    getEvents().then((data) => {
-      const filtered = data.filter((event) => event.userId === user.id);
-      setUserEvents(filtered);
-    });
+    const fetchUserEvents = async () => {
+      const allEvents = await getEvents();
+      const filtered = allEvents.filter((event) => event.userId === user.id);
+
+      const enriched = await Promise.all(
+        filtered.map(async (event) => {
+          const firstArtworkId = event.artworkIds?.[0];
+          let thumbnailImage = null;
+
+          if (firstArtworkId) {
+            try {
+              const art = await getArtDetails(firstArtworkId);
+              thumbnailImage = art?.image_thumbnail || null;
+            } catch (error) {
+              console.error("Fejl ved hentning af værk:", error);
+            }
+          }
+
+          return {
+            ...event,
+            thumbnailImage,
+          };
+        })
+      );
+
+      setUserEvents(enriched);
+    };
+
+    fetchUserEvents();
   }, [user]);
 
   return (
