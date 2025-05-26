@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { getArts } from "@/api/smk";
 import { makeNewEvent } from "@/api/localhost";
-import ArtworkGrid from "./ArtWorkGrid";
+import ArtworkGrid from "./ArtworkGrid";
 import { useRouter } from "next/navigation";
 import { filterArtworksByPeriod } from "@/api/periods";
 import Image from "next/image";

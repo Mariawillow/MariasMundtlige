@@ -51,7 +51,7 @@ const Price = () => {
               </div>
             ))}
             <Link href={`/event/${eventId}`}>
-              <button className="mt-2 text-sm text-[#C4FF00] underline hover:opacity-80">Gå til event</button>
+              <button className="mt-2 text-sm text-[#C4FF00] underline hover:opacity-80 hover:cursor-pointer">Gå til event</button>
             </Link>
           </div>
         ))}

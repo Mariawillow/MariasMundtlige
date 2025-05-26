@@ -46,12 +46,11 @@ export default async function ArtSingleView({ params }) {
 
       {/* Tilbage-knap */}
 
-      <Link href="{`/event/${event.id}`}" className="flex items-center gap-2 text-[#C4FF00] font-semibold hover:underline">
-          <HiOutlineArrowLongLeft className="text-xl" />
-          <span>Tilbage</span>
-        </Link>
+      <Link href={"/"} className="flex items-center gap-2 text-[#C4FF00] font-semibold hover:underline">
+        <HiOutlineArrowLongLeft className="text-xl" />
+        <span>Tilbage</span>
+      </Link>
 
-        
       <div className="inline-block text-center mb-[var(--space-m)]">
         {/* Du kan evt. bruge next/navigation her hvis du vil gøre knappen interaktiv */}
         {/* <p className="text-[#C4FF00] font-semibold inline-block">Tilbage</p>

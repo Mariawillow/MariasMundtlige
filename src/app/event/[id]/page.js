@@ -7,7 +7,7 @@ import Link from "next/link";
 
 const EventSingleView = async ({ params }) => {
   //Denne første del burde vi overveje at flytte til API-side (localhost.js) – meeeen vi kan ikke lige finde ud af hvordan
-  const { id } = params;
+  const { id } = await params;
 
   const res = await fetch(`http://localhost:8080/events/${id}`);
   const eventData = await res.json();
