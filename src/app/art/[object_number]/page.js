@@ -2,6 +2,7 @@ import { HiOutlineArrowLongLeft } from "react-icons/hi2";
 import Image from "next/image";
 import Header from "@/components/(header)/Header";
 import { getArtDetails } from "@/api/smk";
+import Link from "next/link";
 
 //Hjælpe-funktion som bruges senere til at omsætte fødsels- og dødsdato fra ISO-format til dansk dato
 const formatDate = (isoDateString) => {
@@ -44,12 +45,19 @@ export default async function ArtSingleView({ params }) {
       <Header />
 
       {/* Tilbage-knap */}
+
+      <Link href="{`/event/${event.id}`}" className="flex items-center gap-2 text-[#C4FF00] font-semibold hover:underline">
+          <HiOutlineArrowLongLeft className="text-xl" />
+          <span>Tilbage</span>
+        </Link>
+
+        
       <div className="inline-block text-center mb-[var(--space-m)]">
         {/* Du kan evt. bruge next/navigation her hvis du vil gøre knappen interaktiv */}
-        <p className="text-[#C4FF00] font-semibold inline-block">Tilbage</p>
+        {/* <p className="text-[#C4FF00] font-semibold inline-block">Tilbage</p>
         <div className="relative h-6 mt-1">
           <HiOutlineArrowLongLeft className="text-[#C4FF00] absolute left-0 top-0 w-full scale-x-100 scale-y-200" />
-        </div>
+        </div> */}
       </div>
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-l)] relative z-10">
