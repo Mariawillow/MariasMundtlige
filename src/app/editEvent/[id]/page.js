@@ -4,6 +4,7 @@ import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getEvents, updateEvent } from "@/api/localhost";
 import ArtworkSelection from "@/components/(newEvent)/ArtworkSelection";
+import Header from "@/components/(header)/Header";
 
 const EditEventPage = ({ params }) => {
   const { id } = use(params);
@@ -52,15 +53,18 @@ const EditEventPage = ({ params }) => {
 
   return (
     <div className="max-w-6xl mx-auto">
-      <h1 className="text-3xl font-bold text-center my-8">Rediger event</h1>
-      <ArtworkSelection
-        mode="edit"
-        defaultData={event}
-        date={event.date}
-        location={event.location} // vigtig: skal være et objekt
-        period={event.period} // tilpas hvis du bruger mere data
-        onSubmit={handleUpdate}
-      />
+      <Header></Header>
+      <div>
+        <h1 className="text-3xl font-bold text-center my-8">Rediger event</h1>
+        <ArtworkSelection
+          mode="edit"
+          defaultData={event}
+          date={event.date}
+          location={event.location} // vigtig: skal være et objekt
+          period={event.period} // tilpas hvis du bruger mere data
+          onSubmit={handleUpdate}
+        />
+      </div>
     </div>
   );
 };

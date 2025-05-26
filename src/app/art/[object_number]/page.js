@@ -41,7 +41,7 @@ export default async function ArtSingleView({ params }) {
 
   return (
     <div className="relative px-[var(--space-s)] py-[var(--space-l)] overflow-hidden">
-      <Header variant="black" />
+      <Header />
 
       {/* Tilbage-knap */}
       <div className="inline-block text-center mb-[var(--space-m)]">

@@ -21,7 +21,7 @@ const EventSingleView = async ({ params }) => {
 
   return (
     <div className="flex flex-col gap-6">
-      <Header variant="black"></Header>
+      <Header></Header>
 
       <div className="mb-[var(--space-m)] px-4 md:px-8">
         <Link href="/events" className="flex items-center gap-2 text-[#C4FF00] font-semibold hover:underline">
