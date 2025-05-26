@@ -3,9 +3,14 @@
 import ButtonSecondary from "@/components/ButtonSecondary";
 import Stepper from "@/components/Stepper";
 import useCartStore from "@/app/store/cartStore";
+import { format } from "date-fns";
+import { da } from "date-fns/locale";
+
 
 const SingleCard = ({ eventData }) => {
   const { items } = useCartStore((state) => state);
+  const formattedDate = format(new Date(eventData.date), "d. MMMM yyyy", { locale: da });
+
 
   const availableTickets = [
     { id: "1", name: "Voksne", price: 170 },
@@ -17,10 +22,11 @@ const SingleCard = ({ eventData }) => {
   return (
     <section className="px-4">
       {/* Titel og dato */}
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2">
+      <div className="mb-4">
         <h1 className="font-semibold text-2xl">{eventData.title}</h1>
-        <h3 className="font-light text-lg">{eventData.date}</h3>
+        <h3 className="font-light text-lg">{formattedDate}</h3>
       </div>
+
 
       {/* Info + billetter */}
       <div className="grid grid-cols-1 md:grid-cols-[3fr_2fr] gap-10 mt-10">
