@@ -15,6 +15,7 @@ const Basket = () => {
   const items = useCartStore((state) => state.items);
   const clearCart = useCartStore((state) => state.clearCart);
   const [showPopup, setShowPopup] = useState(false);
+  const [totalTickets, setTotalTickets] = useState(0);
 
   //funktionen der fortæller hvad der sker når brugeren klikker på "køb"-knappen.
   const handleBuyClick = async () => {
@@ -32,9 +33,6 @@ const Basket = () => {
         //Hvis quantity er falsy (fx undefined eller tom), sættes det til 0
         const qty = Number(item.quantity) || 0;
 
-        //Laver en console, så vi kan dobbelttjekke hvad der ændres, og qty af det (antal)
-        console.log(`Opdaterer eventId ${item.eventId} med tickets: ${qty}`);
-
         //Kalder funktionen "updatedTickets"
         //opdatere serverens data med det antal billetter (qty) der skal bookes til eventet med ID item.eventId
         await updateTickets({
@@ -42,6 +40,11 @@ const Basket = () => {
           tickets: qty,
         });
       }
+
+      // Beregn total billetter OG gem i state
+      const total = items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
+      setTotalTickets(total);
+
       //If-statement til at tjekke om clearCart virker og er en function.
       if (typeof clearCart === "function") {
         //Kør funktionen (rydder basket)
@@ -54,6 +57,10 @@ const Basket = () => {
       console.error("Fejl ved opdatering af billetter:", error);
       alert("Der skete en fejl under købet. Prøv igen.");
     }
+  };
+
+  const handleClosePopup = () => {
+    setShowPopup(false);
   };
 
   return (
@@ -94,7 +101,7 @@ const Basket = () => {
           </div>
         </section>
 
-        {showPopup && <Popup onClose={() => setShowPopup(false)} />}
+        {showPopup && <Popup onClose={handleClosePopup} totalTickets={totalTickets} />}
       </div>
     </div>
   );
