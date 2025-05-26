@@ -1,8 +1,7 @@
-import { HiOutlineArrowLongLeft } from "react-icons/hi2";
 import Image from "next/image";
 import Header from "@/components/(header)/Header";
 import { getArtDetails } from "@/api/smk";
-import Link from "next/link";
+import ArtClient from "@/components/(art)/ArtClient";
 
 //Hjælpe-funktion som bruges senere til at omsætte fødsels- og dødsdato fra ISO-format til dansk dato
 const formatDate = (isoDateString) => {
@@ -43,22 +42,7 @@ export default async function ArtSingleView({ params }) {
   return (
     <div className="relative px-[var(--space-s)] py-[var(--space-l)] overflow-hidden">
       <Header />
-
-      {/* Tilbage-knap */}
-
-      <Link href={"/"} className="flex items-center gap-2 text-[#C4FF00] font-semibold hover:underline">
-        <HiOutlineArrowLongLeft className="text-xl" />
-        <span>Tilbage</span>
-      </Link>
-
-      <div className="inline-block text-center mb-[var(--space-m)]">
-        {/* Du kan evt. bruge next/navigation her hvis du vil gøre knappen interaktiv */}
-        {/* <p className="text-[#C4FF00] font-semibold inline-block">Tilbage</p>
-        <div className="relative h-6 mt-1">
-          <HiOutlineArrowLongLeft className="text-[#C4FF00] absolute left-0 top-0 w-full scale-x-100 scale-y-200" />
-        </div> */}
-      </div>
-
+      <ArtClient />
       <section className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-l)] relative z-10">
         {/* VENSTRE: billede */}
         <article className="relative w-full max-w-md mx-auto aspect-[4/3]">
