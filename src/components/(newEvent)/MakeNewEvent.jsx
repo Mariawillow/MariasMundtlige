@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import EventFilters from "@/components/(newEvent)/EventFilters";
-import ArtworkSelection from "./ArtWorkSelection";
+import ArtworkSelection from "./ArtworkSelection";
 import { format } from "date-fns";
 
 export default function MakeNewEvent() {
