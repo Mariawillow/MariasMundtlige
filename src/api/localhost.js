@@ -44,14 +44,16 @@ export async function makeNewEvent({ title, description, date, locationId, artwo
   return response.json();
 }
 
-export async function updateTickets({ id, bookedTickets }) {
-  const response = await fetch(`http://localhost:8080/events/${id}`, {
-    method: "PATCH",
+//Funktionen sender en PUT-request til det rigtige endpoint med antallet billetter i body.
+export async function updateTickets({ id, tickets }) { 
+  const response = await fetch(`http://localhost:8080/events/${id}/book`, {
+    method: 'PUT',
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
     },
-    body: JSON.stringify({ bookedTickets }),
+    body: JSON.stringify({ tickets }),
   });
+
   return response.json();
 }
 
