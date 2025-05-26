@@ -46,7 +46,7 @@ export default async function ArtSingleView({ params }) {
 
       {/* Tilbage-knap */}
 
-      <Link href="{`/event/${event.id}`}" className="flex items-center gap-2 text-[#C4FF00] font-semibold hover:underline">
+      <Link href={"/"} className="flex items-center gap-2 text-[#C4FF00] font-semibold hover:underline">
         <HiOutlineArrowLongLeft className="text-xl" />
         <span>Tilbage</span>
       </Link>
