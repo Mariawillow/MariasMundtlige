@@ -41,9 +41,7 @@ const SingleCard = ({ eventData }) => {
         {/* Billetter */}
         <section className="flex flex-col gap-6">
           {availableTickets.map((ticket) => {
-            const cartItem = items.find(
-              (i) => i.id === ticket.id && i.eventId === eventData.id
-            );
+            const cartItem = items.find((i) => i.id === ticket.id && i.eventId === eventData.id);
             const quantity = cartItem?.quantity || 0;
 
             return (
@@ -52,18 +50,20 @@ const SingleCard = ({ eventData }) => {
                   <p className="font-semibold">{ticket.name}</p>
                   <p className="font-light">Pris {ticket.price} DKK</p>
                 </div>
-                <Stepper
-                  itemId={ticket.id}
-                  quantity={quantity}
-                  item={{
-                    id: ticket.id,
-                    name: ticket.name,
-                    price: ticket.price,
-                    eventId: eventData.id,
-                    eventTitle: eventData.title,
-                  }}
-                  remainingTickets={remainingTickets}
-                />
+                <div className="justify-self-end">
+                  <Stepper
+                    itemId={ticket.id}
+                    quantity={quantity}
+                    item={{
+                      id: ticket.id,
+                      name: ticket.name,
+                      price: ticket.price,
+                      eventId: eventData.id,
+                      eventTitle: eventData.title,
+                      remainingTickets: eventData.totalTickets - eventData.bookedTickets,
+                    }}
+                  />
+                </div>
               </div>
             );
           })}

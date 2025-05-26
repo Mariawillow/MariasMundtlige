@@ -1,65 +1,56 @@
-'use client';
+"use client";
 
-import useCartStore from '@/app/store/cartStore';
-import { useState } from 'react';
+import useCartStore from "@/app/store/cartStore";
+import { useState, useEffect } from "react";
 
-export default function Stepper({ itemId, quantity, item, remainingTickets }) {
-  const updateItemQuantity = useCartStore((state) => state.updateItemQuantity);
+export default function Stepper({ itemId, quantity, item }) {
   const addItem = useCartStore((state) => state.addItem);
+  const updateItemQuantity = useCartStore((state) => state.updateItemQuantity);
   const items = useCartStore((state) => state.items);
+
   const [error, setError] = useState(null);
+  const [disablePlus, setDisablePlus] = useState(false);
 
-  // Beregn total antal billetter for dette event på tværs af alle typer
-  const totalSelectedForEvent = items
-    .filter(i => i.eventId === item.eventId)
-    .reduce((sum, i) => sum + i.quantity, 0);
+  // Beregn samlet antal billetter for event
+  const totalQuantityForEvent = items.filter((i) => i.eventId === item.eventId).reduce((sum, i) => sum + i.quantity, 0);
 
-  
-    const increment = () => {
-      if (totalSelectedForEvent < remainingTickets) {
-        setError(null);
-        if (quantity === 0) {
-          addItem(item);
-        } else {
-          updateItemQuantity(itemId, item.eventId, quantity + 1);
-        }
-      } else {
-        setError("Der er ikke flere billetter tilgængelige.");
-      }
-    };
+  useEffect(() => {
+    if (totalQuantityForEvent >= item.remainingTickets) {
+      setDisablePlus(true);
+      setError("Der er ikke flere billetter tilgængelige.");
+    } else {
+      setDisablePlus(false);
+      setError(null);
+    }
+  }, [totalQuantityForEvent, item.remainingTickets]);
+
+  const increment = () => {
+    if (!disablePlus) {
+      addItem(item);
+    }
+  };
 
   const decrement = () => {
-    if (quantity > 1) {
+    if (quantity > 0) {
       updateItemQuantity(itemId, item.eventId, quantity - 1);
-    } else if (quantity === 1) {
-      updateItemQuantity(itemId, item.eventId, 0);
     }
-    setError(null);
   };
 
   return (
-    <div className="flex items-center gap-4 text-2xl">
-            <div className="flex items-center gap-4 text-2xl">
-      {quantity > 0 && (
-        <>
-          <button
-            onClick={decrement}
-            className="px-3 py-1 border border-black hover:border-lime-400 transition"
-          >
-            −
-          </button>
-          <span>{quantity}</span>
-        </>
-      )}
-      <button
-          onClick={increment}
-          className="px-3 py-1 border border-black hover:border-lime-400 transition"
-          disabled={totalSelectedForEvent >= remainingTickets}
-        >
+    <div>
+      <div className="flex items-center gap-4 text-2xl place-self-end w-[150px] justify-between">
+        <button onClick={decrement} disabled={quantity === 0} className={`px-3 py-1 border border-black transition ${quantity === 0 ? "opacity-50 hover:border-black hover:cursor-default" : "hover:border-[#C4FF00] cursor-pointer"}`}>
+          −
+        </button>
+
+        <span className="w-8 text-center tabular-nums">{quantity}</span>
+
+        <button onClick={increment} disabled={disablePlus} className={`px-3 py-1 border border-black transition ${disablePlus ? "opacity-50 hover:border-black hover:cursor-default" : "hover:border-[#C4FF00] cursor-pointer"}`}>
           +
         </button>
-    </div>
-    {error && <p className="text-red-500 text-sm">{error}</p>}
+      </div>
+
+      {error && <p className="text-red-500 mt-1">{error}</p>}
     </div>
   );
 }
