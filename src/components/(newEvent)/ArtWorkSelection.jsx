@@ -51,27 +51,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
     });
   };
 
-  // const handleMakeNewEvent = async () => {
-  //   try {
-  //     await makeNewEvent({
-  //       title: eventName,
-  //       description: eventDescription,
-  //       date,
-  //       locationId: location.id,
-  //       artworkIds: selectedArtworks,
-  //       period: period?.id,
-  //       userId: user?.id,
-  //     });
-
-  //     setShowSuccess(true);
-  //     setTimeout(() => router.push("/dashboard"), 800);
-  //     setTimeout(() => setShowSuccess(false), 5000);
-  //   } catch (error) {
-  //     console.error(error);
-  //     alert("Noget gik galt under oprettelsen af eventet");
-  //   }
-  // };
-
   const [results, setResults] = useState([]);
 
   const handleMakeNewEvent = async () => {
@@ -136,10 +115,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
             <p className="text-center text-gray-400">Henter værker...</p>
           ) : (
             <>
-              {/* <div className="relative w-[400px] my-4 md:place-self-end">
-                <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2 pr-10" />
-                <IoIosSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
-              </div> */}
 
               <div className="relative w-[400px] my-4 md:place-self-end">
                 <SearchBar setResults={setResults} />
