@@ -56,7 +56,7 @@ const Basket = () => {
       </div>
 
       <div className="relative z-10 w-full">
-        <Header variant="black" />
+        <Header />
 
         <section className="grid md:grid-cols-2 gap-4 min-h-[200px]">
           <div className="hidden md:block">
