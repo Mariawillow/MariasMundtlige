@@ -15,8 +15,6 @@ export function filterArtworksByPeriod(artworks, period) {
   return artworks.filter((art) => {
     const range = art.production_date?.[0]?.period;
 
-    console.log("Art:", art.id, "range:", range, "period filter:", period);
-
     if (!range) return false;
 
     const [startYear, endYear] = range.split("-").map(Number);

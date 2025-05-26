@@ -5,10 +5,12 @@ import { useRouter } from "next/navigation";
 import { getEvents, updateEvent } from "@/api/localhost";
 import ArtworkSelection from "@/components/(newEvent)/ArtworkSelection";
 import Header from "@/components/(header)/Header";
+import { getPeriodById } from "@/api/periods";
 
 const EditEventPage = ({ params }) => {
   const { id } = use(params);
   const [event, setEvent] = useState(null);
+  const [period, setPeriod] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -25,15 +27,18 @@ const EditEventPage = ({ params }) => {
       };
 
       // Find eller gæt perioden som objekt
-      const periodObj = found.period
-        ? { id: found.period, from: 1800, to: 2025 } // Du kan sætte dine egne grænser her
-        : { id: "modern", from: 1900, to: 2025 };
+      // const periodObj = getPeriodById(found.period) || getPeriodById("");
+      // console.log("periodeObj", periodObj);
 
       setEvent({
         ...found,
         location: locationObj,
-        period: periodObj, // læg det ind i event direkte
       });
+
+      const matchedPeriod = getPeriodById(found.period);
+      console.log("found.period", found.period);
+      console.log("matchedPeriod", getPeriodById(found.period));
+      setPeriod(matchedPeriod ?? null);
     };
 
     fetchData();
@@ -61,7 +66,8 @@ const EditEventPage = ({ params }) => {
           defaultData={event}
           date={event.date}
           location={event.location} // vigtig: skal være et objekt
-          period={event.period} // tilpas hvis du bruger mere data
+          period={period} // tilpas hvis du bruger mere data
+          setPeriod={setPeriod}
           onSubmit={handleUpdate}
         />
       </div>

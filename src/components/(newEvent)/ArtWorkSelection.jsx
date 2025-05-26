@@ -25,7 +25,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
   const [eventDescription, setEventDescription] = useState(defaultData.description || "");
   const [selectedArtworks, setSelectedArtworks] = useState(defaultData.artworkIds || []);
 
-
   // Hent alle værker én gang
   useEffect(() => {
     setLoading(true);
@@ -75,8 +74,8 @@ export default function ArtworkSelection({ date, location, period, defaultData =
   //     alert("Noget gik galt under oprettelsen af eventet");
   //   }
   // };
-  
-  const [results, setResults] = useState ([]);
+
+  const [results, setResults] = useState([]);
 
   const handleMakeNewEvent = async () => {
     const payload = {
@@ -87,7 +86,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
       artworkIds: selectedArtworks,
       period: period?.id,
     };
-
 
     try {
       if (mode === "edit" && onSubmit) {
@@ -107,7 +105,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
       alert("Noget gik galt under oprettelsen/redigeringen af eventet");
     }
   };
-
 
   return (
     <div className="space-y-8 mt-8">
@@ -146,12 +143,11 @@ export default function ArtworkSelection({ date, location, period, defaultData =
                 <input type="text" placeholder="Søg efter værker..." className="w-full border rounded px-3 py-2 pr-10" />
                 <IoIosSearch className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
               </div> */}
- 
- <div className="relative w-[400px] my-4 md:place-self-end">
-  <SearchBar setResults={setResults} />
-  <SearchResultsList results={results} />
- </div>
 
+              <div className="relative w-[400px] my-4 md:place-self-end">
+                <SearchBar setResults={setResults} />
+                <SearchResultsList results={results} />
+              </div>
 
               {selectedArtworks.length === location?.maxArtworks && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>}
 
@@ -165,9 +161,7 @@ export default function ArtworkSelection({ date, location, period, defaultData =
         <button className="group inline-block text-[#C4FF00] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
           <span className="inline-flex flex-col">
             {/* <span className="text-4xl font-bold px-8">Opret event</span> */}
-            <span className="text-4xl font-bold px-8">
-              {mode === "edit" ? "Gem ændringer" : "Opret event"}
-            </span>
+            <span className="text-4xl font-bold px-8">{mode === "edit" ? "Gem ændringer" : "Opret event"}</span>
             <Image src={arrowLong} alt="pil" className="self-end transition-transform group-hover:translate-x-1 group-disabled:translate-x-0" />
           </span>
         </button>
