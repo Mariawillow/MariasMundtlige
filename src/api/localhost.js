@@ -26,13 +26,13 @@ export async function getDates() {
   return dates;
 }
 
-export async function makeNewEvent({ title, description, date, locationId, artworkIds, userId }) {
+export async function makeNewEvent({ title, description, date, locationId, artworkIds, userId, period }) {
   const response = await fetch("http://localhost:8080/events", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
     },
-    body: JSON.stringify({ title, description, date, locationId, artworkIds, userId }),
+    body: JSON.stringify({ title, description, date, locationId, artworkIds, userId, period }),
   });
 
   if (!response.ok) {
@@ -45,11 +45,11 @@ export async function makeNewEvent({ title, description, date, locationId, artwo
 }
 
 //Funktionen sender en PUT-request til det rigtige endpoint med antallet billetter i body.
-export async function updateTickets({ id, tickets }) { 
+export async function updateTickets({ id, tickets }) {
   const response = await fetch(`http://localhost:8080/events/${id}/book`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({ tickets }),
   });
