@@ -16,7 +16,7 @@ export default function Home() {
     // Opret en GSAP-timeline med standardvarighed og easing
     const tl = gsap.timeline({
       defaults: {
-        duration: 1, // Hver animation varer 1 sekund
+        duration: 2, // Hver animation varer 1 sekund
         ease: "power2.out", // Giver en blød og naturlig bevægelse
       },
     });
@@ -34,7 +34,7 @@ export default function Home() {
           y: 20,
           opacity: 0,
         },
-        "-=0.5" // "-=0.5" betyder at den starter 0.5 sekunder før den forrige animation er færdig (overlap)
+        "-=0.2" // "-=0.5" betyder at den starter 0.5 sekunder før den forrige animation er færdig (overlap)
       );
   }, []); // Kører kun én gang ved første render
 
