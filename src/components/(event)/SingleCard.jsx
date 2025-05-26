@@ -6,6 +6,7 @@ import useCartStore from "@/app/store/cartStore";
 import { format } from "date-fns";
 import { da } from "date-fns/locale";
 
+
 const SingleCard = ({ eventData }) => {
   const { items } = useCartStore((state) => state);
   const formattedDate = format(new Date(eventData.date), "d. MMMM yyyy", { locale: da });
