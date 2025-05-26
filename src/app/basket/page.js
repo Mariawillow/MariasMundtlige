@@ -8,7 +8,7 @@ import Price from "@/components/(basket)/Price";
 import useCartStore from "@/app/store/cartStore";
 import { useState } from "react";
 import Popup from "@/components/(basket)/Popup";
-import ButtonTertiary from "@/components/ButtonTertiary";
+import ButtonSecondary from "@/components/ButtonSecondary";
 import { updateTickets } from "@/api/localhost";
 
 const Basket = () => {
@@ -89,7 +89,7 @@ const Basket = () => {
             <Price />
 
             <div className="mt-6 text-center">
-              <ButtonTertiary onClick={handleBuyClick} />
+              <ButtonSecondary onClick={handleBuyClick}>Køb billetter</ButtonSecondary>
             </div>
           </div>
         </section>
