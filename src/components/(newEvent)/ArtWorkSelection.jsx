@@ -12,11 +12,8 @@ import { SearchBar } from "./SearchBar";
 import SearchResultsList from "./SearchResultsList";
 
 export default function ArtworkSelection({ date, location, period, defaultData = {}, mode = "create", onSubmit }) {
-  // const [eventName, setEventName] = useState("");
-  // const [eventDescription, setEventDescription] = useState("");
   const [allArtworks, setAllArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
-  // const [selectedArtworks, setSelectedArtworks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
   const router = useRouter();
@@ -42,14 +39,14 @@ export default function ArtworkSelection({ date, location, period, defaultData =
     setFilteredArtworks(filtered);
   }, [period, allArtworks]);
 
-  const toggleArtwork = (id) => {
+  const toggleArtwork = (objectNumber) => {
     setSelectedArtworks((prev) => {
-      if (prev.includes(id)) {
-        return prev.filter((i) => i !== id);
+      if (prev.includes(objectNumber)) {
+        return prev.filter((i) => i !== objectNumber);
       } else {
         const maxArtwork = location?.maxArtworks || 3;
         if (prev.length >= maxArtwork) return prev;
-        return [...prev, id];
+        return [...prev, objectNumber];
       }
     });
   };

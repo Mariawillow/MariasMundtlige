@@ -16,7 +16,7 @@ export default function ArtworkGrid({ artworks, selectedArtworks, toggleArtwork 
     <div>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-space-s">
         {currentArtworks.map((artwork) => (
-          <ArtworkCard key={artwork.id} artwork={artwork} selected={selectedArtworks} onClick={toggleArtwork} />
+          <ArtworkCard key={artwork.object_number} artwork={artwork} selected={selectedArtworks} onClick={() => toggleArtwork(artwork.object_number)} />
         ))}
       </div>
       <div className="flex justify-center mt-4">
