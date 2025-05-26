@@ -3,7 +3,7 @@
 import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { getEvents, updateEvent } from "@/api/localhost";
-import ArtworkSelection from "@/components/(newEvent)/ArtworkSelection";
+import ArtworkSelection from "@/components/(newEvent)/ArtWorkSelection";
 import Header from "@/components/(header)/Header";
 import { getPeriodById } from "@/api/periods";
 
