@@ -50,7 +50,7 @@ const Price = () => {
                 </div>
               </div>
             ))}
-            <Link href={`/events/${eventId}`}>
+            <Link href={`/event/${eventId}`}>
               <button className="mt-2 text-sm text-[#C4FF00] underline hover:opacity-80">Gå til event</button>
             </Link>
           </div>
