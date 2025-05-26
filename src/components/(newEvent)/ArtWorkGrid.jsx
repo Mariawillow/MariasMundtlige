@@ -1,4 +1,4 @@
-import ArtworkCard from "./ArtWorkCard";
+import ArtworkCard from "./ArtworkCard";
 import { useState } from "react";
 
 export default function ArtworkGrid({ artworks, selectedArtworks, toggleArtwork }) {

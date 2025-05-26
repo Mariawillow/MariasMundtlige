@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import EventFilters from "@/components/(newEvent)/EventFilters";
-import ArtWorkSelection from "./ArtWorkSelection";
+import ArtworkSelection from "./ArtworkSelection";
 import { format } from "date-fns";
 
 export default function MakeNewEvent() {
@@ -26,7 +26,7 @@ export default function MakeNewEvent() {
     <section>
       <h3 className="text-center">STEP 1: Praktiske informationer</h3>
       <EventFilters date={date} setDate={setDate} location={location} setLocation={setLocation} period={period} setPeriod={setPeriod} /> {/* Vi sender dato og location med videre til komponentet */}
-      {isReady && <ArtWorkSelection date={formattedDate} location={location} period={period} />}
+      {isReady && <ArtworkSelection date={formattedDate} location={location} period={period} />}
     </section>
   );
 }
