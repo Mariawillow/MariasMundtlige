@@ -62,16 +62,18 @@ export default function ArtworkSelection({ date, location, period, defaultData =
       artworkIds: selectedArtworks,
       period: period?.id,
     };
+
+    handleEventAction({
+      mode,
+      onSubmit,
+      user,
+      router,
+      eventInfo,
+      setShowSuccess,
+    });
   };
 
-  handleEventAction({
-    mode,
-    onSubmit,
-    user,
-    router,
-    eventInfo,
-    setShowSuccess,
-  });
+
 
   return (
     <div className="space-y-8 mt-8">
