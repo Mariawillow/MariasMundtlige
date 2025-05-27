@@ -56,7 +56,7 @@ const Header = ({ variant = "black" }) => {
       {/* UserButton desktop */}
       {user && (
         <div className="hidden sm:block">
-          <UserButton showName />
+          <UserButton />
         </div>
       )}
     </div>
