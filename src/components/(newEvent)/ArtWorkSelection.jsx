@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { getArts } from "@/api/smk";
-import { makeNewEvent } from "@/api/localhost";
 import ArtworkGrid from "./ArtworkGrid";
 import { useRouter } from "next/navigation";
 import { filterArtworksByPeriod } from "@/api/periods";
@@ -10,6 +9,7 @@ import arrowLong from "@/images/arrowLong.svg";
 import { useUser } from "@clerk/nextjs";
 import { SearchBar } from "./SearchBar";
 import SearchResultsList from "./SearchResultsList";
+import { handleEventAction } from "@/lib/eventHelpers";
 
 export default function ArtworkSelection({ date, location, period, defaultData = {}, mode = "create", onSubmit }) {
   const [allArtworks, setAllArtworks] = useState([]);
@@ -53,8 +53,8 @@ export default function ArtworkSelection({ date, location, period, defaultData =
 
   const [results, setResults] = useState([]);
 
-  const handleMakeNewEvent = async () => {
-    const payload = {
+  const handleMakeNewEvent = () => {
+    const eventInfo = {
       title: eventName,
       description: eventDescription,
       date,
@@ -62,60 +62,29 @@ export default function ArtworkSelection({ date, location, period, defaultData =
       artworkIds: selectedArtworks,
       period: period?.id,
     };
-
-    try {
-      if (mode === "edit" && onSubmit) {
-        await onSubmit(payload); // PATCH – redigering
-        setShowSuccess(true);
-        setTimeout(() => router.push("/dashboard"), 800);
-        return;
-      }
-
-      // Opret nyt event
-      await makeNewEvent({ ...payload, userId: user?.id });
-      setShowSuccess(true);
-      setTimeout(() => router.push("/dashboard"), 800);
-      setTimeout(() => setShowSuccess(false), 5000);
-    } catch (error) {
-      console.error("Fejl:", error);
-      alert("Noget gik galt under oprettelsen/redigeringen af eventet");
-    }
   };
+
+  handleEventAction({
+    mode,
+    onSubmit,
+    user,
+    router,
+    eventInfo,
+    setShowSuccess,
+  });
 
   return (
     <div className="space-y-8 mt-8">
       <h3 className="text-center">STEP 2: Information om dit event</h3>
 
       <div className="md:grid md:grid-cols-[1fr_2fr] gap-space-l">
-        <div>
-          <form>
-            <label className="text-sm font-medium">Eventnavn</label>
-            <input type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} className="w-full border rounded px-3 py-2" />
-          </form>
-
-          <form>
-            <label className="text-sm font-medium">Beskrivelse</label>
-            <textarea value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} className="w-full border rounded px-3 py-2" rows={4} />
-          </form>
-
-          <label>Vælg værker</label>
-          <p>
-            For valgte lokation kan du maks vælge <span className="font-bold">{location?.maxArtworks}</span> værker
-          </p>
-          <p className="mt-8">
-            <span className="font-bold">
-              {selectedArtworks.length}/{location?.maxArtworks}
-            </span>{" "}
-            værker valgt
-          </p>
-        </div>
+        <EventForm />
 
         <div>
           {loading ? (
             <p className="text-center text-gray-400">Henter værker...</p>
           ) : (
             <>
-
               <div className="relative w-[400px] my-4 md:place-self-end">
                 <SearchBar setResults={setResults} />
                 <SearchResultsList results={results} />
@@ -139,6 +108,7 @@ export default function ArtworkSelection({ date, location, period, defaultData =
         </button>
       </div>
 
+      {/* SuccessToast */}
       {showSuccess && <div className="fixed top-6 right-6 bg-[#C4FF00] text-white px-4 py-2 rounded shadow-lg transition-all z-50">Eventet blev oprettet!</div>}
     </div>
   );
