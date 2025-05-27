@@ -3,7 +3,7 @@
 
 import { useState, useEffect } from "react";
 import EventFilters from "@/components/(newEvent)/EventFilters";
-import ArtWorkSelection from "@/components/(newEvent)/ArtWorkSelection";
+import ArtworkSelection from "@/components/(newEvent)/ArtworkSelection";
 import { format } from "date-fns";
 
 export default function MakeNewEvent() {
@@ -25,7 +25,7 @@ export default function MakeNewEvent() {
   return (
     <section>
       <EventFilters date={date} setDate={setDate} location={location} setLocation={setLocation} period={period} setPeriod={setPeriod} /> {/* Vi sender dato og location med videre til komponentet */}
-      {isReady && <ArtWorkSelection date={formattedDate} location={location} period={period} />}
+      {isReady && <ArtworkSelection date={formattedDate} location={location} period={period} />}
     </section>
   );
 }
