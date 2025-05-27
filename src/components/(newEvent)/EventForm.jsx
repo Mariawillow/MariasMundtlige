@@ -1,4 +1,4 @@
-const EventForm = () => {
+const EventForm = ({ eventName, setEventName, eventDescription, setEventDescription, selectedArtworks, location }) => {
   return (
     <div>
       <form>
