@@ -5,21 +5,19 @@ import { IoIosSearch } from "react-icons/io";
 export const SearchBar = ({setResults}) => {
     const [input, setInput] = useState("");
 
-    const fetchData = (value) => {
-        fetch ("https://jsonplaceholder.typicode.com/users")
-        .then((response) => response.json())
-        .then(json => {
-        const results = json.filter((user) => {
-            return ( 
-                value &&
-                user && 
-                user.id && 
-                user.name.toLowerCase().includes(value)
-                );
-        });
-setResults(results);
-        });
-    };
+    const fetchData = async (value) => {
+        const baseFilters = ["has_image:true", "on_display:false", "public_domain:true"];
+        const filterString = baseFilters.map(f => `[${f}]`).join(",");
+        const url = `https://api.smk.dk/api/v1/art/search/?keys=${value}&filters=${filterString}&offset=0&rows=2000`;
+      
+        try {
+            const response = await fetch(url);
+            const data = await response.json();
+            setResults(data.items || []);
+        } catch (error) {
+            console.error("Fejl ved hentning af data:", error);
+        }
+      };
 
     const handleChange = (value) => {
         setInput(value)
