@@ -40,7 +40,7 @@ export default function Home() {
 
   return (
     <div className="bg-[url('/images/statuePic.svg')] bg-cover bg-no-repeat">
-      <Image src={statuePic} alt="Statue" layout="fill" objectFit="cover" className="scale-x-[-1]" />
+      <Image src={statuePic} alt="Statue" fill style={{ objectFit: "cover" }} className="scale-x-[-1]" />
       <div className="col-start-2 bg-cover bg-no-repeat bg-center relative">
         <Header variant="lime" />
 
