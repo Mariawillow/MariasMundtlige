@@ -2,7 +2,7 @@ import React from "react";
 
 export const SearchResults = ({ result }) => {
     const title = result.titles?.[0]?.title || "Uden titel";
-    const creator = result.production?.[0]?.creator?.name || "Ukendt kunstner";
+    const author = result.documentation?.[0]?.author|| "Ukendt kunstner";
 
   return (
     <div
@@ -11,7 +11,7 @@ export const SearchResults = ({ result }) => {
     >
       <div>
         <p className="font-semibold">{title}</p>
-        <p className="text-sm text-gray-500">{creator}</p>
+        <p className="text-sm text-gray-500">{author}</p>
       </div>
     </div>
   );
