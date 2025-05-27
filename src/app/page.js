@@ -34,7 +34,7 @@ export default function Home() {
           y: 20,
           opacity: 0,
         },
-        "-=0.2" // "-=0.5" betyder at den starter 0.5 sekunder før den forrige animation er færdig (overlap)
+        "-=0.5" // "-=0.5" betyder at den starter 0.5 sekunder før den forrige animation er færdig (overlap)
       );
   }, []); // Kører kun én gang ved første render
 
