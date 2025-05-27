@@ -50,9 +50,12 @@ const Dashboard = () => {
       <Header />
       <h1 className="mb-6">Dashboard</h1>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-semibold">Dine oprettede events</h3>
-        <ButtonPrimary href="/newEvent">Opret event</ButtonPrimary>
-      </div>
+  <h3 className="text-xl font-semibold">
+    {/* erstatning af "dine oprettede events" erstattes med en betinget rendering baseret på længden userEvents */}
+    {userEvents.length > 0 ? "Dine oprettede events" : "Du har ingen oprettede events.."}
+  </h3>
+  <ButtonPrimary href="/newEvent">Opret event</ButtonPrimary>
+</div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {userEvents.map((event) => (
