@@ -25,7 +25,7 @@ export default function MakeNewEvent() {
   return (
     <section>
       <EventFilters
-        ate={date}
+        date={date}
         setDate={setDate}
         location={location}
         setLocation={setLocation}
