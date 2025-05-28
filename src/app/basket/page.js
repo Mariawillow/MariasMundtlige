@@ -6,61 +6,53 @@ import StatuePic from "@/images/statuePic.svg";
 import { FaTicketAlt } from "react-icons/fa";
 import Price from "@/components/(basket)/Price";
 import useCartStore from "@/app/store/cartStore";
-import { useState } from "react";
-import Popup from "@/components/(basket)/Popup";
 import ButtonSecondary from "@/components/ButtonSecondary";
 import { updateTickets } from "@/api/localhost";
+import { useRouter } from "next/navigation";
 
 const Basket = () => {
+  const router = useRouter();
   const items = useCartStore((state) => state.items);
   const clearCart = useCartStore((state) => state.clearCart);
-  const [showPopup, setShowPopup] = useState(false);
-  const [totalTickets, setTotalTickets] = useState(0);
 
-  //funktionen der fortæller hvad der sker når brugeren klikker på "køb"-knappen.
   const handleBuyClick = async () => {
-    //først tjekkes om der er billetter i kurven. alert(besked) vises hvis ikke.
     if (items.length === 0) {
       alert("Du har ikke valgt nogen billetter!");
       return;
     }
 
-    //Ny funktion "try" der håndtere fejl.
     try {
-      //En Løkke som går igennem hvert enkelt element i items-arrayet (hver billet-type eller event)
       for (const item of items) {
-        //Henter antallet (quantity) af billetter brugeren vil købe for den aktuelle item og konverterer det til et tal.
-        //Hvis quantity er falsy (fx undefined eller tom), sættes det til 0
         const qty = Number(item.quantity) || 0;
-
-        //Kalder funktionen "updatedTickets"
-        //opdatere serverens data med det antal billetter (qty) der skal bookes til eventet med ID item.eventId
         await updateTickets({
           id: item.eventId,
           tickets: qty,
         });
       }
 
-      // Beregn total billetter OG gem i state
       const total = items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
-      setTotalTickets(total);
+      console.log("🔍 ITEMS I KURVEN:", items);
+      console.log("🔍 Første eventId:", items[0]?.eventId);
 
-      //If-statement til at tjekke om clearCart virker og er en function.
+      const receiptData = {
+        items,
+        totalTickets: total,
+      };
+
+      // Gem kvittering
+      sessionStorage.setItem("receipt", JSON.stringify(receiptData));
+
+      // Ryd kurv efter kvittering er gemt
       if (typeof clearCart === "function") {
-        //Kør funktionen (rydder basket)
         clearCart();
       }
 
-      //Popup af "tak for køb" funktion.
-      setShowPopup(true);
+      // Gå til kvitteringsside
+      router.push("/receipt");
     } catch (error) {
       console.error("Fejl ved opdatering af billetter:", error);
       alert("Der skete en fejl under købet. Prøv igen.");
     }
-  };
-
-  const handleClosePopup = () => {
-    setShowPopup(false);
   };
 
   return (
@@ -81,10 +73,10 @@ const Basket = () => {
           <div>
             <div className="text-center">
               <h1 className="font-semibold">Eventbilletter</h1>
-              <p className="font-light">Du modtager eventbilletten med det samme efter bestilling på din e-mail (Modtager du ikke en mail indenfor for 5 minutter, så tjek dit SPAM-filter) Børn under 18 år kommer gratis ind til events.</p>
+              <p className="font-light">Du modtager eventbilletten med det samme efter bestilling på din e-mail (Modtager du ikke en mail indenfor for 5 minutter, så tjek dit SPAM-filter). Børn under 18 år kommer gratis ind til events.</p>
             </div>
 
-            <div className=" w-100 h-1 bg-[#C4FF00] mx-auto mt-10 mb-10"></div>
+            <div className="w-100 h-1 bg-[#C4FF00] mx-auto mt-10 mb-10"></div>
 
             <div className="flex items-center">
               <FaTicketAlt className="text-[#C4FF00] scale-x-[3] scale-y-[3] m-5" />
@@ -100,8 +92,6 @@ const Basket = () => {
             </div>
           </div>
         </section>
-
-        {showPopup && <Popup onClose={handleClosePopup} totalTickets={totalTickets} />}
       </div>
     </div>
   );
