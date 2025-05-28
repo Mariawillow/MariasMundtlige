@@ -24,8 +24,18 @@ export default function MakeNewEvent() {
 
   return (
     <section>
-      <EventFilters date={date} setDate={setDate} location={location} setLocation={setLocation} period={period} setPeriod={setPeriod} /> {/* Vi sender dato og location med videre til komponentet */}
-      {isReady && <ArtworkSelection date={formattedDate} location={location} period={period} />}
+      <EventFilters
+        ate={date}
+        setDate={setDate}
+        location={location}
+        setLocation={setLocation}
+        period={period}
+        setPeriod={setPeriod} />
+      {/* Vi sender dato og location med videre til komponentet */}
+      {isReady && <ArtworkSelection
+        date={formattedDate}
+        location={location}
+        period={period} />}
     </section>
   );
 }
