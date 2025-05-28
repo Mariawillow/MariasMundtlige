@@ -3,12 +3,12 @@ const EventForm = ({ eventName, setEventName, eventDescription, setEventDescript
     <div>
       <form>
         <label className="text-sm font-medium">Eventnavn</label>
-        <input type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} className="w-full border rounded px-3 py-2" />
+        <input type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} className="w-full border px-3 py-2" />
       </form>
 
       <form>
         <label className="text-sm font-medium">Beskrivelse</label>
-        <textarea value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} className="w-full border rounded px-3 py-2" rows={4} />
+        <textarea value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} className="w-full border px-3 py-2" rows={4} />
       </form>
 
       <label>Vælg værker</label>

@@ -12,7 +12,6 @@ import { handleEventAction } from "@/lib/eventHelpers"; // Håndterer oprettelse
 import ArtworkGrid from "./ArtworkGrid";
 import arrowLong from "@/images/arrowLong.svg";
 import { SearchBar } from "./SearchBar";
-import SearchResultsList from "./SearchResultsList";
 import EventForm from "./EventForm";
 
 export default function ArtworkSelection({ date, location, period, defaultData = {}, mode = "create", onSubmit }) {
@@ -89,7 +88,16 @@ export default function ArtworkSelection({ date, location, period, defaultData =
     });
   };
 
-  const [results, setResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filtrer værker baseret på søgetekst (kunstner eller titel)
+  const displayedArtworks = searchTerm
+    ? filteredArtworks.filter((art) => {
+        const title = art.titles?.[0]?.title?.toLowerCase() || "";
+        const artist = art.production?.[0]?.artist?.name?.toLowerCase() || "";
+        return title.includes(searchTerm.toLowerCase()) || artist.includes(searchTerm.toLowerCase());
+      })
+    : filteredArtworks;
 
   // Event håndtering: Opret eller opdater event
   // Samler alle data om event i eventInfo
@@ -127,13 +135,12 @@ export default function ArtworkSelection({ date, location, period, defaultData =
           ) : (
             <>
               <div className="relative w-[400px] my-4 md:place-self-end">
-                <SearchBar setResults={setResults} />
-                <SearchResultsList results={results} />
+                <SearchBar onSearch={setSearchTerm} />
               </div>
 
               {selectedArtworks.length === location?.maxArtworks && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>}
 
-              <ArtworkGrid artworks={filteredArtworks} selectedArtworks={selectedArtworks} toggleArtwork={toggleArtwork} />
+              <ArtworkGrid artworks={displayedArtworks} selectedArtworks={selectedArtworks} toggleArtwork={toggleArtwork} />
             </>
           )}
         </div>

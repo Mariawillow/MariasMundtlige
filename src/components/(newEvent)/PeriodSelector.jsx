@@ -2,7 +2,6 @@
 
 import { periods } from "@/api/periods";
 
-
 export default function PeriodSelector({ period, setPeriod }) {
   return (
     <div className="flex flex-col gap-2">
@@ -14,7 +13,7 @@ export default function PeriodSelector({ period, setPeriod }) {
           const selected = periods.find((p) => p.id === selectedId);
           setPeriod(selected);
         }}
-        className="border rounded px-3 py-2"
+        className="border px-3 py-2"
       >
         <option value="" disabled>
           Vælg periode
