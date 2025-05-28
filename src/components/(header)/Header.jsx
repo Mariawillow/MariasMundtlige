@@ -33,10 +33,23 @@ const Header = ({ variant = "black" }) => {
 
   const navItems = (
     <div className="flex flex-col sm:flex-row w-full sm:w-auto items-center gap-8 sm:gap-space-l">
-      <Link href={user ? "/dashboard" : "/events"} className={`w-full text-center sm:w-auto sm:text-left border-b-3 sm:border-none border-${lineColor} pb-2 sm:pb-0 desktop_header_font_size sm:hover:underline sm:hover:underline-offset-10 sm:hover:decoration-3 ${textColor} ${pathname === (user ? "/dashboard" : "/events") ? "sm:underline sm:underline-offset-10 sm:decoration-3" : ""}`} onClick={() => setIsOpen(false)}>
-        {user ? "Dashboard" : "Events"}
-      </Link>
+     <Link
+  href="/events"
+  className={`w-full text-center sm:w-auto sm:text-left border-b-3 sm:border-none border-${lineColor} pb-2 sm:pb-0 desktop_header_font_size sm:hover:underline sm:hover:underline-offset-10 sm:hover:decoration-3 hover:cursor-pointer ${textColor} ${pathname === "/events" ? "sm:underline sm:underline-offset-10 sm:decoration-3" : ""}`}
+  onClick={() => setIsOpen(false)}
+>
+  Events
+</Link>
 
+{user && (
+  <Link
+    href="/dashboard"
+    className={`w-full text-center sm:w-auto sm:text-left border-b-3 sm:border-none border-${lineColor} pb-2 sm:pb-0 desktop_header_font_size sm:hover:underline sm:hover:underline-offset-10 sm:hover:decoration-3 hover:cursor-pointer ${textColor} ${pathname === "/dashboard" ? "sm:underline sm:underline-offset-10 sm:decoration-3" : ""}`}
+    onClick={() => setIsOpen(false)}
+  >
+    Dashboard
+  </Link>
+)}
       {!user && (
         <button
           onClick={() => {
