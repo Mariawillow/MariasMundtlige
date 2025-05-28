@@ -5,10 +5,10 @@ import { IoIosSearch } from "react-icons/io";
 export const SearchBar = ({setResults}) => {
     const [input, setInput] = useState("");
 
-    const fetchData = async (value) => {
+    const fetchData = async (malerier) => {
         const baseFilters = ["has_image:true", "on_display:false", "public_domain:true"];
         const filterString = baseFilters.map(f => `[${f}]`).join(",");
-        const url = `https://api.smk.dk/api/v1/art/search/?keys=${value}&filters=${filterString}&offset=0&rows=2000`;
+        const url = `https://api.smk.dk/api/v1/art/search/?keys=${malerier}&filters=${filterString}&offset=0&rows=2000`;
       
         try {
             const response = await fetch(url);

@@ -37,7 +37,7 @@ export async function makeNewEvent({ title, description, date, locationId, artwo
 
   if (!response.ok) {
     const errorText = await response.text();
-    console.error("Fejlstatus:", response.status, errorText);
+    // console.error("Fejlstatus:", response.status, errorText);
     throw new Error(errorText); // sender den rigtige besked videre
   }
 
