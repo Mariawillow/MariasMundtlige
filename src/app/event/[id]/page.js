@@ -9,7 +9,7 @@ const EventSingleView = async ({ params }) => {
   //Denne første del burde vi overveje at flytte til API-side (localhost.js) – meeeen vi kan ikke lige finde ud af hvordan
   const { id } = await params;
 
-  const res = await fetch(`http://localhost:8080/events/${id}`);
+  const res = await fetch(`http://localhost:8080/events/${id}`); //https://smk-4l23.onrender.com/events/${id}
   const eventData = await res.json();
 
   // Hent kunstværkerne fra SMK API (eller specifikke værker baseret på IDs)
@@ -24,7 +24,7 @@ const EventSingleView = async ({ params }) => {
       <Header></Header>
 
       <div className="mb-[var(--space-m)] px-4 md:px-8">
-        <Link href="/events" className="flex items-center gap-2 text-[#C4FF00] font-semibold hover:underline">
+        <Link href="/events" className="flex items-center gap-2 text-[#C4FF00] font-semibold hover:underline cursor-pointer">
           <HiOutlineArrowLongLeft className="text-xl" />
           <span>Tilbage</span>
         </Link>
