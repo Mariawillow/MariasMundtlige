@@ -64,13 +64,31 @@ export default function ListeView() {
     return abbreviation.some((abbreviation) => location.address.toLowerCase().includes(abbreviation));
   });
 
-  //Vi sortere nu bogsteaverne alfabetisk fra a-å.
+  //Vi sortere nu bogsteaverne alfabetisk fra a-å og efter de populæreste:
   const sortedEvents = [...filteredEvents].sort((a, b) => {
     if (sortOrder === "alphabetical") {
       return a.title.localeCompare(b.title, "da");
     }
+    if (sortOrder === "popularity") {
+      const remainingA = a.totalTickets - a.bookedTickets;
+      const remainingB = b.totalTickets - b.bookedTickets;
+  
+      const isSoldOutA = remainingA <= 0;
+      const isSoldOutB = remainingB <= 0;
+  
+      // Hvis A er udsolgt og B ikke er, skal A komme efter B
+      if (isSoldOutA && !isSoldOutB) return 1;
+      if (!isSoldOutA && isSoldOutB) return -1;
+  
+      // Hvis begge har billetter, sorter efter popularitet (højst først)
+      const popularityA = (a.bookedTickets / a.totalTickets) || 0;
+      const popularityB = (b.bookedTickets / b.totalTickets) || 0;
+      return popularityB - popularityA;
+    }
+  
     return 0;
   });
+  
 
   return (
     <div>
