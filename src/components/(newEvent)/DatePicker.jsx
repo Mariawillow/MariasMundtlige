@@ -22,9 +22,9 @@ export default function DatePicker({ date, setDate, location }) {
       .then((data) => {
         setAvailableDates(data);
       })
-      // .catch((err) => {
-      //   console.error("Fejl ved hentning af datoer", err);
-      // });
+      .catch((err) => {
+        console.error("Fejl ved hentning af datoer", err);
+      });
   }, []);
 
   useEffect(() => {
@@ -36,7 +36,7 @@ export default function DatePicker({ date, setDate, location }) {
     });
   }, [location]);
 
-  useEffect(() => {}, [date]); //Hvad gør du ??
+  useEffect(() => { }, [date]); //Hvad gør du ??
 
   const handleSelect = (day) => {
     setDate(day); // sender dato op
