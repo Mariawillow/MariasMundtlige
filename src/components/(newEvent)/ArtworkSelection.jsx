@@ -24,8 +24,7 @@ export default function ArtworkSelection({ date, location, period, defaultData =
   const [showSuccess, setShowSuccess] = useState(false);
 
   const router = useRouter();
-  const { user } = useRouter(); //giver adgang til allerede loggede ind brugere.
-
+  const { user } = useUser(); //giver adgang til allerede loggede ind brugere.
 
   const [eventName, setEventName] = useState(defaultData.title || "");
   const [eventDescription, setEventDescription] = useState(defaultData.description || "");
