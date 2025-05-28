@@ -89,6 +89,19 @@ export async function deleteEvent(id) {
   return response.json();
 }
 
+// Henter én specifik event baseret på ID
+export async function getEventById(id) {
+  const response = await fetch(`http://localhost:8080/events/${id}`);
+
+  if (!response.ok) {
+    const errorText = await response.text();
+    console.error("Fejl ved hentning af event:", errorText);
+    throw new Error("Event kunne ikke hentes");
+  }
+
+  return await response.json();
+}
+
 // ********* RENDER ***********
 
 // //Denne henter events fra vores fjernserver på Render
