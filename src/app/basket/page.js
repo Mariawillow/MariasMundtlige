@@ -9,15 +9,25 @@ import useCartStore from "@/app/store/cartStore";
 import ButtonSecondary from "@/components/ButtonSecondary";
 import { updateTickets } from "@/api/localhost";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const Basket = () => {
   const router = useRouter();
   const items = useCartStore((state) => state.items);
   const clearCart = useCartStore((state) => state.clearCart);
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [address, setAddress] = useState("");
+
   const handleBuyClick = async () => {
     if (items.length === 0) {
       alert("Du har ikke valgt nogen billetter!");
+      return;
+    }
+
+    if (!name || !email || !address) {
+      alert("Udfyld venligst navn, e-mail og adresse.");
       return;
     }
 
@@ -31,12 +41,13 @@ const Basket = () => {
       }
 
       const total = items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
-      console.log("🔍 ITEMS I KURVEN:", items);
-      console.log("🔍 Første eventId:", items[0]?.eventId);
 
       const receiptData = {
         items,
         totalTickets: total,
+        name,
+        email,
+        address,
       };
 
       // Gem kvittering
@@ -56,43 +67,57 @@ const Basket = () => {
   };
 
   return (
-    <div className="bg-[url('/images/statuePic.svg')] bg-cover bg-no-repeat">
-      <div className="block md:hidden absolute inset-0">
-        <Image src={StatuePic} alt="Statue" layout="fill" objectFit="cover" priority />
-        <div className="absolute inset-0 bg-white opacity-60"></div>
+    <div className="relative min-h-screen">
+      {/* MOBIL: baggrundsbillede */}
+      <div className="absolute inset-0 md:hidden z-0">
+        <Image src={StatuePic} alt="Statue" fill className="object-cover" priority />
+        <div className="absolute inset-0 bg-white opacity-70" />
       </div>
 
-      <div className="relative z-10 w-full">
+      <div className="relative z-10">
         <Header />
 
-        <section className="grid md:grid-cols-2 gap-4 min-h-[200px]">
-          <div className="hidden md:block">
-            <Image src={StatuePic} alt="statuebillede" width={300} height={200} className="w-full h-full object-cover" />
+        {/* Wrapper i main for layout – fordi main styres af global.css */}
+        <main className="py-10 px-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
+            {/* VENSTRE kolonne – billede (kun på md+) */}
+            <div className="hidden md:block">
+              <Image src={StatuePic} alt="Statue billede" width={600} height={800} className="w-full h-full object-cover" />
+            </div>
+
+            {/* HØJRE kolonne – tekst og funktionalitet */}
+            <div className="flex flex-col justify-center space-y-6">
+              <h1 className="text-2xl sm:text-3xl font-semibold">Eventbilletter</h1>
+
+              <p className="text-sm sm:text-base font-light text-left max-w-xl">Du modtager eventbilletten med det samme efter bestilling på din e-mail. (Modtager du ikke en mail indenfor 5 minutter, så tjek dit SPAM-filter). Børn under 18 år kommer gratis ind til events.</p>
+
+              <div className="h-1 bg-[#C4FF00] w-full my-6 sm:my-10" />
+
+              <div className="flex items-center gap-4">
+                <FaTicketAlt className="text-[#C4FF00] text-4xl sm:text-5xl" />
+                <h2 className="text-lg sm:text-xl font-light">Billetter</h2>
+              </div>
+
+              {items.length === 0 ? <p className="text-gray-600">Du har ikke valgt nogle billetter...</p> : <Price />}
+
+              <div className="space-y-3 mt-6">
+                <h4 className="font-bold">Dine informationer</h4>
+                <label className="text-sm font-medium">Navn</label>
+                <input type="text" placeholder="Navn" className="w-full border px-3 py-2 " value={name} onChange={(e) => setName(e.target.value)} required />
+
+                <label className="text-sm font-medium">E-mail</label>
+                <input type="email" placeholder="E-mail" className="w-full border px-3 py-2 " value={email} onChange={(e) => setEmail(e.target.value)} required />
+
+                <label className="text-sm font-medium">Adresse</label>
+                <input type="text" placeholder="Adresse" className="w-full border px-3 py-2 " value={address} onChange={(e) => setAddress(e.target.value)} required />
+              </div>
+
+              <div className="pt-6">
+                <ButtonSecondary onClick={handleBuyClick}>Køb billetter</ButtonSecondary>
+              </div>
+            </div>
           </div>
-
-          <div className="">
-            <div className="text-center">
-              <h1 className="font-semibold">Eventbilletter</h1>
-              <p className="font-light text-sm sm:text-base max-w-[90%] sm:max-w-xl mx-auto">
-Du modtager eventbilletten med det samme efter bestilling på din e-mail (Modtager du ikke en mail indenfor for 5 minutter, så tjek dit SPAM-filter). Børn under 18 år kommer gratis ind til events.</p>
-            </div>
-
-            <div className="w-100 h-1 bg-[#C4FF00] mx-auto mt-10 mb-10"></div>
-
-            <div className="flex items-center">
-                            <FaTicketAlt className="text-[#C4FF00] scale-x-[3] scale-y-[3] m-5" />
-              <h2 className="font-light">Billetter</h2>
-            </div>
-
-            {items.length === 0 && <p>Du har ikke valgt nogle billetter..</p>}
-
-            <Price />
-
-            <div className=" text-center justify-self-end mt-20">
-              <ButtonSecondary onClick={handleBuyClick}>Køb billetter</ButtonSecondary>
-            </div>
-          </div>
-        </section>
+        </main>
       </div>
     </div>
   );
