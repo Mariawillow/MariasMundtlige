@@ -90,14 +90,16 @@ export default function ArtworkSelection({ date, location, period, defaultData =
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filtrer værker baseret på søgetekst (kunstner eller titel)
-  const displayedArtworks = searchTerm
-    ? filteredArtworks.filter((art) => {
-        const title = art.titles?.[0]?.title?.toLowerCase() || "";
-        const artist = art.production?.[0]?.artist?.name?.toLowerCase() || "";
-        return title.includes(searchTerm.toLowerCase()) || artist.includes(searchTerm.toLowerCase());
-      })
-    : filteredArtworks;
+  // Filtrer og sorterer værker baseret på søgetekst (kunstner eller titel) + valgte værker øverst
+  const displayedArtworks = (
+    searchTerm
+      ? filteredArtworks.filter((art) => {
+          const title = art.titles?.[0]?.title?.toLowerCase() || "";
+          const artist = art.production?.[0]?.artist?.name?.toLowerCase() || "";
+          return title.includes(searchTerm.toLowerCase()) || artist.includes(searchTerm.toLowerCase());
+        })
+      : filteredArtworks
+  ).filter((art) => !selectedArtworks.includes(art.object_number));
 
   // Event håndtering: Opret eller opdater event
   // Samler alle data om event i eventInfo
@@ -127,7 +129,7 @@ export default function ArtworkSelection({ date, location, period, defaultData =
       <h3 className="text-center">STEP 2: Information om dit event</h3>
 
       <div className="md:grid md:grid-cols-[1fr_2fr] gap-space-l">
-        <EventForm eventName={eventName} setEventName={setEventName} eventDescription={eventDescription} setEventDescription={setEventDescription} selectedArtworks={selectedArtworks} location={location} />
+        <EventForm eventName={eventName} setEventName={setEventName} eventDescription={eventDescription} setEventDescription={setEventDescription} selectedArtworks={selectedArtworks} location={location} filteredArtworks={filteredArtworks} toggleArtwork={toggleArtwork} />
 
         <div>
           {loading ? (
