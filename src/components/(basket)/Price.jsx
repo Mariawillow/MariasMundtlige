@@ -22,17 +22,17 @@ const Price = () => {
 
   return (
     <article>
-      <section className="flex flex-col gap-4">
+      <section className="gap-4 space-y-6">
         {Object.entries(groupedItems).map(([eventId, group]) => (
-          <div key={eventId}>
+          <div key={eventId} className="border-b pb-4">
             <h4 className="font-semibold mt-5">{group.eventTitle}</h4>
             {group.tickets.map((item) => (
-              <div key={item.id} className="grid grid-cols-2">
+              <div key={item.id} className="grid grid-cols-2 items-center">
                 <div>
                   <p className="font-semibold">{item.name}</p>
                   <p className="font-light">Pris {item.price} DKK</p>
                 </div>
-                <div className="justify-self-end">
+                <div className="justify-self-start sm:justify-self-end">
                   <Stepper
                     itemId={item.id}
                     quantity={item.quantity}

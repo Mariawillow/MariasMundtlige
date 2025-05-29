@@ -38,7 +38,7 @@ export default function Stepper({ itemId, quantity, item }) {
 
   return (
     <div>
-      <div className="flex items-center gap-4 text-2xl place-self-end w-[150px] justify-between">
+      <div className="flex items-center text-2xl place-self-end justify-between">
         <button onClick={decrement} disabled={quantity === 0} className={`px-3 py-1 border border-black transition ${quantity === 0 ? "opacity-50 hover:border-black hover:cursor-default" : "hover:border-[#C4FF00] cursor-pointer"}`}>
           −
         </button>

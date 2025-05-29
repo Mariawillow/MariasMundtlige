@@ -70,16 +70,17 @@ const Basket = () => {
             <Image src={StatuePic} alt="statuebillede" width={300} height={200} className="w-full h-full object-cover" />
           </div>
 
-          <div>
+          <div className="">
             <div className="text-center">
               <h1 className="font-semibold">Eventbilletter</h1>
-              <p className="font-light">Du modtager eventbilletten med det samme efter bestilling på din e-mail (Modtager du ikke en mail indenfor for 5 minutter, så tjek dit SPAM-filter). Børn under 18 år kommer gratis ind til events.</p>
+              <p className="font-light text-sm sm:text-base max-w-[90%] sm:max-w-xl mx-auto">
+Du modtager eventbilletten med det samme efter bestilling på din e-mail (Modtager du ikke en mail indenfor for 5 minutter, så tjek dit SPAM-filter). Børn under 18 år kommer gratis ind til events.</p>
             </div>
 
             <div className="w-100 h-1 bg-[#C4FF00] mx-auto mt-10 mb-10"></div>
 
             <div className="flex items-center">
-              <FaTicketAlt className="text-[#C4FF00] scale-x-[3] scale-y-[3] m-5" />
+                            <FaTicketAlt className="text-[#C4FF00] scale-x-[3] scale-y-[3] m-5" />
               <h2 className="font-light">Billetter</h2>
             </div>
 
@@ -87,7 +88,7 @@ const Basket = () => {
 
             <Price />
 
-            <div className="mt-6 text-center">
+            <div className=" text-center justify-self-end mt-20">
               <ButtonSecondary onClick={handleBuyClick}>Køb billetter</ButtonSecondary>
             </div>
           </div>
