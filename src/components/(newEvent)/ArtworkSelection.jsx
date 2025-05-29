@@ -72,14 +72,21 @@ export default function ArtworkSelection({ date, location, period, defaultData =
     filterArtworksByAvailability();
   }, [period, date, location, allArtworks]);
 
+  const [artworkToast, setArtworkToast] = useState(null); // fx string besked
+
   // Funktion til at vælge og fravælge kunstværker
   const toggleArtwork = (objectNumber) => {
     setSelectedArtworks((prev) => {
       if (prev.includes(objectNumber)) {
+        setArtworkToast("Værk fjernet");
         return prev.filter((i) => i !== objectNumber);
       } else {
         const maxArtwork = location?.maxArtworks;
-        if (prev.length >= maxArtwork) return prev;
+        if (prev.length >= maxArtwork) {
+          setArtworkToast(`Maks antal på ${maxArtwork} værker nået`);
+          return prev;
+        }
+        setArtworkToast("Værk valgt");
         return [...prev, objectNumber];
       }
     });
@@ -108,6 +115,14 @@ export default function ArtworkSelection({ date, location, period, defaultData =
   )
     //fjerner de værker, som allerede er valgt af brugeren
     .filter((art) => !selectedArtworks.includes(art.object_number));
+
+  // Fjern artwork toasten automatisk efter 1.5 sekunder
+  useEffect(() => {
+    if (artworkToast) {
+      const timer = setTimeout(() => setArtworkToast(null), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [artworkToast]);
 
   // Event håndtering: Opret eller opdater event
   // Samler alt data om event i eventInfo
@@ -154,6 +169,7 @@ export default function ArtworkSelection({ date, location, period, defaultData =
             </>
           )}
         </div>
+        {artworkToast && <div className="fixed bottom-6 right-6 bg-[#6b5f6e] text-white px-4 py-2 rounded shadow-lg z-50 transition-all">{artworkToast}</div>}
       </div>
       <div className="flex justify-end">
         <button className="group inline-block text-[#C4FF00] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
