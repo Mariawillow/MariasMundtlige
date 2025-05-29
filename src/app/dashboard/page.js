@@ -12,24 +12,21 @@ const Dashboard = () => {
   const [userEvents, setUserEvents] = useState([]);
 
   useEffect(() => {
+    //Finder personlig userId og købler til dashboard.
     if (!user?.id) return;
 
     const fetchUserEvents = async () => {
       const allEvents = await getEvents();
       const filtered = allEvents.filter((event) => event.userId === user.id);
 
-      const enriched = await Promise.all(
+      const eventsWithImages = await Promise.all(
         filtered.map(async (event) => {
           const firstArtworkId = event.artworkIds?.[0];
           let thumbnailImage = null;
 
           if (firstArtworkId) {
-            try {
-              const art = await getArtDetails(firstArtworkId);
-              thumbnailImage = art?.image_thumbnail || null;
-            } catch (error) {
-              console.error("Fejl ved hentning af værk:", error);
-            }
+            const art = await getArtDetails(firstArtworkId);
+            thumbnailImage = art?.image_thumbnail || null;
           }
 
           return {
@@ -39,7 +36,7 @@ const Dashboard = () => {
         })
       );
 
-      setUserEvents(enriched);
+      setUserEvents(eventsWithImages);
     };
 
     fetchUserEvents();
@@ -50,12 +47,12 @@ const Dashboard = () => {
       <Header />
       <h1 className="mb-6">Dashboard</h1>
       <div className="flex items-center justify-between mb-4">
-  <h3 className="text-xl font-semibold">
-    {/* erstatning af "dine oprettede events" erstattes med en betinget rendering baseret på længden userEvents */}
-    {userEvents.length > 0 ? "Dine oprettede events" : "Du har ingen oprettede events.."}
-  </h3>
-  <ButtonPrimary href="/newEvent">Opret event</ButtonPrimary>
-</div>
+        <h3 className="text-xl font-semibold">
+          {/* erstatning af "dine oprettede events" erstattes med en betinget rendering baseret på længden userEvents */}
+          {userEvents.length > 0 ? "Dine oprettede events" : "Du har ingen oprettede events..."}
+        </h3>
+        <ButtonPrimary href="/newEvent">Opret event</ButtonPrimary>
+      </div>
 
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
         {userEvents.map((event) => (

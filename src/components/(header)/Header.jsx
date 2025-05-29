@@ -2,10 +2,12 @@
 
 import { useState, useRef, useEffect } from "react";
 import { useUser, SignIn, UserButton } from "@clerk/nextjs";
-import { usePathname, useRouter } from "next/navigation";
+import { usePathname } from "next/navigation";
+
 import Image from "next/image";
 import Link from "next/link";
 import BasketIcon from "./BasketIcon";
+
 import logoLime from "@/logos/smk_logo_lime.png";
 import logoBlack from "@/logos/smk_logo_sort.png";
 
@@ -14,7 +16,6 @@ const Header = ({ variant = "black" }) => {
   const [showSignIn, setShowSignIn] = useState(false);
   const { user } = useUser();
   const pathname = usePathname();
-  const router = useRouter();
   const signInRef = useRef(null);
 
   const isLime = variant === "lime";
@@ -33,23 +34,25 @@ const Header = ({ variant = "black" }) => {
 
   const navItems = (
     <div className="flex flex-col sm:flex-row w-full sm:w-auto items-center gap-8 sm:gap-space-l">
-     <Link
-  href="/events"
-  className={`w-full text-center sm:w-auto sm:text-left border-b-3 sm:border-none border-${lineColor} pb-2 sm:pb-0 desktop_header_font_size sm:hover:underline sm:hover:underline-offset-10 sm:hover:decoration-3 hover:cursor-pointer ${textColor} ${pathname === "/events" ? "sm:underline sm:underline-offset-10 sm:decoration-3" : ""}`}
-  onClick={() => setIsOpen(false)}
->
-  Events
-</Link>
+      <Link
+        href="/events"
+        className={`w-full text-center sm:w-auto sm:text-left border-b-3 sm:border-none border-${lineColor}
+        pb-2 sm:pb-0 desktop_header_font_size sm:hover:underline sm:hover:underline-offset-10 sm:hover:decoration-3 hover:cursor-pointer 
+        ${textColor} ${pathname === "/events" ? "sm:underline sm:underline-offset-10 sm:decoration-3" : ""}`}
+        onClick={() => setIsOpen(false)}
+      >
+        Events
+      </Link>
 
-{user && (
-  <Link
-    href="/dashboard"
-    className={`w-full text-center sm:w-auto sm:text-left border-b-3 sm:border-none border-${lineColor} pb-2 sm:pb-0 desktop_header_font_size sm:hover:underline sm:hover:underline-offset-10 sm:hover:decoration-3 hover:cursor-pointer ${textColor} ${pathname === "/dashboard" ? "sm:underline sm:underline-offset-10 sm:decoration-3" : ""}`}
-    onClick={() => setIsOpen(false)}
-  >
-    Dashboard
-  </Link>
-)}
+      {user && (
+        <Link
+          href="/dashboard"
+          className={`w-full text-center sm:w-auto sm:text-left border-b-3 sm:border-none border-${lineColor} pb-2 sm:pb-0 desktop_header_font_size sm:hover:underline sm:hover:underline-offset-10 sm:hover:decoration-3 hover:cursor-pointer ${textColor} ${pathname === "/dashboard" ? "sm:underline sm:underline-offset-10 sm:decoration-3" : ""}`}
+          onClick={() => setIsOpen(false)}
+        >
+          Dashboard
+        </Link>
+      )}
       {!user && (
         <button
           onClick={() => {
@@ -98,7 +101,7 @@ const Header = ({ variant = "black" }) => {
       </div>
 
       {/* Mobilmenu – fuld baggrund og klikbare punkter med mellemrum */}
-      {isOpen && <div className="fixed inset-0 bg-[#bab0bc] flex flex-col justify-center items-center z-40 px-10 sm:hidden">{navItems}</div>}
+      {isOpen && <div className="fixed inset-0 bg-[var(--background)] flex flex-col justify-center items-center z-40 px-10 sm:hidden">{navItems}</div>}
 
       {/* Login-popup */}
       {showSignIn && (

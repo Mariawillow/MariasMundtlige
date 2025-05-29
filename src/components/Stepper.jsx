@@ -24,13 +24,13 @@ export default function Stepper({ itemId, quantity, item }) {
     }
   }, [totalQuantityForEvent, item.remainingTickets]);
 
-  const increment = () => {
+  const increase = () => {
     if (!disablePlus) {
       addItem(item);
     }
   };
 
-  const decrement = () => {
+  const decrease = () => {
     if (quantity > 0) {
       updateItemQuantity(itemId, item.eventId, quantity - 1);
     }
@@ -39,13 +39,13 @@ export default function Stepper({ itemId, quantity, item }) {
   return (
     <div>
       <div className="flex items-center text-2xl place-self-end justify-between">
-        <button onClick={decrement} disabled={quantity === 0} className={`px-3 py-1 border border-black transition ${quantity === 0 ? "opacity-50 hover:border-black hover:cursor-default" : "hover:border-[#C4FF00] cursor-pointer"}`}>
+        <button onClick={decrease} disabled={quantity === 0} className={`px-3 py-1 border border-black transition ${quantity === 0 ? "opacity-50 hover:border-black hover:cursor-default" : "hover:border-[#C4FF00] cursor-pointer"}`}>
           −
         </button>
 
         <span className="w-8 text-center tabular-nums">{quantity}</span>
 
-        <button onClick={increment} disabled={disablePlus} className={`px-3 py-1 border border-black transition ${disablePlus ? "opacity-50 hover:border-black hover:cursor-default" : "hover:border-[#C4FF00] cursor-pointer"}`}>
+        <button onClick={increase} disabled={disablePlus} className={`px-3 py-1 border border-black transition ${disablePlus ? "opacity-50 hover:border-black hover:cursor-default" : "hover:border-[#C4FF00] cursor-pointer"}`}>
           +
         </button>
       </div>
