@@ -13,7 +13,6 @@ import { handleEventAction } from "@/lib/eventHelpers"; // Håndterer oprettelse
 import ArtworkGrid from "./ArtworkGrid";
 import arrowLong from "@/images/arrowLong.svg";
 import { SearchBar } from "./SearchBar";
-import SearchResultsList from "./SearchResultsList";
 import EventForm from "./EventForm";
 
 
@@ -89,7 +88,18 @@ export default function ArtworkSelection({ date, location, period, defaultData =
     });
   };
 
-  const [results, setResults] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Filtrer og sorterer værker baseret på søgetekst (kunstner eller titel) + valgte værker øverst
+  const displayedArtworks = (
+    searchTerm
+      ? filteredArtworks.filter((art) => {
+          const title = art.titles?.[0]?.title?.toLowerCase() || "";
+          const artist = art.production?.[0]?.artist?.name?.toLowerCase() || "";
+          return title.includes(searchTerm.toLowerCase()) || artist.includes(searchTerm.toLowerCase());
+        })
+      : filteredArtworks
+  ).filter((art) => !selectedArtworks.includes(art.object_number));
 
   // Event håndtering: Opret eller opdater event
   // Samler alle data om event i eventInfo
@@ -120,7 +130,7 @@ export default function ArtworkSelection({ date, location, period, defaultData =
       <h3 className="text-center">STEP 2: Information om dit event</h3>
 
       <div className="md:grid md:grid-cols-[1fr_2fr] gap-space-l">
-        <EventForm eventName={eventName} setEventName={setEventName} eventDescription={eventDescription} setEventDescription={setEventDescription} selectedArtworks={selectedArtworks} location={location} />
+        <EventForm eventName={eventName} setEventName={setEventName} eventDescription={eventDescription} setEventDescription={setEventDescription} selectedArtworks={selectedArtworks} location={location} filteredArtworks={filteredArtworks} toggleArtwork={toggleArtwork} />
 
         <div>
           {loading ? (
@@ -128,13 +138,12 @@ export default function ArtworkSelection({ date, location, period, defaultData =
           ) : (
             <>
               <div className="relative w-[400px] my-4 md:place-self-end">
-                <SearchBar setResults={setResults} />
-                <SearchResultsList results={results} />
+                <SearchBar onSearch={setSearchTerm} />
               </div>
 
               {selectedArtworks.length === location?.maxArtworks && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>}
 
-              <ArtworkGrid artworks={filteredArtworks} selectedArtworks={selectedArtworks} toggleArtwork={toggleArtwork} />
+              <ArtworkGrid artworks={displayedArtworks} selectedArtworks={selectedArtworks} toggleArtwork={toggleArtwork} />
             </>
           )}
         </div>

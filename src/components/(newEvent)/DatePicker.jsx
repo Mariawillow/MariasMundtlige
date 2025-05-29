@@ -53,7 +53,7 @@ export default function DatePicker({ date, setDate, location }) {
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">
         <Calendar
-          className="bg-neutral-100 rounded-md"
+          className="bg-neutral-100"
           mode="single"
           selected={date}
           onSelect={handleSelect}
