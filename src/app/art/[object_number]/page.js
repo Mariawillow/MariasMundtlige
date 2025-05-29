@@ -5,8 +5,8 @@ import ArtClient from "@/components/ButtonBackClient";
 import { format, parseISO } from "date-fns";
 import { da } from "date-fns/locale";
 
-export default async function ArtSingleView({ params }) {
-  const { object_number } = params;
+export default async function ArtSingleView(props) {
+  const { object_number } = await (await props).params;
 
   // Hent kunstværksdata fra SMK-API
   const artwork = await getArtDetails(object_number);
