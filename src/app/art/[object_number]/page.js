@@ -2,20 +2,8 @@ import Image from "next/image";
 import Header from "@/components/(header)/Header";
 import { getArtDetails } from "@/api/smk";
 import ArtClient from "@/components/ButtonBackClient";
-
-//Hjælpe-funktion som bruges senere til at omsætte fødsels- og dødsdato fra ISO-format til dansk dato
-const formatDate = (isoDateString) => {
-  //Hvis isoDateString ikke findes, returnerer vi "Ukendt dato".
-  if (!isoDateString) return "Ukendt dato";
-  // Opretter et Date-objekt ud fra den givne ISO-dato
-  const date = new Date(isoDateString);
-  // Formaterer datoen
-  return new Intl.DateTimeFormat("da-DK", {
-    day: "numeric", // Vist som dag, f.eks. "18"
-    month: "long", // Vist som fuld måned, f.eks. "maj"
-    year: "numeric", // Vist som årstal, f.eks. "2025"
-  }).format(date);
-};
+import { format, parseISO } from "date-fns";
+import { da } from "date-fns/locale";
 
 export default async function ArtSingleView({ params }) {
   const { object_number } = params;
@@ -35,8 +23,6 @@ export default async function ArtSingleView({ params }) {
   const artist = artwork?.artist || "Ukendt kunstner";
   const artistDateOfBirth = artwork?.production?.[0]?.creator_date_of_birth;
   const artistDateOfDeath = artwork?.production?.[0]?.creator_date_of_death;
-  const formattedBirthDate = formatDate(artistDateOfBirth) || "Ukendt fødeår";
-  const formattedDeathDate = formatDate(artistDateOfDeath) || "Ukendt dødsår";
   const nationality = artwork?.production?.[0]?.creator_nationality || "ukendt nationalitet";
 
   return (
@@ -60,7 +46,7 @@ export default async function ArtSingleView({ params }) {
           </p>
           <h4 className="font-semibold mt-space-m">Kunstner</h4>
           <p className="font-light">
-            {artist}, {formattedBirthDate} - {formattedDeathDate}, {nationality}
+            {artist}, {artistDateOfBirth ? format(parseISO(artistDateOfBirth), "d. MMM yyyy", { locale: da }) : "Ukendt fødeår"} - {artistDateOfDeath ? format(parseISO(artistDateOfDeath), "d. MMM yyyy", { locale: da }) : "Ukendt dødsår"}, {nationality}
           </p>
         </aside>
       </section>

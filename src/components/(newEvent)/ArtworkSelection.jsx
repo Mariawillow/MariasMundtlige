@@ -33,6 +33,9 @@ export default function ArtworkSelection({ date, location, period, defaultData =
     setLoading(true);
     getArts()
       .then((data) => setAllArtworks(data))
+      .catch(() => {
+        alert("Der opstod en fejl ved hentning af kunstværker. Prøv igen senere.");
+      })
       .finally(() => setLoading(false));
   }, []);
 
