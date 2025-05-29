@@ -4,11 +4,6 @@ import { IoIosSearch } from "react-icons/io";
 export const SearchBar = ({ onSearch }) => {
   const [input, setInput] = useState("");
 
-  const handleChange = (value) => {
-    setInput(value);
-    onSearch(value); // Giver søgeteksten videre op
-  };
-
   const fetchData = async (malerier) => {
     const baseFilters = ["has_image:true", "on_display:false", "public_domain:true"];
     const filterString = baseFilters.map((f) => `[${f}]`).join(",");
