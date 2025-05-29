@@ -15,7 +15,6 @@ import arrowLong from "@/images/arrowLong.svg";
 import { SearchBar } from "./SearchBar";
 import EventForm from "./EventForm";
 
-
 export default function ArtworkSelection({ date, location, period, defaultData = {}, mode = "create", onSubmit }) {
   const [allArtworks, setAllArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
@@ -29,7 +28,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
   const [eventDescription, setEventDescription] = useState(defaultData.description || "");
   const [selectedArtworks, setSelectedArtworks] = useState(defaultData.artworkIds || []);
 
-
   // Hent alle værker én gang og sættes i allArtworks
   useEffect(() => {
     setLoading(true);
@@ -37,7 +35,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
       .then((data) => setAllArtworks(data))
       .finally(() => setLoading(false));
   }, []);
-
 
   // Filtrer værker, når perioden ændrer sig
   useEffect(() => {
@@ -87,16 +84,27 @@ export default function ArtworkSelection({ date, location, period, defaultData =
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filtrer og sorterer værker baseret på søgetekst (kunstner eller titel)
+  // Filtrer og sorterer værker baseret på søgetekst (kunstner)
   const displayedArtworks = (
     searchTerm
       ? filteredArtworks.filter((art) => {
-        const title = art.titles?.[0]?.title?.toLowerCase() || "";
-        const artist = art.production?.[0]?.artist?.name?.toLowerCase() || "";
-        return title.includes(searchTerm.toLowerCase()) || artist.includes(searchTerm.toLowerCase());
-      })
+          // Sikre at art.artist er et array
+          const artistNames = Array.isArray(art.artist) ? art.artist : [];
+          // Gemmer searchterm i lowercase
+          const search = searchTerm.toLowerCase();
+
+          // Tjekker om nogen af kunstnernavnene matcher søgetermen
+          return artistNames.some((name) => {
+            // Hvis navnet ikke er en streng (fx null, tal, etc.), ignorer det
+            if (typeof name !== "string") return false;
+            // Lowercaser navnet og tjekker om søgetermen indgår
+            return name.toLowerCase().includes(search);
+          });
+        })
       : filteredArtworks
-  ).filter((art) => !selectedArtworks.includes(art.object_number));
+  )
+    //fjerner de værker, som allerede er valgt af brugeren
+    .filter((art) => !selectedArtworks.includes(art.object_number));
 
   // Event håndtering: Opret eller opdater event
   // Samler alt data om event i eventInfo
@@ -120,7 +128,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
       setShowSuccess,
     });
   };
-
 
   return (
     <div className="space-y-8 mt-8">
@@ -156,7 +163,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
 
       {/* SuccessToast */}
       {showSuccess && <div className="fixed top-6 right-6 bg-[#C4FF00] text-white px-4 py-2 rounded shadow-lg transition-all z-50">Eventet blev oprettet!</div>}
-
     </div>
   );
 }
