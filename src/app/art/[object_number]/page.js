@@ -1,7 +1,7 @@
 import Image from "next/image";
 import Header from "@/components/(header)/Header";
 import { getArtDetails } from "@/api/smk";
-import ArtClient from "@/components/(art)/ArtClient";
+import ArtClient from "@/components/ButtonBackClient";
 
 //Hjælpe-funktion som bruges senere til at omsætte fødsels- og dødsdato fra ISO-format til dansk dato
 const formatDate = (isoDateString) => {
@@ -37,7 +37,7 @@ export default async function ArtSingleView({ params }) {
   const artistDateOfDeath = artwork?.production?.[0]?.creator_date_of_death;
   const formattedBirthDate = formatDate(artistDateOfBirth) || "Ukendt fødeår";
   const formattedDeathDate = formatDate(artistDateOfDeath) || "Ukendt dødsår";
-  const nationality = artwork?.production?.[0]?.creator_nationality || "Ukendt nationalitet";
+  const nationality = artwork?.production?.[0]?.creator_nationality || "ukendt nationalitet";
 
   return (
     <div className="relative px-[var(--space-s)] py-[var(--space-l)] overflow-hidden">
@@ -56,7 +56,7 @@ export default async function ArtSingleView({ params }) {
           <h1 className="font-semibold">{title}</h1>
           <h3 className="font-light">{periode}</h3>
           <p className="font-light mt-space-s">
-            Værket er fremstillet med teknikken {techniques}, og hører til {department}.
+            Værket er fremstillet med teknikken '{techniques}', og hører til {department}.
           </p>
           <h4 className="font-semibold mt-space-m">Kunstner</h4>
           <p className="font-light">

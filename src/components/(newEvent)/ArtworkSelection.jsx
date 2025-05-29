@@ -20,7 +20,7 @@ export default function ArtworkSelection({ date, location, period, defaultData =
   const [allArtworks, setAllArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false);
+  const [showSuccess, setShowSuccess] = useState(false); //Toast effekt
 
   const router = useRouter();
   const { user } = useUser(); //giver adgang til allerede loggede ind brugere.
@@ -35,7 +35,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
     setLoading(true);
     getArts()
       .then((data) => setAllArtworks(data))
-      .catch(console.error)
       .finally(() => setLoading(false));
   }, []);
 
@@ -66,8 +65,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
 
         // Sæt de filtrerede og tilgængelige værker som de værker, der vises
         setFilteredArtworks(availableArtworks);
-      } catch (err) {
-        console.error("Fejl i værk-filtrering:", err);
       } finally {
         setLoading(false);
       }
@@ -90,19 +87,19 @@ export default function ArtworkSelection({ date, location, period, defaultData =
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filtrer og sorterer værker baseret på søgetekst (kunstner eller titel) + valgte værker øverst
+  // Filtrer og sorterer værker baseret på søgetekst (kunstner eller titel)
   const displayedArtworks = (
     searchTerm
       ? filteredArtworks.filter((art) => {
-          const title = art.titles?.[0]?.title?.toLowerCase() || "";
-          const artist = art.production?.[0]?.artist?.name?.toLowerCase() || "";
-          return title.includes(searchTerm.toLowerCase()) || artist.includes(searchTerm.toLowerCase());
-        })
+        const title = art.titles?.[0]?.title?.toLowerCase() || "";
+        const artist = art.production?.[0]?.artist?.name?.toLowerCase() || "";
+        return title.includes(searchTerm.toLowerCase()) || artist.includes(searchTerm.toLowerCase());
+      })
       : filteredArtworks
   ).filter((art) => !selectedArtworks.includes(art.object_number));
 
   // Event håndtering: Opret eller opdater event
-  // Samler alle data om event i eventInfo
+  // Samler alt data om event i eventInfo
   const handleMakeNewEvent = () => {
     const eventInfo = {
       title: eventName,
@@ -113,7 +110,7 @@ export default function ArtworkSelection({ date, location, period, defaultData =
       period: period?.id,
     };
 
-    // Kalder funktion som opretter eller opdaterer baseret på mode ("create" eller "edit"). Her håndteres også success-feedback
+    // Kalder funktion som opretter eller opdaterer baseret på mode ("create" eller "edit"). Her håndteres også success-feedback (toast)
     handleEventAction({
       mode,
       onSubmit,
@@ -151,7 +148,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
       <div className="flex justify-end">
         <button className="group inline-block text-[#C4FF00] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
           <span className="inline-flex flex-col">
-            {/* <span className="text-4xl font-bold px-8">Opret event</span> */}
             <span className="text-4xl font-bold px-8">{mode === "edit" ? "Gem ændringer" : "Opret event"}</span>
             <Image src={arrowLong} alt="pil" className="self-end transition-transform group-hover:translate-x-1 group-disabled:translate-x-0" />
           </span>

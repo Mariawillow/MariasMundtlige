@@ -11,13 +11,14 @@ const Price = () => {
     return items.reduce((totalPrice, item) => totalPrice + item.price * item.quantity, 0);
   };
 
-  const groupedItems = items.reduce((acc, item) => {
+  //output er vores opsamler af items 
+  const groupedItems = items.reduce((output, item) => {
     const key = item.eventId;
-    if (!acc[key]) {
-      acc[key] = { eventTitle: item.eventTitle, tickets: [] };
+    if (!output[key]) {
+      output[key] = { eventTitle: item.eventTitle, tickets: [] };
     }
-    acc[key].tickets.push(item);
-    return acc;
+    output[key].tickets.push(item);
+    return output;
   }, {});
 
   return (
@@ -56,7 +57,7 @@ const Price = () => {
           </div>
         ))}
         <div className="flex items-center gap-4 mt-5">
-          <h4 className="font-semibold">Total: {getTotalPrice()} DKK</h4>
+          <h4 className="font-semibold ml-auto">Total: {getTotalPrice()} DKK</h4>
         </div>
       </section>
     </article>

@@ -40,11 +40,11 @@ const Basket = () => {
         });
       }
 
-      const total = items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
+      const totalTickets = items.reduce((sum, item) => sum + (Number(item.quantity) || 0), 0);
 
       const receiptData = {
         items,
-        totalTickets: total,
+        totalTickets: totalTickets,
         name,
         email,
         address,
@@ -61,7 +61,6 @@ const Basket = () => {
       // Gå til kvitteringsside
       router.push("/receipt");
     } catch (error) {
-      console.error("Fejl ved opdatering af billetter:", error);
       alert("Der skete en fejl under købet. Prøv igen.");
     }
   };
