@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useState } from "react";
 import gsap from "gsap";
 
 export default function ArtworkCard({ artwork, selected, onClick }) {
@@ -9,12 +9,6 @@ export default function ArtworkCard({ artwork, selected, onClick }) {
   const title = artwork.titles?.[0]?.title || "Uden titel";
   const thumbnail = artwork.image_thumbnail || "/fallback.jpg";
 
-  useEffect(() => {
-    if (!isFadingOut) {
-      gsap.fromTo(cardRef.current, { opacity: 0, scale: 0.95, y: 10 }, { opacity: 1, scale: 1, y: 0, duration: 1, ease: "power2.out" });
-    }
-  }, [isFadingOut]);
-
   const handleClick = () => {
     setIsFadingOut(true);
     gsap.to(cardRef.current, {
@@ -24,7 +18,7 @@ export default function ArtworkCard({ artwork, selected, onClick }) {
       duration: 0.4,
       ease: "power2.inOut",
       onComplete: () => {
-        onClick(artwork.object_number); //Fjerner først card, når animationen er færdig
+        onClick(artwork.object_number); // Fjern kortet efter animation
       },
     });
   };
