@@ -1,6 +1,6 @@
 "use client";
 
-import ListeCardClient from "@/components/(events)/ListeCardClient";
+import ListeCardWrapper from "@/components/(events)/ListeCardWrapper";
 import Header from "@/components/(header)/Header";
 import LocationDropdown from "@/components/(events)/DropdownLocation";
 import SortingDropdown from "@/components/(events)/DropDownSorter";
@@ -8,7 +8,7 @@ import SortingDropdown from "@/components/(events)/DropDownSorter";
 import { useEffect, useState } from "react";
 import { getEvents, getLocations } from "@/api/localhost"; // Henter event data
 import { getArtDetails } from "@/api/smk"; //Henter værk data
-import { cityAbbreviation } from "@/lib/cityHelpers";
+import { cityShorten } from "@/lib/cityHelpers";
 
 export default function ListeView() {
   const [events, setEvents] = useState([]); // Gemmer events
@@ -22,8 +22,8 @@ export default function ListeView() {
     const fetchData = async () => {
       const [eventsData, locationsData] = await Promise.all([getEvents(), getLocations()]);
 
-      // Berig events med thumbnail fra SMK API
-      const enrichedEvents = await Promise.all(
+      // Finder eventets med thumbnail fra SMK API
+      const firstArtImg = await Promise.all(
         eventsData.map(async (event) => {
           const firstArtworkId = event.artworkIds?.[0];
           let thumbnailImage = null;
@@ -44,7 +44,7 @@ export default function ListeView() {
         })
       );
 
-      setEvents(enrichedEvents);
+      setEvents(firstArtImg);
       setLocations(locationsData);
     };
 
@@ -59,12 +59,12 @@ export default function ListeView() {
     if (!selectedCity) return true; // Ingen filter - vis alle
     const location = getLocationById(event.locationId); // Find lokationen til eventet
     if (!location) return false; // Hvis lokation ikke findes, skjul event
-    const abbreviation = cityAbbreviation[selectedCity] || [selectedCity.toLowerCase()]; // Find forkortelse for by
+    const shorten = cityShorten[selectedCity] || [selectedCity.toLowerCase()]; // Find forkortelse for by
     // Tjek om lokationsadressen indeholder et af forkortelse (case-insensitive)
-    return abbreviation.some((abbreviation) => location.address.toLowerCase().includes(abbreviation));
+    return shorten.some((shorten) => location.address.toLowerCase().includes(shorten));
   });
 
-  //Vi sortere nu bogsteaverne alfabetisk fra a-å og efter de populæreste:
+  //Vi sortere nu bogstaverne alfabetisk fra a-å og efter de populæreste:
   const sortedEvents = [...filteredEvents].sort((a, b) => {
     if (sortOrder === "alphabetical") {
       return a.title.localeCompare(b.title, "da");
@@ -72,23 +72,22 @@ export default function ListeView() {
     if (sortOrder === "popularity") {
       const remainingA = a.totalTickets - a.bookedTickets;
       const remainingB = b.totalTickets - b.bookedTickets;
-  
+
       const isSoldOutA = remainingA <= 0;
       const isSoldOutB = remainingB <= 0;
-  
+
       // Hvis A er udsolgt og B ikke er, skal A komme efter B
       if (isSoldOutA && !isSoldOutB) return 1;
       if (!isSoldOutA && isSoldOutB) return -1;
-  
+
       // Hvis begge har billetter, sorter efter popularitet (højst først)
-      const popularityA = (a.bookedTickets / a.totalTickets) || 0;
-      const popularityB = (b.bookedTickets / b.totalTickets) || 0;
+      const popularityA = a.bookedTickets / a.totalTickets || 0;
+      const popularityB = b.bookedTickets / b.totalTickets || 0;
       return popularityB - popularityA;
     }
-  
+
     return 0;
   });
-  
 
   return (
     <div>
@@ -97,7 +96,7 @@ export default function ListeView() {
         <LocationDropdown onSelectCity={setSelectedCity} />
         <SortingDropdown onSortChange={setSortOrder} />
       </div>
-      <ListeCardClient events={sortedEvents} />
+      <ListeCardWrapper events={sortedEvents} />
     </div>
   );
 }

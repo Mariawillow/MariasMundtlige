@@ -1,4 +1,4 @@
-export const cityAbbreviation = {
+export const cityShorten = {
   Aalborg: ["Ålborg", "aalborg"],
   Esbjerg: ["esbjerg"],
   Holstebro: ["holstebro"],

@@ -2,13 +2,12 @@ import React, { useState, useEffect } from "react";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { IoIosArrowDown } from "react-icons/io";
 import { getLocations } from "@/api/localhost";
-import { cityAbbreviation } from "@/lib/cityHelpers";
+import { cityShorten } from "@/lib/cityHelpers";
 
 // Definer listen af byer til dropdown
 const cities = ["Aalborg", "Esbjerg", "Holstebro", "København", "Køge", "Lyngby", "Odense", "Silkeborg", "Århus"];
 
 export default function LocationDropdown({ onSelectCity }) {
-  // resten af din kode...
   const [open, setOpen] = useState(false);
   const [selectedCity, setSelectedCity] = useState(null);
   const [locations, setLocations] = useState([]);
@@ -32,8 +31,8 @@ export default function LocationDropdown({ onSelectCity }) {
     if (!selectedCity) {
       setFilteredLocations(locations);
     } else {
-      const abbreviation = cityAbbreviation[selectedCity] || [selectedCity.toLowerCase()];
-      const filtered = locations.filter((loc) => abbreviation.some((abbreviation) => loc.address.toLowerCase().includes(abbreviation)));
+      const shorten = cityShorten[selectedCity] || [selectedCity.toLowerCase()];
+      const filtered = locations.filter((location) => shorten.some((shorten) => location.address.toLowerCase().includes(shorten)));
       setFilteredLocations(filtered);
     }
 

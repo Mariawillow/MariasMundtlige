@@ -15,7 +15,7 @@ import arrowLong from "@/images/arrowLong.svg";
 import { SearchBar } from "./SearchBar";
 import EventForm from "./EventForm";
 
-export default function ArtworkSelection({ date, location, period, defaultData = {}, mode = "create", onSubmit }) {
+export default function EventInformation({ date, location, period, defaultData = {}, mode = "create", onSubmit }) {
   const [allArtworks, setAllArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
   const [loading, setLoading] = useState(false);

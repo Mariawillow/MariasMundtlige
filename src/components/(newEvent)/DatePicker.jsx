@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { getDates, getEvents } from "@/api/localhost";
 import { format, isSameDay, parseISO } from "date-fns";
 import { da } from "date-fns/locale";
@@ -36,7 +36,7 @@ export default function DatePicker({ date, setDate, location }) {
     });
   }, [location]);
 
-  useEffect(() => { }, [date]); //Hvad gør du ??
+  useEffect(() => {}, [date]);
 
   const handleSelect = (day) => {
     setDate(day); // sender dato op
@@ -68,5 +68,3 @@ export default function DatePicker({ date, setDate, location }) {
     </Popover>
   );
 }
-
-// => !availableDates.some((dateStr) => isSameDay(day, parseISO(dateStr)))}

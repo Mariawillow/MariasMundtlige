@@ -25,17 +25,7 @@ export default function Home() {
     tl.from(headingRef.current, {
       y: 60,
       opacity: 0,
-    })
-
-      // Anden animation: Knappen glider lidt op og fader ind
-      .from(
-        buttonRef.current,
-        {
-          y: 20,
-          opacity: 0,
-        },
-        "-=0.5" // "-=0.5" betyder at den starter 0.5 sekunder før den forrige animation er færdig (overlap)
-      );
+    });
   }, []); // Kører kun én gang ved første render
 
   return (
