@@ -1,3 +1,5 @@
+"use client"
+
 import ListeCard from "./ListeCard";
 
 const ListeCardWrapper = ({ events }) => {

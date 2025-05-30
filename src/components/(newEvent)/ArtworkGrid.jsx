@@ -1,3 +1,5 @@
+"use client"
+
 import ArtworkCard from "./ArtworkCard";
 import { useState } from "react";
 

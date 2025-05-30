@@ -1,3 +1,5 @@
+"use client"
+
 import DatePicker from "@/components/(newEvent)/DatePicker";
 
 export default function DateSelector({ date, setDate, location }) {

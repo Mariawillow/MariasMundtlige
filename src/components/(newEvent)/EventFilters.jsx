@@ -1,3 +1,5 @@
+"use client"
+
 //Samler location, dato og kunstperiode
 import DateSelector from "@/components/(newEvent)/DateSelector";
 import LocationSelector from "@/components/(newEvent)/LocationSelector";

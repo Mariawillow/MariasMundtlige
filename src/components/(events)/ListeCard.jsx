@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -42,7 +44,7 @@ const ListeCard = ({ event }) => {
         ) : remainingTickets < 10 ? (
           <div className="absolute top-2 right-2 bg-gray-50 text-black text-xs font-bold px-2 py-1 z-10">Få billetter tilbage</div>
         ) : // Og "null" ellers vi ingenting
-        null}
+          null}
 
         {/* Overlay text (hidden on small screens) */}
         <div className="hidden sm:flex absolute inset-0 flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition duration-300">
