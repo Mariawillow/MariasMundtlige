@@ -136,6 +136,7 @@ export default function EventInformation({ date, location, period, defaultData =
       locationId: location.id,
       artworkIds: selectedArtworks,
       period: period?.id,
+      totalTickets: location.maxTickets,
     };
 
     // Kalder funktion som opretter eller opdaterer baseret på mode ("create" eller "edit"). Her håndteres også success-feedback (toast)
