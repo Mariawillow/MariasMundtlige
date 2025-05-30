@@ -71,7 +71,7 @@ export default function ArtworkCard({ artwork, selected, onClick, disableSelect 
         ${disableSelect && !isSelected ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
       `}
     >
-      <img src={thumbnail} alt={title} className="w-full h-full object-cover" />
+      <img src={imgUrl} alt={title} className="w-full h-full object-cover" />
     </div>
   );
 }

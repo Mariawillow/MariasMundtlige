@@ -9,11 +9,27 @@ import { da } from "date-fns/locale";
 const ListeCard = ({ event }) => {
   //minusser totalToickes fra bookedTickets - bruges til bagde så man kn se om man ska skynde sig.
   const remainingTickets = event.totalTickets - event.bookedTickets;
-  const imageUrl = event.thumbnailImage || StatuePic;
+  // State til billede-URL, fallback til artPlaceholder
+  const [imageUrl, setImageUrl] = useState(artPlaceholder);
 
   // Formatteret dato
   // "PPP" = Pretty Print Pattern som er en færdig, lokaliseret datoformat.
   const formattedDate = format(parseISO(event.date), "PPP", { locale: da });
+
+  useEffect(() => {
+    async function fetchThumbnail() {
+      // Brug helperen til at hente det første kunstværks billede, hvis der er artworkIds
+      if (event.artworkIds?.length) {
+        const url = await firstArtImgHelper(event.artworkIds);
+        setImageUrl(url);
+      } else {
+        setImageUrl(artPlaceholder); // fallback hvis ingen artworkIds
+      }
+    }
+
+    fetchThumbnail();
+  }, [event.artworkIds]);
+
   return (
     <Link href={`/event/${event.id}`} className="group w-full cursor-pointer">
       <div className="relative aspect-[3/2]">
