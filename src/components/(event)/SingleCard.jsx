@@ -46,12 +46,13 @@ const SingleCard = ({ eventData }) => {
             const quantity = cartItem?.quantity || 0;
 
             return (
-              <div key={ticket.id} className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
+              <div key={ticket.id} className="flex justify-between items-center gap-4 flex-wrap">
                 <div>
                   <p className="font-semibold">{ticket.name}</p>
                   <p className="font-light">Pris {ticket.price} DKK</p>
                 </div>
-                <div className="justify-self-end">
+
+                <div className="flex flex-col items-end gap-1 min-w-[100px]">
                   <Stepper
                     itemId={ticket.id}
                     quantity={quantity}
@@ -66,6 +67,8 @@ const SingleCard = ({ eventData }) => {
                   />
                 </div>
               </div>
+
+
             );
           })}
 
