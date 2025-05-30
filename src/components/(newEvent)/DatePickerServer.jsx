@@ -1,6 +1,6 @@
 "use server";
 
-import { getDates } from "@/api/localhost";
+import { getDates } from "@/api/events";
 import DatePicker from "./DatePicker";
 
 export default async function DatePickerServer() {

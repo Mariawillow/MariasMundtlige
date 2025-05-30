@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useUser } from "@clerk/nextjs";
 
 import { getArts } from "@/api/smk";
-import { getEvents } from "@/api/localhost";
+import { getEvents } from "@/api/events";
 import { filterArtworksByPeriod } from "@/api/periods";
 import { handleEventAction } from "@/lib/eventHelpers"; // Håndterer oprettelse og opdatering af events
 

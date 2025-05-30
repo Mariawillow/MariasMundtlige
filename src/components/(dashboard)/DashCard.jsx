@@ -7,7 +7,7 @@ import { FaPen } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 
 import StatuePic from "@/images/statuePic.svg"; //laves om til placeholder billede
-import { deleteEvent } from "@/api/localhost";
+import { deleteEvent } from "@/api/events";
 
 const DashCard = ({ event }) => {
   const handleDelete = async () => {

@@ -6,7 +6,7 @@ import LocationDropdown from "@/components/(events)/DropdownLocation";
 import SortingDropdown from "@/components/(events)/DropDownSorter";
 
 import { useEffect, useState } from "react";
-import { getEvents, getLocations } from "@/api/localhost"; // Henter event data
+import { getEvents, getLocations } from "@/api/events"; // Henter event data
 import { getArtDetails } from "@/api/smk"; //Henter værk data
 import { cityShorten } from "@/lib/cityHelpers";
 

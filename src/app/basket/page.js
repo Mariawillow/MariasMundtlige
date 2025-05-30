@@ -7,7 +7,7 @@ import { FaTicketAlt } from "react-icons/fa";
 import Price from "@/components/(basket)/Price";
 import useCartStore from "@/app/store/cartStore";
 import ButtonSecondary from "@/components/ButtonSecondary";
-import { updateTickets } from "@/api/localhost";
+import { updateTickets } from "@/api/events";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
