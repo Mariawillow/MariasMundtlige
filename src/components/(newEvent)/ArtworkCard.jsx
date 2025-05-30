@@ -1,13 +1,33 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
+import { firstArtImgHelper } from "@/lib/firstArtImgHelper"; // Importér din helper
+import artPlaceholder from "@/images/artPlaceholder.png";
 
 export default function ArtworkCard({ artwork, selected, onClick }) {
   // Referencen til DOM-elementet, så vi kan animere det med GSAP
   const cardRef = useRef();
 
+  // State til thumbnail-URL, vi henter den asynkront via helperen
+  const [thumbnail, setThumbnail] = useState(artPlaceholder.src || artPlaceholder);
+
+  // Tjek om dette artwork er valgt
   const isSelected = selected.includes(artwork.object_number);
+
+  // Titel fallback
   const title = artwork.titles?.[0]?.title || "Uden titel";
-  const thumbnail = artwork.image_thumbnail || "/fallback.jpg";
+
+  useEffect(() => {
+    // Hent billed-URL ved hjælp af helperen, som tager artworkIds
+    // Her laver vi et array med kun dette artworks ID (da helper forventer artworkIds-array)
+    async function fetchThumbnail() {
+      const url = await firstArtImgHelper([artwork.object_number]);
+      setThumbnail(url);
+    }
+
+    fetchThumbnail();
+  }, [artwork.object_number]);
+
+  const imgUrl = thumbnail;
 
   // Funktioner der animere kort og kalder onClick callback, når animationen er færdig
   const handleClick = () => {
@@ -27,7 +47,7 @@ export default function ArtworkCard({ artwork, selected, onClick }) {
 
   return (
     <div ref={cardRef} onClick={handleClick} className={`aspect-square cursor-pointer transition ${isSelected ? "border-[3px] border-[#C4FF00]" : "border-gray-200"}`}>
-      <img src={thumbnail} alt={title} className="w-full h-full object-cover" />
+      <img src={imgUrl} alt={title} className="w-full h-full object-cover" />
     </div>
   );
 }
