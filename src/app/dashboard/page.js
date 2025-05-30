@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
-import { getEvents } from "@/api/localhost";
+import { getEvents } from "@/api/events";
 import { getArtDetails } from "@/api/smk";
 import DashCard from "@/components/(dashboard)/DashCard";
 import Header from "@/components/(header)/Header";

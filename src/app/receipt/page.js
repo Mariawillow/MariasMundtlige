@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getEventById } from "@/api/localhost";
+import { getEventById } from "@/api/events";
 import Header from "@/components/(header)/Header";
 import ButtonSecondary from "@/components/ButtonSecondary";
 

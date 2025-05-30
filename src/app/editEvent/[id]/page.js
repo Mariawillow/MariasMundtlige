@@ -5,7 +5,7 @@ import Header from "@/components/(header)/Header";
 import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { getEvents, updateEvent } from "@/api/localhost";
+import { getEvents, updateEvent } from "@/api/events";
 import { getPeriodById } from "@/api/periods";
 
 const EditEventPage = ({ params }) => {

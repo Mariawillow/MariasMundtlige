@@ -1,4 +1,4 @@
-import { makeNewEvent } from "@/api/localhost";
+import { makeNewEvent } from "@/api/events";
 
 // Funktion som håndterer oprettelse og redigering af event
 export async function handleEventAction({ mode, onSubmit, user, router, eventInfo, setShowSuccess }) {

@@ -1,6 +1,6 @@
 "use server";
 
-import { getLocations } from "@/api/localhost";
+import { getLocations } from "@/api/events";
 import LocationSelector from "./LocationSelector";
 
 export default async function MakeEventStepOneWrapper() {

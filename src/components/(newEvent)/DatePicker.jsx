@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { getDates, getEvents } from "@/api/localhost";
+import { getDates, getEvents } from "@/api/events";
 import { format, isSameDay, parseISO } from "date-fns";
 import { da } from "date-fns/locale";
 

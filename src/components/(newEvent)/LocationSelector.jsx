@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
-import { getLocations, getEvents } from "@/api/localhost";
+import { getLocations, getEvents } from "@/api/events";
 import { isSameDay, parseISO } from "date-fns";
 
 export default function LocationSelector({ location, setLocation, date }) {

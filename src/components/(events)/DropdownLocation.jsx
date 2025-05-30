@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 import { IoIosArrowDown } from "react-icons/io";
-import { getLocations } from "@/api/localhost";
+import { getLocations } from "@/api/events";
 import { cityShorten } from "@/lib/cityHelpers";
 
 // Definer listen af byer til dropdown
