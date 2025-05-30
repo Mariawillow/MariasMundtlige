@@ -7,6 +7,7 @@ import { FaTicketAlt } from "react-icons/fa";
 import Price from "@/components/(basket)/Price";
 import useCartStore from "@/app/store/cartStore";
 import ButtonSecondary from "@/components/ButtonSecondary";
+import Popup from "@/components/Popup";
 import { updateTickets } from "@/api/events";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -19,15 +20,16 @@ const Basket = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
+  const [popupMessage, setPopupMessage] = useState("");
 
   const handleBuyClick = async () => {
     if (items.length === 0) {
-      alert("Du har ikke valgt nogen billetter!");
+      setPopupMessage("Du har ikke valgt nogen billetter!");
       return;
     }
 
     if (!name || !email || !address) {
-      alert("Udfyld venligst navn, e-mail og adresse.");
+      setPopupMessage("Udfyld venligst navn, e-mail og adresse.");
       return;
     }
 
@@ -117,6 +119,7 @@ const Basket = () => {
             </div>
           </div>
         </main>
+        {popupMessage && <Popup message={popupMessage} onClose={() => setPopupMessage("")} />}
       </div>
     </div>
   );
