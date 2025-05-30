@@ -34,11 +34,11 @@ export default function Home() {
       <div className="col-start-2 bg-cover bg-no-repeat bg-center relative">
         <Header variant="lime" />
 
-        <h1 ref={headingRef} className="text-[#C4FF00] leading-relaxed font-light mt-space-2xl">
+        <h1 ref={headingRef} className="text-3xl sm:text-m text-[#C4FF00] leading-relaxed font-light mt-space-2xl">
           Oplev Storartet Kunst <br /> På Flere Måder
         </h1>
 
-        <div className="flex justify-end mt-10 sm:mt-16" ref={buttonRef}>
+        <div className="flex justify-end" ref={buttonRef}>
           <ButtonPrimary href="/events">Se events</ButtonPrimary>
         </div>
       </div>

@@ -42,15 +42,16 @@ const Dashboard = () => {
   }, [user]);
 
   return (
-    <article>
+    <article className="px-4 sm:px-4">
       <Header />
       <h1 className="mb-6">Dashboard</h1>
+
       <div className="flex items-center justify-between mb-4">
         <h3 className="text-xl font-semibold">{userEvents.length > 0 ? "Dine oprettede events" : "Du har ingen oprettede events..."}</h3>
         <ButtonPrimary href="/newEvent">Opret event</ButtonPrimary>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
         {userEvents.map((event) => (
           <DashCard key={event.id} event={event} />
         ))}
