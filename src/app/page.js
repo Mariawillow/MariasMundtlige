@@ -38,7 +38,7 @@ export default function Home() {
           Oplev Storartet Kunst <br /> På Flere Måder
         </h1>
 
-        <div className="flex justify-end" ref={buttonRef}>
+        <div className="flex justify-end mt-40" ref={buttonRef}>
           <ButtonPrimary href="/events">Se events</ButtonPrimary>
         </div>
       </div>
