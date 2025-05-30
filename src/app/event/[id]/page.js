@@ -2,8 +2,6 @@ import Header from "@/components/(header)/Header";
 import SingleCard from "@/components/(event)/SingleCard";
 import EventArtClient from "@/components/(event)/EventArtClient";
 import ButtonBack from "@/components/ButtonBack";
-import Link from "next/link";
-import { HiOutlineArrowLongLeft } from "react-icons/hi2";
 import { getArtDetails } from "@/api/smk";
 
 const EventSingleView = async ({ params }) => {
