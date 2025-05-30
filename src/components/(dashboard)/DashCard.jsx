@@ -28,7 +28,7 @@ const DashCard = ({ event }) => {
     <div className="relative aspect-[3/2] group w-full">
       {/* Billedlink til event */}
       <Link href={`/event/${event.id}`}>
-        <Image src={imageUrl} alt={`Eventbillede: ${event.title}`} width={300} height={200} className="w-full h-full object-cover transition duration-300 hover:opacity-40" />
+        <Image src={imageUrl} alt={`Eventbillede: ${event.title}`} width={300} height={200} className="w-full h-full object-cover transition duration-300 hover:opacity-40" loading="lazy" />
       </Link>
 
       {/* Indhold under billedet */}
