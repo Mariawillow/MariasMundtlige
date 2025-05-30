@@ -78,19 +78,6 @@ body {
 main {
   grid-column: 2;
   display: block;
-  padding-left: 1rem; /* px-4 */
-  padding-right: 1rem;
-  padding-top: 2rem;
-  padding-bottom: 2rem;
-}
-
-@media (min-width: 640px) {
-  main {
-    padding-left: 2rem; /* sm:px-8 */
-    padding-right: 2rem;
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-  }
 }
 
 h1 {

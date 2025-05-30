@@ -38,7 +38,7 @@ export default function Home() {
           Oplev Storartet Kunst <br /> På Flere Måder
         </h1>
 
-        <div className="ml-auto mt-50 sm:mt-65" ref={buttonRef}>
+        <div className="flex justify-end mt-10 sm:mt-16" ref={buttonRef}>
           <ButtonPrimary href="/events">Se events</ButtonPrimary>
         </div>
       </div>
