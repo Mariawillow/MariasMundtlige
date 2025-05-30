@@ -7,7 +7,7 @@ import ButtonSecondary from "@/components/ButtonSecondary";
 
 export default function ReceiptPage() {
   const [receipt, setReceipt] = useState(null);
-  const [events, setEvents] = useState({}); // Her gemmer vi alle events vi henter
+  const [events, setEvents] = useState({}); // Her gemmer vi købte events
 
   useEffect(() => {
     // 1. Hent kvittering fra sessionStorage

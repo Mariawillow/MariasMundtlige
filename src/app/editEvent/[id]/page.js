@@ -1,10 +1,11 @@
 "use client";
+import EventInformation from "@/components/(newEvent)/EventInformation";
+import Header from "@/components/(header)/Header";
 
 import { use, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+
 import { getEvents, updateEvent } from "@/api/localhost";
-import ArtworkSelection from "@/components/(newEvent)/ArtworkSelection";
-import Header from "@/components/(header)/Header";
 import { getPeriodById } from "@/api/periods";
 
 const EditEventPage = ({ params }) => {
@@ -53,7 +54,7 @@ const EditEventPage = ({ params }) => {
     <div className="max-w-6xl mx-auto">
       <Header />
       <h1 className="text-3xl font-bold text-center my-8">Rediger event</h1>
-      <ArtworkSelection mode="edit" defaultData={event} date={event.date} location={event.location} period={period} setPeriod={setPeriod} onSubmit={handleUpdate} />
+      <EventInformation mode="edit" defaultData={event} date={event.date} location={event.location} period={period} setPeriod={setPeriod} onSubmit={handleUpdate} />
     </div>
   );
 };

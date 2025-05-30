@@ -1,9 +1,10 @@
 import Header from "@/components/(header)/Header";
 import SingleCard from "@/components/(event)/SingleCard";
 import EventArtClient from "@/components/(event)/EventArtClient";
-import { getArtDetails } from "@/api/smk";
-import { HiOutlineArrowLongLeft } from "react-icons/hi2";
+import ButtonBack from "@/components/ButtonBack";
 import Link from "next/link";
+import { HiOutlineArrowLongLeft } from "react-icons/hi2";
+import { getArtDetails } from "@/api/smk";
 
 const EventSingleView = async ({ params }) => {
   //Denne første del burde vi overveje at flytte til API-side (localhost.js) – meeeen vi kan ikke lige finde ud af hvordan
@@ -23,12 +24,7 @@ const EventSingleView = async ({ params }) => {
     <div className="flex flex-col gap-6">
       <Header></Header>
 
-      <div className="mb-[var(--space-m)] px-4 md:px-8">
-        <Link href="/events" className="flex items-center gap-2 text-[#C4FF00] font-semibold hover:underline cursor-pointer">
-          <HiOutlineArrowLongLeft className="text-xl" />
-          <span>Tilbage</span>
-        </Link>
-      </div>
+      <ButtonBack>Tilbage</ButtonBack>
 
       <SingleCard eventData={eventData}></SingleCard>
 

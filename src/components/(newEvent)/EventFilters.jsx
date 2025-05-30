@@ -1,4 +1,4 @@
-//Samler location og pick a date
+//Samler location, dato og kunstperiode
 import DateSelector from "@/components/(newEvent)/DateSelector";
 import LocationSelector from "@/components/(newEvent)/LocationSelector";
 import PeriodSelector from "@/components/(newEvent)/PeriodSelector";

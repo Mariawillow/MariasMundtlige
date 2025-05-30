@@ -1,7 +1,6 @@
 "use client";
-import React, { useState } from "react";
+import { useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
-
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuLabel, DropdownMenuItem, DropdownMenuSeparator } from "@/components/ui/dropdown-menu";
 
 export default function SortingDropdown({ onSortChange }) {

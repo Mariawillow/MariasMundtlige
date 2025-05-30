@@ -45,11 +45,11 @@ export default function LocationSelector({ location, setLocation, date }) {
         <option value="" disabled>
           Vælg lokation
         </option>
-        {locations.map((loc) => {
-          const isBooked = bookedLocationsIds.includes(loc.id);
+        {locations.map((location) => {
+          const isBooked = bookedLocationsIds.includes(location.id);
           return (
-            <option key={loc.id} value={loc.id} disabled={isBooked} className={isBooked ? "text-gray-400 bg-gray-100" : ""}>
-              {loc.address} {isBooked ? "(optaget)" : ""}
+            <option key={location.id} value={location.id} disabled={isBooked} className={isBooked ? "text-gray-400 bg-gray-100" : ""}>
+              {location.address} {isBooked ? "(optaget)" : ""}
             </option>
           );
         })}

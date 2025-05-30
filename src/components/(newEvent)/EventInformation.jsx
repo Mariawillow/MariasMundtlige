@@ -15,8 +15,7 @@ import arrowLong from "@/images/arrowLong.svg";
 import { SearchBar } from "./SearchBar";
 import EventForm from "./EventForm";
 
-
-export default function ArtworkSelection({ date, location, period, defaultData = {}, mode = "create", onSubmit }) {
+export default function EventInformation({ date, location, period, defaultData = {}, mode = "create", onSubmit }) {
   const [allArtworks, setAllArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -29,15 +28,16 @@ export default function ArtworkSelection({ date, location, period, defaultData =
   const [eventDescription, setEventDescription] = useState(defaultData.description || "");
   const [selectedArtworks, setSelectedArtworks] = useState(defaultData.artworkIds || []);
 
-
   // Hent alle værker én gang og sættes i allArtworks
   useEffect(() => {
     setLoading(true);
     getArts()
       .then((data) => setAllArtworks(data))
+      .catch(() => {
+        alert("Der opstod en fejl ved hentning af kunstværker. Prøv igen senere.");
+      })
       .finally(() => setLoading(false));
   }, []);
-
 
   // Filtrer værker, når perioden ændrer sig
   useEffect(() => {
@@ -72,14 +72,21 @@ export default function ArtworkSelection({ date, location, period, defaultData =
     filterArtworksByAvailability();
   }, [period, date, location, allArtworks]);
 
+  const [artworkToast, setArtworkToast] = useState(null); // fx string besked
+
   // Funktion til at vælge og fravælge kunstværker
   const toggleArtwork = (objectNumber) => {
     setSelectedArtworks((prev) => {
       if (prev.includes(objectNumber)) {
+        setArtworkToast("Værk fjernet");
         return prev.filter((i) => i !== objectNumber);
       } else {
         const maxArtwork = location?.maxArtworks;
-        if (prev.length >= maxArtwork) return prev;
+        if (prev.length >= maxArtwork) {
+          setArtworkToast(`Maks antal på ${maxArtwork} værker nået`);
+          return prev;
+        }
+        setArtworkToast("Værk valgt");
         return [...prev, objectNumber];
       }
     });
@@ -87,16 +94,35 @@ export default function ArtworkSelection({ date, location, period, defaultData =
 
   const [searchTerm, setSearchTerm] = useState("");
 
-  // Filtrer og sorterer værker baseret på søgetekst (kunstner eller titel)
+  // Filtrer og sorterer værker baseret på søgetekst (kunstner)
   const displayedArtworks = (
     searchTerm
       ? filteredArtworks.filter((art) => {
-        const title = art.titles?.[0]?.title?.toLowerCase() || "";
-        const artist = art.production?.[0]?.artist?.name?.toLowerCase() || "";
-        return title.includes(searchTerm.toLowerCase()) || artist.includes(searchTerm.toLowerCase());
-      })
+          // Sikre at art.artist er et array
+          const artistNames = Array.isArray(art.artist) ? art.artist : [];
+          // Gemmer searchterm i lowercase
+          const search = searchTerm.toLowerCase();
+
+          // Tjekker om nogen af kunstnernavnene matcher søgetermen
+          return artistNames.some((name) => {
+            // Hvis navnet ikke er en streng (fx null, tal, etc.), ignorer det
+            if (typeof name !== "string") return false;
+            // Lowercaser navnet og tjekker om søgetermen indgår
+            return name.toLowerCase().includes(search);
+          });
+        })
       : filteredArtworks
-  ).filter((art) => !selectedArtworks.includes(art.object_number));
+  )
+    //fjerner de værker, som allerede er valgt af brugeren
+    .filter((art) => !selectedArtworks.includes(art.object_number));
+
+  // Fjern artwork toasten automatisk efter 1.5 sekunder
+  useEffect(() => {
+    if (artworkToast) {
+      const timer = setTimeout(() => setArtworkToast(null), 1500);
+      return () => clearTimeout(timer);
+    }
+  }, [artworkToast]);
 
   // Event håndtering: Opret eller opdater event
   // Samler alt data om event i eventInfo
@@ -121,7 +147,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
     });
   };
 
-
   return (
     <div className="space-y-8 mt-8">
       <h3 className="text-center">STEP 2: Information om dit event</h3>
@@ -144,6 +169,7 @@ export default function ArtworkSelection({ date, location, period, defaultData =
             </>
           )}
         </div>
+        {artworkToast && <div className="fixed bottom-6 right-6 bg-[#6b5f6e] text-white px-4 py-2 rounded shadow-lg z-50 transition-all">{artworkToast}</div>}
       </div>
       <div className="flex justify-end">
         <button className="group inline-block text-[#C4FF00] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
@@ -156,7 +182,6 @@ export default function ArtworkSelection({ date, location, period, defaultData =
 
       {/* SuccessToast */}
       {showSuccess && <div className="fixed top-6 right-6 bg-[#C4FF00] text-white px-4 py-2 rounded shadow-lg transition-all z-50">Eventet blev oprettet!</div>}
-
     </div>
   );
 }
