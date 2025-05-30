@@ -9,7 +9,8 @@ const ListeCard = ({ event }) => {
   const remainingTickets = event.totalTickets - event.bookedTickets;
   const imageUrl = event.thumbnailImage || StatuePic;
 
-  // Formatteret dato
+  // Formatteret dato 
+  // "PPP" = Pretty Print Pattern som er en færdig, lokaliseret datoformat.
   const formattedDate = format(parseISO(event.date), "PPP", { locale: da });
   return (
     <Link href={`/event/${event.id}`} className="group w-full cursor-pointer">
