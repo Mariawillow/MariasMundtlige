@@ -15,7 +15,7 @@ export default function RootLayout({ children }) {
     <ClerkProvider publishableKey={publishableKey}>
       <html lang="da">
         <body className={`${montserrat.variable} antialiased`}>
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen mb-12">{children}</main>
           <Footer />
         </body>
       </html>
