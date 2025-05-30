@@ -19,7 +19,7 @@ export default function EventInformation({ date, location, period, defaultData =
   const [allArtworks, setAllArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [showSuccess, setShowSuccess] = useState(false); //Toast effekt
+  const [showSuccess, setShowSuccess] = useState(""); //Toast effekt
 
   const router = useRouter();
   const { user } = useUser(); //giver adgang til allerede loggede ind brugere.
@@ -98,19 +98,19 @@ export default function EventInformation({ date, location, period, defaultData =
   const displayedArtworks = (
     searchTerm
       ? filteredArtworks.filter((art) => {
-          // Sikre at art.artist er et array
-          const artistNames = Array.isArray(art.artist) ? art.artist : [];
-          // Gemmer searchterm i lowercase
-          const search = searchTerm.toLowerCase();
+        // Sikre at art.artist er et array
+        const artistNames = Array.isArray(art.artist) ? art.artist : [];
+        // Gemmer searchterm i lowercase
+        const search = searchTerm.toLowerCase();
 
-          // Tjekker om nogen af kunstnernavnene matcher søgetermen
-          return artistNames.some((name) => {
-            // Hvis navnet ikke er en streng (fx null, tal, etc.), ignorer det
-            if (typeof name !== "string") return false;
-            // Lowercaser navnet og tjekker om søgetermen indgår
-            return name.toLowerCase().includes(search);
-          });
-        })
+        // Tjekker om nogen af kunstnernavnene matcher søgetermen
+        return artistNames.some((name) => {
+          // Hvis navnet ikke er en streng (fx null, tal, etc.), ignorer det
+          if (typeof name !== "string") return false;
+          // Lowercaser navnet og tjekker om søgetermen indgår
+          return name.toLowerCase().includes(search);
+        });
+      })
       : filteredArtworks
   )
     //fjerner de værker, som allerede er valgt af brugeren
@@ -123,6 +123,8 @@ export default function EventInformation({ date, location, period, defaultData =
       return () => clearTimeout(timer);
     }
   }, [artworkToast]);
+
+
 
   // Event håndtering: Opret eller opdater event
   // Samler alt data om event i eventInfo
@@ -165,7 +167,7 @@ export default function EventInformation({ date, location, period, defaultData =
 
               {selectedArtworks.length === location?.maxArtworks && <p className="text-sm text-red-500">Du har valgt maks antal værker.</p>}
 
-              <ArtworkGrid artworks={displayedArtworks} selectedArtworks={selectedArtworks} toggleArtwork={toggleArtwork} />
+              <ArtworkGrid artworks={displayedArtworks} selectedArtworks={selectedArtworks} toggleArtwork={toggleArtwork} location={location} />
             </>
           )}
         </div>
@@ -181,7 +183,11 @@ export default function EventInformation({ date, location, period, defaultData =
       </div>
 
       {/* SuccessToast */}
-      {showSuccess && <div className="fixed top-6 right-6 bg-[#C4FF00] text-white px-4 py-2 rounded shadow-lg transition-all z-50">Eventet blev oprettet!</div>}
+      {showSuccess && (
+        <div className="fixed top-6 right-6 bg-[#C4FF00] text-black px-4 py-2 rounded shadow-lg z-50 transition-all">
+          {showSuccess}
+        </div>
+      )}
     </div>
   );
 }

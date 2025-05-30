@@ -42,7 +42,6 @@ const EditEventPage = ({ params }) => {
   const handleUpdate = async (updatedFields) => {
     try {
       await updateEvent({ id, ...updatedFields });
-      router.push("/dashboard");
     } catch (err) {
       alert("Noget gik galt under opdatering af event");
     }

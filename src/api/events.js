@@ -192,3 +192,16 @@ export async function getEventById(id) {
 
 //   return response.json();
 // }
+
+// Henter én specifik event baseret på ID
+// export async function getEventById(id) {
+//   const response = await fetch(`https://smk-4l23.onrender.com/events/${id}`);
+
+//   if (!response.ok) {
+//     const errorText = await response.text();
+//     console.error("Fejl ved hentning af event:", errorText);
+//     throw new Error("Event kunne ikke hentes");
+//   }
+
+//   return await response.json();
+// }

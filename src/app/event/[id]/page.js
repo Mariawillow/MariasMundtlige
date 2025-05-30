@@ -3,13 +3,13 @@ import SingleCard from "@/components/(event)/SingleCard";
 import EventArtClient from "@/components/(event)/EventArtClient";
 import ButtonBack from "@/components/ButtonBack";
 import { getArtDetails } from "@/api/smk";
+import { getEventById } from "@/api/events";
 
 const EventSingleView = async ({ params }) => {
   //Denne første del burde vi overveje at flytte til API-side (localhost.js) – meeeen vi kan ikke lige finde ud af hvordan
   const { id } = await params;
 
-  const res = await fetch(`http://localhost:8080/events/${id} `); //https://smk-4l23.onrender.com/events/${id}
-  const eventData = await res.json();
+  const eventData = await getEventById(id);
 
   // Hent kunstværkerne fra SMK API (eller specifikke værker baseret på IDs)
   const artworkIds = eventData.artworkIds || [];

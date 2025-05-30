@@ -1,7 +1,7 @@
 import ArtworkCard from "./ArtworkCard";
 import { useState } from "react";
 
-export default function ArtworkGrid({ artworks, selectedArtworks, toggleArtwork }) {
+export default function ArtworkGrid({ artworks, selectedArtworks, toggleArtwork, location }) {
   if (!artworks.length) {
     return <p className="text-center text-gray-500">Ingen værker fundet i den valgte periode.</p>;
   }
@@ -16,7 +16,8 @@ export default function ArtworkGrid({ artworks, selectedArtworks, toggleArtwork 
     <div>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-space-s">
         {currentArtworks.map((artwork) => (
-          <ArtworkCard key={artwork.object_number} artwork={artwork} selected={selectedArtworks} onClick={() => toggleArtwork(artwork.object_number)} />
+          <ArtworkCard key={artwork.object_number} artwork={artwork} selected={selectedArtworks} onClick={() => toggleArtwork(artwork.object_number)} disableSelect={selectedArtworks.length >= location.maxArtworks}
+          />
         ))}
       </div>
       <div className="flex justify-center mt-4">
