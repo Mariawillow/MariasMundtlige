@@ -113,7 +113,7 @@ const Basket = () => {
                 <input type="text" placeholder="Adresse" className="w-full border px-3 py-2 " value={address} onChange={(e) => setAddress(e.target.value)} required />
               </div>
 
-              <div className="pt-6">
+              <div className="pt-6 ml-auto">
                 <ButtonSecondary onClick={handleBuyClick}>Køb billetter</ButtonSecondary>
               </div>
             </div>
