@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { useUser } from "@clerk/nextjs";
 import { getEvents } from "@/api/events";
-import { getArtDetails } from "@/api/smk";
+import { firstArtImgHelper } from "@/lib/firstArtImgHelper";
 import DashCard from "@/components/(dashboard)/DashCard";
 import Header from "@/components/(header)/Header";
 import ButtonPrimary from "@/components/ButtonPrimary";
@@ -13,30 +13,29 @@ const Dashboard = () => {
 
   useEffect(() => {
     //Finder personlig userId og købler til dashboard.
-    if (!user?.id) return;
+    if (!user?.id) return; // Vent på at user er hentet og har id
 
     const fetchUserEvents = async () => {
       const allEvents = await getEvents();
+
+      // Filtrér events, så kun dem der tilhører den aktuelle bruger (user.id)
       const filtered = allEvents.filter((event) => event.userId === user.id);
 
+      // For hvert event: hent det første kunstværks billede hvis muligt med helper-funktion
       const eventsWithImages = await Promise.all(
         filtered.map(async (event) => {
-          const firstArtworkId = event.artworkIds?.[0];
-          let thumbnailImage = null;
+          // Her bruger vi helper-funktionen som henter billed-URL eller fallback
+          const thumbnailImage = await firstArtImgHelper(event.artworkIds);
 
-          if (firstArtworkId) {
-            const art = await getArtDetails(firstArtworkId);
-            thumbnailImage = art?.image_thumbnail || null;
-          }
-
+          // Returner event med tilføjet thumbnailImage property
           return {
             ...event,
-            thumbnailImage,
+            thumbnailImage, // altid en string med URL
           };
         })
       );
 
-      setUserEvents(eventsWithImages);
+      setUserEvents(eventsWithImages); // Opdater state med events + billeder
     };
 
     fetchUserEvents();
@@ -47,10 +46,7 @@ const Dashboard = () => {
       <Header />
       <h1 className="mb-6">Dashboard</h1>
       <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-semibold">
-          {/* erstatning af "dine oprettede events" erstattes med en betinget rendering baseret på længden userEvents */}
-          {userEvents.length > 0 ? "Dine oprettede events" : "Du har ingen oprettede events..."}
-        </h3>
+        <h3 className="text-xl font-semibold">{userEvents.length > 0 ? "Dine oprettede events" : "Du har ingen oprettede events..."}</h3>
         <ButtonPrimary href="/newEvent">Opret event</ButtonPrimary>
       </div>
 

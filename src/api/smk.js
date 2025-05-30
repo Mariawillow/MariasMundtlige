@@ -1,10 +1,3 @@
-// Henter alle kunstværker fra SMK, som har billede og ikke er udstillet
-// export async function getArts() {
-//   const res = await fetch("https://api.smk.dk/api/v1/art/search/?keys=*&filters=[has_image:true],[on_display:false],[public_domain:true]&offset=0&rows=2000");
-//   const data = await res.json();
-//   return data.items || [];
-// }
-
 // Henter op til 2000 malerier fra SMK’s API,
 // som har billeder, ikke er udstillet, og er i public domain
 export async function getArts() {

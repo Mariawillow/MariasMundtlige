@@ -1,17 +1,35 @@
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import StatuePic from "@/images/statuePic.svg";
 import Link from "next/link";
+import { firstArtImgHelper } from "@/lib/firstArtImgHelper";
+import artPlaceholder from "@/images/artPlaceholder.png";
 import { format, parseISO } from "date-fns";
 import { da } from "date-fns/locale";
 
 const ListeCard = ({ event }) => {
   //minusser totalToickes fra bookedTickets - bruges til bagde så man kn se om man ska skynde sig.
   const remainingTickets = event.totalTickets - event.bookedTickets;
-  const imageUrl = event.thumbnailImage || StatuePic;
+  // State til billede-URL, fallback til artPlaceholder
+  const [imageUrl, setImageUrl] = useState(artPlaceholder);
 
-  // Formatteret dato 
+  // Formatteret dato
   // "PPP" = Pretty Print Pattern som er en færdig, lokaliseret datoformat.
   const formattedDate = format(parseISO(event.date), "PPP", { locale: da });
+
+  useEffect(() => {
+    async function fetchThumbnail() {
+      // Brug helperen til at hente det første kunstværks billede, hvis der er artworkIds
+      if (event.artworkIds?.length) {
+        const url = await firstArtImgHelper(event.artworkIds);
+        setImageUrl(url);
+      } else {
+        setImageUrl(artPlaceholder); // fallback hvis ingen artworkIds
+      }
+    }
+
+    fetchThumbnail();
+  }, [event.artworkIds]);
+
   return (
     <Link href={`/event/${event.id}`} className="group w-full cursor-pointer">
       <div className="relative aspect-[3/2]">
@@ -24,7 +42,7 @@ const ListeCard = ({ event }) => {
         ) : remainingTickets < 10 ? (
           <div className="absolute top-2 right-2 bg-gray-50 text-black text-xs font-bold px-2 py-1 z-10">Få billetter tilbage</div>
         ) : // Og "null" ellers vi ingenting
-          null}
+        null}
 
         {/* Overlay text (hidden on small screens) */}
         <div className="hidden sm:flex absolute inset-0 flex-col justify-center items-center text-center opacity-0 group-hover:opacity-100 transition duration-300">
