@@ -75,6 +75,9 @@ const DashCard = ({ event }) => {
             handleDeleteConfirmed(); // Slet event
             setShowPopup(false); // Luk popup bagefter
           }}
+          showConfirm={true} // Vi vil gerne vise "Ja, slet"
+          confirmText="Ja, slet"
+          cancelText="Annuller"
         />
       )}
     </div>
