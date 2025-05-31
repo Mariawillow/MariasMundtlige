@@ -83,6 +83,8 @@ main {
 h1 {
   font-size: var(--step-5);
   font-weight: 600;
+  line-height: 1;
+  margin-bottom: 1rem;
 }
 
 h2 {

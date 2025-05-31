@@ -44,11 +44,13 @@ const Dashboard = () => {
   return (
     <article className="px-4 sm:px-4">
       <Header />
-      <h1 className="mb-6">Dashboard</h1>
+      <h1 className="mb-6 mt-10">Dashboard</h1>
 
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xl font-semibold">{userEvents.length > 0 ? "Dine oprettede events" : "Du har ingen oprettede events..."}</h3>
-        <ButtonPrimary href="/newEvent">Opret event</ButtonPrimary>
+      <div className="flex flex-col md:flex-row justify-between mb-4">
+        <h3 className="text-xl order-1 md:order-0 font-semibold mt-6">{userEvents.length > 0 ? "Dine oprettede events" : "Du har ingen oprettede events..."}</h3>
+        <div className="self-end">
+          <ButtonPrimary href="/newEvent">Opret event</ButtonPrimary>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
