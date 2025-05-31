@@ -10,7 +10,6 @@ import { gsap } from "gsap";
 
 export default function Home() {
   const headingRef = useRef(null);
-  const buttonRef = useRef(null);
 
   useEffect(() => {
     // Opret en GSAP-timeline med standardvarighed og easing
@@ -38,7 +37,7 @@ export default function Home() {
           Oplev Storartet Kunst <br /> På Flere Måder
         </h1>
 
-        <div className="flex justify-end mt-40" ref={buttonRef}>
+        <div className="flex justify-end mt-40">
           <ButtonPrimary href="/events">Se events</ButtonPrimary>
         </div>
       </div>
