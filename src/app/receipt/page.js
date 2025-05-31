@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { getEventById } from "@/api/events";
 import Header from "@/components/(header)/Header";
 import ButtonSecondary from "@/components/ButtonSecondary";
+import { format } from "date-fns";
 
 export default function ReceiptPage() {
   const [receipt, setReceipt] = useState(null);
@@ -70,6 +71,9 @@ export default function ReceiptPage() {
           <div key={eventId} className="mb-10  p-6">
             <h2 className="text-2xl font-semibold">{event.title}</h2>
             <p className="text-gray-500 mb-4">Dato: {event.date}</p>
+
+            <p className="text-sm text-gray-500">Købstidspunkt: {format(new Date(receipt.timestamp), "HH:mm, dd.MM.yyyy")}</p>
+
             <hr className="mb-4 border-[#C4FF00] border-t-2" />
 
             <div className="grid gap-4 grid-cols-1 md:grid-cols-2">

@@ -50,6 +50,7 @@ const Basket = () => {
         name,
         email,
         address,
+        timestamp: new Date().toISOString(),
       };
 
       // Gem kvittering
