@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useRef, useEffect } from "react";
 import gsap from "gsap";
@@ -6,20 +6,6 @@ import ArtworkCard from "./ArtworkCard";
 
 const EventForm = ({ eventName, setEventName, eventDescription, setEventDescription, selectedArtworks, location, filteredArtworks, toggleArtwork }) => {
   const selectedWrapperRef = useRef();
-
-  useEffect(() => {
-    if (selectedWrapperRef.current) {
-      if (selectedArtworks.length > 0) {
-        gsap.fromTo(selectedWrapperRef.current, { opacity: 0 }, { opacity: 1, duration: 1, ease: "power2.out" });
-      } else {
-        gsap.to(selectedWrapperRef.current, {
-          opacity: 0,
-          duration: 0.3,
-          ease: "power2.inOut",
-        });
-      }
-    }
-  }, [selectedArtworks.length]);
 
   return (
     <div>

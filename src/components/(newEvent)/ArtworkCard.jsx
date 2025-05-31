@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useRef, useState, useEffect } from "react";
 import gsap from "gsap";
@@ -38,8 +38,7 @@ export default function ArtworkCard({ artwork, selected, onClick, disableSelect 
       gsap.to(cardRef.current, {
         opacity: 0,
         scale: 0.95,
-        y: 10,
-        duration: 0.4,
+        duration: 0.6,
         ease: "power2.inOut",
         onComplete: () => {
           onClick(artwork.object_number);
@@ -55,8 +54,7 @@ export default function ArtworkCard({ artwork, selected, onClick, disableSelect 
     gsap.to(cardRef.current, {
       opacity: 0,
       scale: 0.95,
-      y: 10,
-      duration: 0.4,
+      duration: 0.6,
       ease: "power2.inOut",
       onComplete: () => {
         onClick(artwork.object_number);
@@ -68,7 +66,7 @@ export default function ArtworkCard({ artwork, selected, onClick, disableSelect 
     <div
       ref={cardRef}
       onClick={handleClick}
-      className={`aspect-square transition
+      className={`aspect-square transition hover:border-[3px] hover:border-[#C4FF00]
         ${isSelected ? "border-[3px] border-[#C4FF00]" : "border-gray-200"}
         ${disableSelect && !isSelected ? "opacity-50 cursor-not-allowed" : "cursor-pointer"}
       `}
