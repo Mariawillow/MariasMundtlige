@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Header from "@/components/(header)/Header";
-import StatuePic from "@/images/statuePic.svg";
+import StatuePic from "@/images/statuePic.png";
 import { FaTicketAlt } from "react-icons/fa";
 import Price from "@/components/(basket)/Price";
 import useCartStore from "@/app/store/cartStore";
