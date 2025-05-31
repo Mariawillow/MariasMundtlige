@@ -8,8 +8,8 @@ import Image from "next/image";
 import Link from "next/link";
 import BasketIcon from "./BasketIcon";
 
-import logoLime from "@/logos/smk_logo_lime.png";
-import logoBlack from "@/logos/smk_logo_sort.png";
+import logoLime from "@/images/smk_logo_lime.png";
+import logoBlack from "@/images/smk_logo_sort.png";
 
 const Header = ({ variant = "black" }) => {
   const [isOpen, setIsOpen] = useState(false);
