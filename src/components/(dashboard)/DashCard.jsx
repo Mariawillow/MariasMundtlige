@@ -6,8 +6,8 @@ import { useState } from "react";
 import { FaPen } from "react-icons/fa";
 import { FaTrashCan } from "react-icons/fa6";
 import { deleteEvent } from "@/api/events";
-import Popup from "@/components/Popup"; // Husk at rette path hvis det ligger et andet sted!
-import artPlaceholder from "@/images/statuePic.svg"; // Dit fallback billede
+import Popup from "@/components/Popup";
+import artPlaceholder from "@/images/artPlaceholder.png";
 
 const DashCard = ({ event }) => {
   const [showPopup, setShowPopup] = useState(false); // styrer om popup vises
@@ -26,15 +26,7 @@ const DashCard = ({ event }) => {
   return (
     <div className="relative aspect-[3/2] group w-full">
       <Link href={`/event/${event.id}`}>
-        <Image
-          src={imageUrl}
-          alt={`Eventbillede: ${event.title}`}
-          width={300}
-          height={200}
-          className="w-full h-full object-cover transition duration-300 hover:opacity-40"
-          unoptimized={typeof imageUrl === "string" && imageUrl.startsWith("http")}
-          loading="lazy"
-        />
+        <Image src={imageUrl} alt={`Eventbillede: ${event.title}`} width={300} height={200} className="w-full h-full object-cover transition duration-300 hover:opacity-40" unoptimized={typeof imageUrl === "string" && imageUrl.startsWith("http")} loading="lazy" />
       </Link>
 
       <div className="mt-4 px-2 space-y-1">
@@ -44,26 +36,16 @@ const DashCard = ({ event }) => {
           </Link>
           <div className="flex gap-4">
             {/* Når popup'en klikkes vises popup'en */}
-            <button
-              onClick={() => setShowPopup(true)}
-              className="cursor-pointer text-red-600 hover:text-red-800"
-              aria-label="Slet event"
-            >
+            <button onClick={() => setShowPopup(true)} className="cursor-pointer text-red-600 hover:text-red-800" aria-label="Slet event">
               <FaTrashCan size={20} />
             </button>
 
-            <Link
-              href={`/editEvent/${event.id}`}
-              className="text-black hover:text-[#C4FF00]"
-              aria-label="Rediger event"
-            >
+            <Link href={`/editEvent/${event.id}`} className="text-black hover:text-[#C4FF00]" aria-label="Rediger event">
               <FaPen size={20} />
             </Link>
           </div>
         </div>
-        <p className="text-black font-medium">
-          {format(parseISO(event.date), "d. MMMM yyyy", { locale: da })}
-        </p>
+        <p className="text-black font-medium">{format(parseISO(event.date), "d. MMMM yyyy", { locale: da })}</p>
       </div>
 
       {/* Her viser vi din popup hvis showPopup er true */}
