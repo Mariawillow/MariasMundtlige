@@ -55,7 +55,7 @@ const ListeCard = ({ event }) => {
       </div>
 
       {/* Text below image (visible only on small screens) */}
-      <div className="md:hidden mt-2 text-center">
+      <div className="md:hidden mt-2 ml-auto mb-6">
         <h4 className="text-black font-semibold">{event.title}</h4>
         <h3 className="text-black font-light">170 DKK</h3>
         <p className="text-black font-semibold">{formattedDate}</p>
