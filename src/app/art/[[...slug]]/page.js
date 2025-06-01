@@ -7,10 +7,19 @@ import { da } from "date-fns/locale";
 import artPlaceholder from "@/images/artPlaceholder.png";
 
 export default async function ArtSingleView(props) {
-  const { object_number } = await (await props).params;
+  // const { object_number } = await (await props).params;
+  const slug = props.params.slug || [];
+
+  // slug[0] = object_number
+  // slug[1] = part (kan være undefined hvis der ikke er nogen part)
+  const object_number = slug[0];
+  const part = slug[1] || null;
+
+  // Hvis part findes, så bygger vi "object_number/part", ellers bare "object_number"
+  const fullObjectNumber = part ? `${object_number}/${part}` : object_number;
 
   // Hent kunstværksdata fra SMK-API
-  const artwork = await getArtDetails(object_number);
+  const artwork = await getArtDetails(fullObjectNumber);
 
   // Konstanter som opsamler information fra vores API
   // Vi bruger Optional chaining (?.) for at sikre, at vi ikke får en fejl, når vi prøver at tilgå noget, som muligvis ikke findes
