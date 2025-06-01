@@ -36,7 +36,7 @@ export default function DatePicker({ date, setDate, location }) {
     });
   }, [location]);
 
-  useEffect(() => {}, [date]);
+  useEffect(() => { }, [date]);
 
   const handleSelect = (day) => {
     setDate(day); // sender dato op
@@ -58,6 +58,7 @@ export default function DatePicker({ date, setDate, location }) {
           selected={date}
           onSelect={handleSelect}
           initialFocus
+          defaultMonth={new Date(2025, 4, 1)} // Starter på maj måned - de eneste datoer er i maj.
           disabled={(day) => {
             const isNotAvailable = !availableDates.some((dateStr) => isSameDay(day, parseISO(dateStr)));
             const isBooked = disabledDates.some((bookedStr) => isSameDay(day, parseISO(bookedStr)));
