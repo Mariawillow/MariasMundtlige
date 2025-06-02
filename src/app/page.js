@@ -30,6 +30,7 @@ export default function Home() {
         <h1 ref={headingRef} className="text-3xl sm:text-m text-[#C4FF00] leading-relaxed font-light mt-space-2xl">
           Oplev Storartet Kunst <br /> På Flere Måder
         </h1>
+        <h2>TEST</h2>
 
         <div className="flex justify-end mt-40">
           <ButtonPrimary href="/events">Se events</ButtonPrimary>
