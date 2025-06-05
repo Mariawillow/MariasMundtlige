@@ -36,7 +36,7 @@ export default function ArtworkGrid({ artworks, selectedArtworks, toggleArtwork,
           <MdKeyboardArrowLeft />
         </button>
 
-        <span className="flex items-center w-25">
+        <span className="flex items-center justify-center w-28">
           Side {currentPage} af {totalPages}
         </span>
 
