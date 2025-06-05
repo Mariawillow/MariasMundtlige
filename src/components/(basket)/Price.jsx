@@ -39,20 +39,24 @@ const Price = () => {
                   <p className="font-light">Pris {item.price} DKK</p>
                 </div>
                 <div className="justify-self-start sm:justify-self-end flex items-center-safe">
-                  <Stepper
-                    itemId={item.id}
-                    quantity={item.quantity}
-                    item={{
-                      id: item.id,
-                      name: item.name,
-                      price: item.price,
-                      eventId: item.eventId,
-                      eventTitle: item.eventTitle,
-                      remainingTickets: item.remainingTickets,
-                      bookedTickets: item.bookedTickets,
-                    }}
-                    remainingTickets={item.remainingTickets}
-                  />
+                <Stepper
+  itemId={item.id}
+  quantity={item.quantity}
+  onQuantityChange={(newQty) => {
+    // Opdater cartStore med ny mængde – sørg for at have en updateQuantity funktion i dit cartStore
+    useCartStore.getState().updateItemQuantity(item.id, item.eventId, newQty);
+  }}
+  item={{
+    id: item.id,
+    name: item.name,
+    price: item.price,
+    eventId: item.eventId,
+    eventTitle: item.eventTitle,
+    remainingTickets: item.remainingTickets,
+    bookedTickets: item.bookedTickets,
+  }}
+  remainingTickets={item.remainingTickets}
+/>
                   {/* //kryds der kalder på removeItem fra cardStore og fjerner billetterne. */}
                     <RxCross2 size={30} width={20} onClick={() => removeItem(item.id, item.eventId)} className="hover:text-red-600 transition cursor-pointer ml-2" />
                 </div>
