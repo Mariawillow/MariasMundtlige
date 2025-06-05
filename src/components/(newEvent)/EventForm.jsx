@@ -3,19 +3,36 @@
 import { useRef, useEffect } from "react";
 import ArtworkCard from "./ArtworkCard";
 
-const EventForm = ({ eventName, setEventName, eventDescription, setEventDescription, selectedArtworks, location, filteredArtworks, toggleArtwork }) => {
+const EventForm = ({ eventName, setEventName, eventDescription, setEventDescription, formErrors, setFormErrors, selectedArtworks, location, filteredArtworks, toggleArtwork }) => {
+  // Når eventName ændrer sig, ryd 'name' fejl
+  useEffect(() => {
+    if (eventName.trim() !== "" && formErrors.name) {
+      setFormErrors((prev) => ({ ...prev, name: false }));
+    }
+  }, [eventName, formErrors.name, setFormErrors]);
+
+  // Når eventDescription ændrer sig, ryd 'description' fejl
+  useEffect(() => {
+    if (eventDescription.trim() !== "" && formErrors.description) {
+      setFormErrors((prev) => ({ ...prev, description: false }));
+    }
+
+    if (selectedArtworks.length > 0 && formErrors.artworks) {
+      setFormErrors((prev) => ({ ...prev, artworks: false }));
+    }
+  }, [eventDescription, formErrors.description, setFormErrors]);
   const selectedWrapperRef = useRef();
 
   return (
     <div className="flex flex-col gap-4">
       <form>
         <label className="text-sm font-medium">Eventnavn *</label>
-        <input type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} className="w-full border px-3 py-2" />
+        <input required type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} className={`w-full border px-3 py-2 ${formErrors?.name ? "border-red-500" : ""}`} />
       </form>
 
       <form>
         <label className="text-sm font-medium mt-2">Beskrivelse *</label>
-        <textarea value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} className="w-full border px-3 py-2" rows={4} />
+        <textarea required value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} className={`w-full border px-3 py-2 ${formErrors?.description ? "border-red-500" : ""}`} rows={4} />
       </form>
 
       <div className="flex flex-col">
@@ -30,6 +47,7 @@ const EventForm = ({ eventName, setEventName, eventDescription, setEventDescript
           </span>{" "}
           værker valgt
         </p>
+        {formErrors.artworks && <p className="text-red-500 text-sm mt-2">Du skal vælge mindst ét værk.</p>}
       </div>
 
       {/* Fade-in/ud container */}

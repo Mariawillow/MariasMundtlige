@@ -86,9 +86,11 @@ export default function EventInformation({ date, location, period, defaultData =
   // Funktion til at vælge og fravælge kunstværker
   const toggleArtwork = (objectNumber) => {
     setSelectedArtworks((prev) => {
+      let updated;
+
       if (prev.includes(objectNumber)) {
         setArtworkToast("Værk fjernet");
-        return prev.filter((i) => i !== objectNumber);
+        updated = prev.filter((i) => i !== objectNumber);
       } else {
         const maxArtwork = location?.maxArtworks;
         if (prev.length >= maxArtwork) {
@@ -96,8 +98,15 @@ export default function EventInformation({ date, location, period, defaultData =
           return prev;
         }
         setArtworkToast("Værk valgt");
-        return [...prev, objectNumber];
+        updated = [...prev, objectNumber];
       }
+
+      // Ryd fejl, hvis der nu er mindst ét værk valgt
+      if (updated.length > 0 && formErrors.artworks) {
+        setFormErrors((prevErrors) => ({ ...prevErrors, artworks: false }));
+      }
+
+      return updated;
     });
   };
 
@@ -137,9 +146,37 @@ export default function EventInformation({ date, location, period, defaultData =
     }
   }, [location, selectedArtworks]);
 
+  const [showValidationPopup, setShowValidationPopup] = useState(false);
+
+  const [formErrors, setFormErrors] = useState({
+    name: false,
+    description: false,
+    artworks: false,
+  });
+
   // Event håndtering: Opret eller opdater event
   // Samler alt data om event i eventInfo
   const handleMakeNewEvent = () => {
+    const nameEmpty = eventName.trim() === "";
+    const descEmpty = eventDescription.trim() === "";
+    const noArtworks = selectedArtworks.length === 0;
+
+    if (nameEmpty || descEmpty || noArtworks) {
+      setFormErrors({
+        name: nameEmpty,
+        description: descEmpty,
+        artworks: noArtworks,
+      });
+      setShowValidationPopup(true); // ← Tilføj denne linje
+      return;
+    }
+
+    setFormErrors({
+      name: false,
+      description: false,
+      artworks: false,
+    });
+
     const eventInfo = {
       title: eventName,
       description: eventDescription,
@@ -166,7 +203,7 @@ export default function EventInformation({ date, location, period, defaultData =
       <h3 className="text-center">STEP 2: Information om dit event</h3>
 
       <div className="md:grid md:grid-cols-[1fr_2fr] gap-space-l">
-        <EventForm eventName={eventName} setEventName={setEventName} eventDescription={eventDescription} setEventDescription={setEventDescription} selectedArtworks={selectedArtworks} location={location} filteredArtworks={filteredArtworks} toggleArtwork={toggleArtwork} />
+        <EventForm eventName={eventName} setEventName={setEventName} eventDescription={eventDescription} setEventDescription={setEventDescription} formErrors={formErrors} setFormErrors={setFormErrors} selectedArtworks={selectedArtworks} location={location} filteredArtworks={filteredArtworks} toggleArtwork={toggleArtwork} />
 
         <div>
           {loading ? (
@@ -186,7 +223,7 @@ export default function EventInformation({ date, location, period, defaultData =
         {artworkToast && <div className="fixed bottom-6 right-6 bg-[#6b5f6e] text-white px-4 py-2 rounded shadow-lg z-50 transition-all">{artworkToast}</div>}
       </div>
       <div className="flex justify-end">
-        <button className="group inline-block text-[#C4FF00] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0 || selectedArtworks.length > location?.maxArtworks}>
+        <button className="group inline-block text-[#C4FF00] cursor-pointer" onClick={handleMakeNewEvent}>
           <span className="inline-flex flex-col">
             <span className="text-4xl font-bold px-8">{mode === "edit" ? "Gem ændringer" : "Opret event"}</span>
             <Image src={arrowLong} alt="pil" className="self-end transition-transform group-hover:translate-x-1 group-disabled:translate-x-0" loading="lazy" />
@@ -198,6 +235,8 @@ export default function EventInformation({ date, location, period, defaultData =
 
       {/* SuccessToast */}
       {showSuccess && <div className="fixed top-6 right-6 bg-[#C4FF00] text-black px-4 py-2 rounded shadow-lg z-50 transition-all">{showSuccess}</div>}
+      {/* Ikke succes pop up */}
+      {showValidationPopup && <Popup message="Du skal udfylde alle felter." onClose={() => setShowValidationPopup(false)} showConfirm={false} />}
     </div>
   );
 }
