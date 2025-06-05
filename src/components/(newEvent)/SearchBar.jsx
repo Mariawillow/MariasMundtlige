@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import React, { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
@@ -12,9 +12,14 @@ export const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <div className="input-wrapper">
-      <IoIosSearch id="search-icon" className="absolute right-3 top-1/2 transform -translate-y-1/2 pointer-events-none" />
-      <input placeholder="Søg efter kunstnere her..." value={input} onChange={(e) => handleChange(e.target.value)} className="w-full border rounded px-3 py-2 pr-10" />
+    <div>
+      <label className="text-sm font-medium">Søg efter kunstnere blandt værkerne</label>
+      <div className="relative">
+        <span className="absolute inset-y-0 right-4 flex items-center pl-3 text-[#5D585E]">
+          <IoIosSearch />
+        </span>
+        <input type="text" placeholder="Søg efter kunstnere her..." value={input} onChange={(e) => handleChange(e.target.value)} className="w-full border px-3 py-2 pr-3" />
+      </div>
     </div>
   );
 };

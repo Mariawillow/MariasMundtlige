@@ -31,10 +31,7 @@ export default function EventInformation({ date, location, period, defaultData =
   const [selectedArtworks, setSelectedArtworks] = useState(defaultData.artworkIds || []);
   const tooManyArtworks = selectedArtworks.length > location?.maxArtworks;
 
-  const selectedArtworksFull = allArtworks.filter((art) =>
-    selectedArtworks.includes(art.object_number)
-  );
-
+  const selectedArtworksFull = allArtworks.filter((art) => selectedArtworks.includes(art.object_number));
 
   // Hent alle værker én gang og sættes i allArtworks
   useEffect(() => {
@@ -71,15 +68,9 @@ export default function EventInformation({ date, location, period, defaultData =
         // Fjern de konflikterende kunstværker fra de værker, som er fra perioden
         const availableArtworks = periodFiltered.filter((art) => !conflictingArtworks.includes(art.object_number));
 
-        const selectedArtworksFull = allArtworks.filter((art) => selectedArtworks.includes(art.object_number)
-        );
+        const selectedArtworksFull = allArtworks.filter((art) => selectedArtworks.includes(art.object_number));
         // Kombiner valgte værker + de filtrerede tilgængelige værker
-        const combinedArtworks = [
-          ...selectedArtworksFull,
-          ...availableArtworks.filter(
-            (art) => !selectedArtworks.includes(art.object_number)
-          ),
-        ];
+        const combinedArtworks = [...selectedArtworksFull, ...availableArtworks.filter((art) => !selectedArtworks.includes(art.object_number))];
 
         // Sæt de filtrerede og tilgængelige værker som de værker, der vises
         setFilteredArtworks(combinedArtworks);
@@ -113,9 +104,8 @@ export default function EventInformation({ date, location, period, defaultData =
   const [searchTerm, setSearchTerm] = useState("");
 
   // Filtrer og sorterer værker baseret på søgetekst (kunstner)
-  const displayedArtworks = (
-    searchTerm
-      ? filteredArtworks.filter((art) => {
+  const displayedArtworks = searchTerm
+    ? filteredArtworks.filter((art) => {
         // Sikre at art.artist er et array
         const artistNames = Array.isArray(art.artist) ? art.artist : [];
         // Gemmer searchterm i lowercase
@@ -129,10 +119,7 @@ export default function EventInformation({ date, location, period, defaultData =
           return name.toLowerCase().includes(search);
         });
       })
-      : filteredArtworks
-  )
-    //fjerner de værker, som allerede er valgt af brugeren
-    .filter((art) => !selectedArtworks.includes(art.object_number));
+    : filteredArtworks;
 
   // Fjern artwork toasten automatisk efter 1.5 sekunder
   useEffect(() => {
@@ -142,7 +129,6 @@ export default function EventInformation({ date, location, period, defaultData =
     }
   }, [artworkToast]);
 
-
   useEffect(() => {
     if (location && selectedArtworks.length > location.maxArtworks) {
       setShowPopup(true); //Viser popup'en med at der er for mange valgt værker på den nye lokation.
@@ -150,7 +136,6 @@ export default function EventInformation({ date, location, period, defaultData =
       setShowPopup(false); //Skjuler vores popup hvis der IKKE er for mange valgte værker på den nye lokation.
     }
   }, [location, selectedArtworks]);
-
 
   // Event håndtering: Opret eller opdater event
   // Samler alt data om event i eventInfo
@@ -209,23 +194,10 @@ export default function EventInformation({ date, location, period, defaultData =
         </button>
       </div>
 
-      {showPopup && (
-        <Popup
-          message={`Du har valgt ${selectedArtworks.length} værker, men lokationen tillader kun ${location?.maxArtworks} værker. Fravælg venligst ${selectedArtworks.length - location?.maxArtworks} værker.`}
-          onClose={() => setShowPopup(false)}
-          showConfirm={false}
-          selectedArtworks={selectedArtworksFull}
-          toggleArtwork={toggleArtwork}
-          tooManyArtworks={tooManyArtworks}
-        />
-      )}
+      {showPopup && <Popup message={`Du har valgt ${selectedArtworks.length} værker, men lokationen tillader kun ${location?.maxArtworks} værker. Fravælg venligst ${selectedArtworks.length - location?.maxArtworks} værker.`} onClose={() => setShowPopup(false)} showConfirm={false} selectedArtworks={selectedArtworksFull} toggleArtwork={toggleArtwork} tooManyArtworks={tooManyArtworks} />}
 
       {/* SuccessToast */}
-      {showSuccess && (
-        <div className="fixed top-6 right-6 bg-[#C4FF00] text-black px-4 py-2 rounded shadow-lg z-50 transition-all">
-          {showSuccess}
-        </div>
-      )}
+      {showSuccess && <div className="fixed top-6 right-6 bg-[#C4FF00] text-black px-4 py-2 rounded shadow-lg z-50 transition-all">{showSuccess}</div>}
     </div>
   );
 }
