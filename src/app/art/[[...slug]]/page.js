@@ -4,7 +4,7 @@ import { getArtDetails } from "@/api/smk";
 import ArtClient from "@/components/ButtonBackClient";
 import { format, parseISO } from "date-fns";
 import { da } from "date-fns/locale";
-import artPlaceholder from "@/images/artPlaceholder.png";
+import { artImageHelper } from "@/lib/firstArtImgHelper";
 
 export default async function ArtSingleView(props) {
   // const { object_number } = await (await props).params;
@@ -25,7 +25,7 @@ export default async function ArtSingleView(props) {
   // Vi bruger Optional chaining (?.) for at sikre, at vi ikke får en fejl, når vi prøver at tilgå noget, som muligvis ikke findes
   const primaryColor = artwork?.colors?.[0]; //Første farve i color arrayet
   const secondaryColor = artwork?.colors?.[1]; //Anden farve i color arrayet
-  const imageUrl = artwork?.image_thumbnail || artPlaceholder;
+  const imageUrl = artImageHelper(artwork);
   const title = artwork.titles?.[0]?.title || "Ukendt Titel";
   const periode = artwork?.production_date?.[0]?.period || "Ukendt periode";
   const techniques = artwork?.techniques || "ukendt teknik";
