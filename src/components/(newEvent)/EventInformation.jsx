@@ -95,9 +95,8 @@ export default function EventInformation({ date, location, period, defaultData =
   const [searchTerm, setSearchTerm] = useState("");
 
   // Filtrer og sorterer værker baseret på søgetekst (kunstner)
-  const displayedArtworks = (
-    searchTerm
-      ? filteredArtworks.filter((art) => {
+  const displayedArtworks = searchTerm
+    ? filteredArtworks.filter((art) => {
         // Sikre at art.artist er et array
         const artistNames = Array.isArray(art.artist) ? art.artist : [];
         // Gemmer searchterm i lowercase
@@ -111,10 +110,7 @@ export default function EventInformation({ date, location, period, defaultData =
           return name.toLowerCase().includes(search);
         });
       })
-      : filteredArtworks
-  )
-    //fjerner de værker, som allerede er valgt af brugeren
-    .filter((art) => !selectedArtworks.includes(art.object_number));
+    : filteredArtworks;
 
   // Fjern artwork toasten automatisk efter 1.5 sekunder
   useEffect(() => {
@@ -123,8 +119,6 @@ export default function EventInformation({ date, location, period, defaultData =
       return () => clearTimeout(timer);
     }
   }, [artworkToast]);
-
-
 
   // Event håndtering: Opret eller opdater event
   // Samler alt data om event i eventInfo
@@ -184,11 +178,7 @@ export default function EventInformation({ date, location, period, defaultData =
       </div>
 
       {/* SuccessToast */}
-      {showSuccess && (
-        <div className="fixed top-6 right-6 bg-[#C4FF00] text-black px-4 py-2 rounded shadow-lg z-50 transition-all">
-          {showSuccess}
-        </div>
-      )}
+      {showSuccess && <div className="fixed top-6 right-6 bg-[#C4FF00] text-black px-4 py-2 rounded shadow-lg z-50 transition-all">{showSuccess}</div>}
     </div>
   );
 }

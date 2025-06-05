@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 //Samler location, dato og kunstperiode
 import DateSelector from "@/components/(newEvent)/DateSelector";
@@ -9,9 +9,11 @@ export default function EventFilters({ date, setDate, location, setLocation, per
   return (
     <article>
       <h3 className="text-center">STEP 1: Praktiske informationer</h3>
-      <DateSelector date={date} setDate={setDate} location={location} />
-      <LocationSelector location={location} setLocation={setLocation} date={date} />
-      <PeriodSelector period={period} setPeriod={setPeriod}></PeriodSelector>
+      <div className="flex flex-col gap-4">
+        <DateSelector date={date} setDate={setDate} location={location} />
+        <LocationSelector location={location} setLocation={setLocation} date={date} />
+        <PeriodSelector period={period} setPeriod={setPeriod}></PeriodSelector>
+      </div>
     </article>
   );
 }

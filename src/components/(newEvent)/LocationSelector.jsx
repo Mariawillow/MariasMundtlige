@@ -39,8 +39,8 @@ export default function LocationSelector({ location, setLocation, date }) {
   };
 
   return (
-    <div className="flex flex-col gap-2">
-      <label className="text-sm font-medium">Lokation</label>
+    <div className="flex flex-col">
+      <label className="text-sm font-medium">Lokation *</label>
       <select value={location?.id || ""} onChange={handleChange} className="border px-3 py-2">
         <option value="" disabled>
           Vælg lokation
