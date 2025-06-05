@@ -1,7 +1,8 @@
 "use client";
 
 import Image from "next/image";
-import artPlaceholder from "@/images/artPlaceholder.png";
+import { artImageHelper } from "@/lib/firstArtImgHelper";
+
 
 const Popup = ({
   onClose,
@@ -25,16 +26,12 @@ const Popup = ({
             <div key={artwork.object_number} className="flex flex-col items-center">
               <div className="w-24 h-24 relative mb-1">
                 <Image
-                  src={
-                    artwork.image_thumbnail &&
-                      artwork.image_thumbnail.trim() !== ""
-                      ? artwork.image_thumbnail
-                      : artPlaceholder
-                  }
+                  src={artImageHelper(artwork)}
                   alt={`Værk ${artwork.object_number}`}
                   fill
                   className="object-cover"
                 />
+
               </div>
 
               <button
