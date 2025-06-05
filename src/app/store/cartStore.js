@@ -4,6 +4,7 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
 const cartStore = create(
+  //Persist søger for at kurven gemmes i browserens local storage.
   persist(
     (set, get) => ({
       items: [],
@@ -30,6 +31,34 @@ const cartStore = create(
             items: [...items, { ...item, quantity: 1 }],
           });
         }
+      },
+
+      addToCart: (itemsToAdd) => {
+        const { items } = get();
+        const newItems = [...items];
+      
+        for (const newItem of itemsToAdd) {
+          const totalQuantityForEvent = newItems
+            .filter((i) => i.eventId === newItem.eventId)
+            .reduce((sum, i) => sum + i.quantity, 0);
+      
+          if (totalQuantityForEvent + newItem.quantity > newItem.remainingTickets) {
+            alert("Der er ikke flere billetter tilgængelige for dette event.");
+            continue; // spring over
+          }
+      
+          const existingIndex = newItems.findIndex(
+            (i) => i.id === newItem.id && i.eventId === newItem.eventId
+          );
+      
+          if (existingIndex !== -1) {
+            newItems[existingIndex].quantity += newItem.quantity;
+          } else {
+            newItems.push({ ...newItem });
+          }
+        }
+      
+        set({ items: newItems });
       },
 
       updateItemQuantity: (id, eventId, newQuantity) => {

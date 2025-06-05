@@ -5,15 +5,46 @@ import Stepper from "@/components/Stepper";
 import useCartStore from "@/app/store/cartStore";
 import { format } from "date-fns";
 import { da } from "date-fns/locale";
+import { useState } from "react";
+
 
 const SingleCard = ({ eventData }) => {
-  const { items } = useCartStore((state) => state);
+  const addToCart = useCartStore((state) => state.addToCart); //tilføjer antal billetter til kurv
+  const [selectedTickets, setSelectedTickets] = useState({});
   const formattedDate = format(new Date(eventData.date), "d. MMMM yyyy", { locale: da });
+
+
+  const handleQuantityChange = (ticketId, quantity) => {
+    setSelectedTickets((prev) => ({
+      ...prev,
+      [ticketId]: quantity,
+    }));
+  };
 
   const availableTickets = [
     { id: "1", name: "Voksne", price: 170 },
     { id: "2", name: "Studerende", price: 90 },
   ];
+
+  //Funktion der kaldes når brugeren klikker på "tilføj til kurv" Bygger en Array af billetterne - sender dem til addToCard (zustand store)
+  const handleAddToCart = () => {
+    const ticketsToAdd = Object.entries(selectedTickets)
+      .filter(([_, quantity]) => quantity > 0)
+      .map(([ticketId, quantity]) => {
+        const ticket = availableTickets.find((t) => t.id === ticketId);
+        return {
+          id: ticket.id,
+          name: ticket.name,
+          price: ticket.price,
+          quantity,
+          eventId: eventData.id,
+          eventTitle: eventData.title,
+          remainingTickets: eventData.totalTickets - eventData.bookedTickets,
+        };
+      });
+  
+    addToCart(ticketsToAdd); // Dette sender alle valgte billetter samlet
+  };
 
   return (
     <section className="px-4">
@@ -41,39 +72,27 @@ const SingleCard = ({ eventData }) => {
 
         {/* Billetter */}
         <section className="flex flex-col gap-6">
-          {availableTickets.map((ticket) => {
-            const cartItem = items.find((i) => i.id === ticket.id && i.eventId === eventData.id);
-            const quantity = cartItem?.quantity || 0;
+          {availableTickets.map((ticket) => (
+            <div key={ticket.id} className="flex justify-between items-center gap-4 flex-wrap">
+            <div>
+              <p className="font-semibold">{ticket.name}</p>
+              <p className="font-light">Pris {ticket.price} DKK</p>
+            </div>
 
-            return (
-              <div key={ticket.id} className="flex justify-between items-center gap-4 flex-wrap">
-                <div>
-                  <p className="font-semibold">{ticket.name}</p>
-                  <p className="font-light">Pris {ticket.price} DKK</p>
-                </div>
-
-                <div className="flex flex-col items-end gap-1 min-w-[100px]">
-                  <Stepper
-                    itemId={ticket.id}
-                    quantity={quantity}
-                    item={{
-                      id: ticket.id,
-                      name: ticket.name,
-                      price: ticket.price,
-                      eventId: eventData.id,
-                      eventTitle: eventData.title,
-                      remainingTickets: eventData.totalTickets - eventData.bookedTickets,
-                    }}
-                  />
-                </div>
+            <div className="flex flex-col items-end gap-1 min-w-[100px]">
+            <Stepper
+  quantity={selectedTickets[ticket.id] || 0}
+  onQuantityChange={(q) => handleQuantityChange(ticket.id, q)}
+  maxQuantity={eventData.totalTickets - eventData.bookedTickets}
+/>
               </div>
+            </div>
+          ))}
 
-
-            );
-          })}
-
-          <div className="flex justify-end">
-            <ButtonSecondary href="/basket">Gå til kurv</ButtonSecondary>
+<div className="flex justify-end">
+<ButtonSecondary onClick={handleAddToCart}>
+  Tilføj til kurv
+</ButtonSecondary>
           </div>
         </section>
       </div>
