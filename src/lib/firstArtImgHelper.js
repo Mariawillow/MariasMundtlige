@@ -1,3 +1,5 @@
+// src/helpers/firstArtImgHelper.js
+
 import artPlaceholder from "@/images/artPlaceholder.png";
 import { getArtDetails } from "@/api/smk";
 
@@ -8,15 +10,22 @@ export function resolveImageUrl(thumbnail) {
 }
 
 export async function firstArtImgHelper(artworkIds) {
-  if (!artworkIds?.length) return artPlaceholder.src || artPlaceholder;
+  if (!artworkIds?.length) return artPlaceholder.src;
 
   const firstArtworkId = artworkIds[0];
-  if (!firstArtworkId) return artPlaceholder.src || artPlaceholder;
+  if (!firstArtworkId) return artPlaceholder.src;
 
   const art = await getArtDetails(firstArtworkId);
   if (isValidUrl(art?.image_thumbnail)) {
     return resolveImageUrl(art.image_thumbnail);
   }
 
-  return artPlaceholder.src || artPlaceholder;
+  return artPlaceholder.src;
+}
+
+export function artImageHelper(artwork) {
+  if (isValidUrl(artwork?.image_thumbnail)) {
+    return resolveImageUrl(artwork.image_thumbnail);
+  }
+  return artPlaceholder.src;
 }
