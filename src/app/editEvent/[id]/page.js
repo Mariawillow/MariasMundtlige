@@ -1,6 +1,7 @@
 "use client";
 import EventInformation from "@/components/(newEvent)/EventInformation";
 import Header from "@/components/(header)/Header";
+import EventFilters from "@/components/(newEvent)/EventFilters";
 
 import { use, useEffect, useState } from "react";
 
@@ -11,6 +12,8 @@ const EditEventPage = ({ params }) => {
   const { id } = use(params);
   const [event, setEvent] = useState(null);
   const [period, setPeriod] = useState(null);
+  const [date, setDate] = useState(null);
+  const [location, setLocation] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -29,6 +32,9 @@ const EditEventPage = ({ params }) => {
         ...found,
         location: locationObj,
       });
+
+      setDate(found.date);
+      setLocation(locationObj);
 
       const matchedPeriod = getPeriodById(found.period);
       setPeriod(matchedPeriod ?? null);
@@ -51,7 +57,9 @@ const EditEventPage = ({ params }) => {
     <div className="max-w-6xl mx-auto">
       <Header />
       <h1 className="text-3xl font-bold text-center my-8">Rediger event</h1>
-      <EventInformation mode="edit" defaultData={event} date={event.date} location={event.location} period={period} setPeriod={setPeriod} onSubmit={handleUpdate} />
+      <EventFilters date={date} setDate={setDate} location={location} setLocation={setLocation} period={period} setPeriod={setPeriod} />
+
+      <EventInformation mode="edit" defaultData={event} date={date} location={location} period={period} setPeriod={setPeriod} onSubmit={handleUpdate} />
     </div>
   );
 };

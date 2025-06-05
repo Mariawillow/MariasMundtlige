@@ -14,12 +14,14 @@ import ArtworkGrid from "./ArtworkGrid";
 import arrowLong from "@/images/arrowLong.svg";
 import { SearchBar } from "./SearchBar";
 import EventForm from "./EventForm";
+import Popup from "../Popup";
 
 export default function EventInformation({ date, location, period, defaultData = {}, mode = "create", onSubmit }) {
   const [allArtworks, setAllArtworks] = useState([]);
   const [filteredArtworks, setFilteredArtworks] = useState([]);
   const [loading, setLoading] = useState(false);
   const [showSuccess, setShowSuccess] = useState(""); //Toast effekt
+  const [showPopup, setShowPopup] = useState(false);
 
   const router = useRouter();
   const { user } = useUser(); //giver adgang til allerede loggede ind brugere.
@@ -27,6 +29,12 @@ export default function EventInformation({ date, location, period, defaultData =
   const [eventName, setEventName] = useState(defaultData.title || "");
   const [eventDescription, setEventDescription] = useState(defaultData.description || "");
   const [selectedArtworks, setSelectedArtworks] = useState(defaultData.artworkIds || []);
+  const tooManyArtworks = selectedArtworks.length > location?.maxArtworks;
+
+  const selectedArtworksFull = allArtworks.filter((art) =>
+    selectedArtworks.includes(art.object_number)
+  );
+
 
   // Hent alle værker én gang og sættes i allArtworks
   useEffect(() => {
@@ -63,14 +71,24 @@ export default function EventInformation({ date, location, period, defaultData =
         // Fjern de konflikterende kunstværker fra de værker, som er fra perioden
         const availableArtworks = periodFiltered.filter((art) => !conflictingArtworks.includes(art.object_number));
 
+        const selectedArtworksFull = allArtworks.filter((art) => selectedArtworks.includes(art.object_number)
+        );
+        // Kombiner valgte værker + de filtrerede tilgængelige værker
+        const combinedArtworks = [
+          ...selectedArtworksFull,
+          ...availableArtworks.filter(
+            (art) => !selectedArtworks.includes(art.object_number)
+          ),
+        ];
+
         // Sæt de filtrerede og tilgængelige værker som de værker, der vises
-        setFilteredArtworks(availableArtworks);
+        setFilteredArtworks(combinedArtworks);
       } finally {
         setLoading(false);
       }
     };
     filterArtworksByAvailability();
-  }, [period, date, location, allArtworks]);
+  }, [period, date, location, allArtworks, selectedArtworks]);
 
   const [artworkToast, setArtworkToast] = useState(null); // fx string besked
 
@@ -125,6 +143,14 @@ export default function EventInformation({ date, location, period, defaultData =
   }, [artworkToast]);
 
 
+  useEffect(() => {
+    if (location && selectedArtworks.length > location.maxArtworks) {
+      setShowPopup(true); //Viser popup'en med at der er for mange valgt værker på den nye lokation.
+    } else {
+      setShowPopup(false); //Skjuler vores popup hvis der IKKE er for mange valgte værker på den nye lokation.
+    }
+  }, [location, selectedArtworks]);
+
 
   // Event håndtering: Opret eller opdater event
   // Samler alt data om event i eventInfo
@@ -175,13 +201,24 @@ export default function EventInformation({ date, location, period, defaultData =
         {artworkToast && <div className="fixed bottom-6 right-6 bg-[#6b5f6e] text-white px-4 py-2 rounded shadow-lg z-50 transition-all">{artworkToast}</div>}
       </div>
       <div className="flex justify-end">
-        <button className="group inline-block text-[#C4FF00] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
+        <button className="group inline-block text-[#C4FF00] cursor-pointer disabled:cursor-not-allowed disabled:opacity-50" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0 || selectedArtworks.length > location?.maxArtworks}>
           <span className="inline-flex flex-col">
             <span className="text-4xl font-bold px-8">{mode === "edit" ? "Gem ændringer" : "Opret event"}</span>
             <Image src={arrowLong} alt="pil" className="self-end transition-transform group-hover:translate-x-1 group-disabled:translate-x-0" loading="lazy" />
           </span>
         </button>
       </div>
+
+      {showPopup && (
+        <Popup
+          message={`Du har valgt ${selectedArtworks.length} værker, men lokationen tillader kun ${location?.maxArtworks} værker. Fravælg venligst ${selectedArtworks.length - location?.maxArtworks} værker.`}
+          onClose={() => setShowPopup(false)}
+          showConfirm={false}
+          selectedArtworks={selectedArtworksFull}
+          toggleArtwork={toggleArtwork}
+          tooManyArtworks={tooManyArtworks}
+        />
+      )}
 
       {/* SuccessToast */}
       {showSuccess && (
