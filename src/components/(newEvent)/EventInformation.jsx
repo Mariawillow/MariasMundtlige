@@ -106,19 +106,19 @@ export default function EventInformation({ date, location, period, defaultData =
   // Filtrer og sorterer værker baseret på søgetekst (kunstner)
   const displayedArtworks = searchTerm
     ? filteredArtworks.filter((art) => {
-        // Sikre at art.artist er et array
-        const artistNames = Array.isArray(art.artist) ? art.artist : [];
-        // Gemmer searchterm i lowercase
-        const search = searchTerm.toLowerCase();
+      // Sikre at art.artist er et array
+      const artistNames = Array.isArray(art.artist) ? art.artist : [];
+      // Gemmer searchterm i lowercase
+      const search = searchTerm.toLowerCase();
 
-        // Tjekker om nogen af kunstnernavnene matcher søgetermen
-        return artistNames.some((name) => {
-          // Hvis navnet ikke er en streng (fx null, tal, etc.), ignorer det
-          if (typeof name !== "string") return false;
-          // Lowercaser navnet og tjekker om søgetermen indgår
-          return name.toLowerCase().includes(search);
-        });
-      })
+      // Tjekker om nogen af kunstnernavnene matcher søgetermen
+      return artistNames.some((name) => {
+        // Hvis navnet ikke er en streng (fx null, tal, etc.), ignorer det
+        if (typeof name !== "string") return false;
+        // Lowercaser navnet og tjekker om søgetermen indgår
+        return name.toLowerCase().includes(search);
+      });
+    })
     : filteredArtworks;
 
   // Fjern artwork toasten automatisk efter 1.5 sekunder
@@ -194,7 +194,14 @@ export default function EventInformation({ date, location, period, defaultData =
         </button>
       </div>
 
-      {showPopup && <Popup message={`Du har valgt ${selectedArtworks.length} værker, men lokationen tillader kun ${location?.maxArtworks} værker. Fravælg venligst ${selectedArtworks.length - location?.maxArtworks} værker.`} onClose={() => setShowPopup(false)} showConfirm={false} selectedArtworks={selectedArtworksFull} toggleArtwork={toggleArtwork} tooManyArtworks={tooManyArtworks} />}
+      {showPopup && <Popup
+        message={
+          <>
+            Du har valgt {selectedArtworks.length} værker, men lokationen tillader kun {location?.maxArtworks} værker.
+            <br />
+            Fravælg venligst <strong>{selectedArtworks.length - location?.maxArtworks}</strong> værker.
+          </>
+        } onClose={() => setShowPopup(false)} showConfirm={false} selectedArtworks={selectedArtworksFull} toggleArtwork={toggleArtwork} tooManyArtworks={tooManyArtworks} />}
 
       {/* SuccessToast */}
       {showSuccess && <div className="fixed top-6 right-6 bg-[#C4FF00] text-black px-4 py-2 rounded shadow-lg z-50 transition-all">{showSuccess}</div>}
