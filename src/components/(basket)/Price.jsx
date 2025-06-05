@@ -3,6 +3,8 @@
 import useCartStore from "@/app/store/cartStore";
 import Stepper from "@/components/Stepper";
 import Link from "next/link";
+import { RxCross2 } from "react-icons/rx";
+
 
 const Price = () => {
   const { items } = useCartStore((state) => state);
@@ -10,6 +12,9 @@ const Price = () => {
   const getTotalPrice = () => {
     return items.reduce((totalPrice, item) => totalPrice + item.price * item.quantity, 0);
   };
+
+  const { removeItem } = useCartStore((state) => state);
+
 
   //output er vores opsamler af items 
   const groupedItems = items.reduce((output, item) => {
@@ -33,7 +38,7 @@ const Price = () => {
                   <p className="font-semibold">{item.name}</p>
                   <p className="font-light">Pris {item.price} DKK</p>
                 </div>
-                <div className="justify-self-start sm:justify-self-end">
+                <div className="justify-self-start sm:justify-self-end flex items-center-safe">
                   <Stepper
                     itemId={item.id}
                     quantity={item.quantity}
@@ -48,9 +53,12 @@ const Price = () => {
                     }}
                     remainingTickets={item.remainingTickets}
                   />
+                  {/* //kryds der kalder på removeItem fra cardStore og fjerner billetterne. */}
+                    <RxCross2 size={30} width={20} onClick={() => removeItem(item.id, item.eventId)} className="hover:text-red-600 transition cursor-pointer ml-2" />
                 </div>
               </div>
             ))}
+
             <Link href={`/event/${eventId}`}>
               <button className="mt-2 text-sm text-[#C4FF00] underline hover:opacity-80 hover:cursor-pointer">Gå til event</button>
             </Link>

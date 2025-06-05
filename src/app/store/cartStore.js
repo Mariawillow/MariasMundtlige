@@ -59,6 +59,13 @@ const cartStore = create(
           });
         }
       },
+      //Funktion der fjerner billetter 
+      removeItem: (id, eventId) => {
+        const { items } = get();
+        set({
+          items: items.filter((item) => !(item.id === id && item.eventId === eventId)),
+        });
+      },
 
       // Tilføj clearCart funktion:
       clearCart: () => set({ items: [] }),
