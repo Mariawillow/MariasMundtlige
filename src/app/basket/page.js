@@ -73,7 +73,7 @@ const Basket = () => {
       <title>Din kurv</title>
       {/* MOBIL: baggrundsbillede */}
       <div className="absolute inset-0 md:hidden z-0">
-        <Image src={StatuePic} alt="Statue" fill className="object-cover" priority />
+        <Image src={StatuePic} alt="" fill className="object-cover" priority />
         <div className="absolute inset-0 bg-white opacity-70" />
       </div>
 
