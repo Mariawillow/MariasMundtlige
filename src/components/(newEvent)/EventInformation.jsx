@@ -68,14 +68,18 @@ export default function EventInformation({ date, location, period, defaultData =
         // Fjern de konflikterende kunstværker fra de værker, som er fra perioden
         const availableArtworks = periodFiltered.filter((art) => !conflictingArtworks.includes(art.object_number));
 
+        const selectedArtworksFull = allArtworks.filter((art) => selectedArtworks.includes(art.object_number));
+        // Kombiner valgte værker + de filtrerede tilgængelige værker
+        const combinedArtworks = [...selectedArtworksFull, ...availableArtworks.filter((art) => !selectedArtworks.includes(art.object_number))];
+
         // Sæt de filtrerede og tilgængelige værker som de værker, der vises
-        setFilteredArtworks(availableArtworks);
+        setFilteredArtworks(combinedArtworks);
       } finally {
         setLoading(false);
       }
     };
     filterArtworksByAvailability();
-  }, [period, date, location, allArtworks, selectedArtworks]);
+  }, [period, date, location, allArtworks]);
 
   const [artworkToast, setArtworkToast] = useState(null); // fx string besked
 
@@ -111,19 +115,19 @@ export default function EventInformation({ date, location, period, defaultData =
   // Filtrer og sorterer værker baseret på søgetekst (kunstner)
   const displayedArtworks = searchTerm
     ? filteredArtworks.filter((art) => {
-        // Sikre at art.artist er et array
-        const artistNames = Array.isArray(art.artist) ? art.artist : [];
-        // Gemmer searchterm i lowercase
-        const search = searchTerm.toLowerCase();
+      // Sikre at art.artist er et array
+      const artistNames = Array.isArray(art.artist) ? art.artist : [];
+      // Gemmer searchterm i lowercase
+      const search = searchTerm.toLowerCase();
 
-        // Tjekker om nogen af kunstnernavnene matcher søgetermen
-        return artistNames.some((name) => {
-          // Hvis navnet ikke er en streng (fx null, tal, etc.), ignorer det
-          if (typeof name !== "string") return false;
-          // Lowercaser navnet og tjekker om søgetermen indgår
-          return name.toLowerCase().includes(search);
-        });
-      })
+      // Tjekker om nogen af kunstnernavnene matcher søgetermen
+      return artistNames.some((name) => {
+        // Hvis navnet ikke er en streng (fx null, tal, etc.), ignorer det
+        if (typeof name !== "string") return false;
+        // Lowercaser navnet og tjekker om søgetermen indgår
+        return name.toLowerCase().includes(search);
+      });
+    })
     : filteredArtworks;
 
   // Fjern artwork toasten automatisk efter 1.5 sekunder
