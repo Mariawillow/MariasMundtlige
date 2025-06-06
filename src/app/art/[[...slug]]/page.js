@@ -45,7 +45,7 @@ export default async function ArtSingleView(props) {
         <article className="relative w-full max-w-md mx-auto aspect-[4/3]">
           <div className="absolute w-1/3 h-1/3 -left-[10%] -top-[10%] -z-10" style={{ backgroundColor: primaryColor }} />
           <div className="absolute w-1/2 h-1/2 left-3/5 -bottom-[15%] bg-[#8b6b3a] -z-10" style={{ backgroundColor: secondaryColor }} />
-          <Image src={imageUrl} alt={title} fill className="object-cover" loading="eager" />
+          <Image src={imageUrl} alt={title} fill className="object-cover" />
         </article>
 
         {/* HØJRE: tekst */}

@@ -226,7 +226,7 @@ export default function EventInformation({ date, location, period, defaultData =
         <button className="group inline-block text-[#C4FF00] cursor-pointer" onClick={handleMakeNewEvent}>
           <span className="inline-flex flex-col">
             <span className="text-4xl font-bold px-8">{mode === "edit" ? "Gem ændringer" : "Opret event"}</span>
-            <Image src={arrowLong} alt="pil" className="self-end transition-transform group-hover:translate-x-1 group-disabled:translate-x-0" loading="eager" />
+            <Image src={arrowLong} alt="pil" className="self-end transition-transform group-hover:translate-x-1 group-disabled:translate-x-0" />
           </span>
         </button>
       </div>
