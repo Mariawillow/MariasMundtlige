@@ -37,6 +37,7 @@ export default async function ArtSingleView(props) {
 
   return (
     <div className="relative px-[var(--space-s)] py-[var(--space-l)] overflow-hidden">
+      <title>Kunstværk beskrivelse</title>
       <Header />
       <ArtClient />
       <section className="grid grid-cols-1 md:grid-cols-2 gap-[var(--space-l)] relative z-10">

@@ -43,6 +43,7 @@ const Dashboard = () => {
 
   return (
     <article className="px-4 sm:px-4">
+      <title>Dashboard</title>
       <Header />
       <h1 className="mb-6 mt-10">Dashboard</h1>
 

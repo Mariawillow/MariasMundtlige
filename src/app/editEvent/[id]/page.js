@@ -55,6 +55,7 @@ const EditEventPage = ({ params }) => {
 
   return (
     <div className="max-w-6xl mx-auto">
+      <title>Rediger event</title>
       <Header />
       <h1 className="text-3xl font-bold text-center my-8">Rediger event</h1>
       <EventFilters date={date} setDate={setDate} location={location} setLocation={setLocation} period={period} setPeriod={setPeriod} />

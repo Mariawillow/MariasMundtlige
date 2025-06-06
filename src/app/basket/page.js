@@ -70,6 +70,7 @@ const Basket = () => {
 
   return (
     <div className="relative min-h-screen">
+      <title>Din kurv</title>
       {/* MOBIL: baggrundsbillede */}
       <div className="absolute inset-0 md:hidden z-0">
         <Image src={StatuePic} alt="Statue" fill className="object-cover" priority />

@@ -91,6 +91,7 @@ export default function ListeView() {
 
   return (
     <div>
+      <title>Events</title>
       <Header />
       <div className="flex justify-end space-x-4">
         <LocationDropdown onSelectCity={setSelectedCity} />

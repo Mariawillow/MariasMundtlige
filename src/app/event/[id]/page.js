@@ -20,6 +20,7 @@ const EventSingleView = async ({ params }) => {
 
   return (
     <div className="flex flex-col gap-6">
+      <title>Event beskrivelse</title>
       <Header></Header>
 
       <ButtonBack>Tilbage</ButtonBack>
