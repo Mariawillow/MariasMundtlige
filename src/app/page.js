@@ -23,6 +23,7 @@ export default function Home() {
 
   return (
     <div className="bg-[url('/images/statuePic.png')] bg-cover bg-no-repeat">
+      <title>Forside</title>
       <Image src={statuePic} alt="Statue" fill style={{ objectFit: "cover" }} className="scale-x-[-1]" />
       <div className="col-start-2 bg-cover bg-no-repeat bg-center relative">
         <Header variant="lime" />

@@ -69,6 +69,7 @@ export default function ReceiptPage() {
 
         return (
           <div key={eventId} className="mb-10  p-6">
+            <title>Tak for dit køb</title>
             <h2 className="text-2xl font-semibold">{event.title}</h2>
             <p className="text-gray-500 mb-4">Dato: {event.date}</p>
 
