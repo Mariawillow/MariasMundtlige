@@ -27,12 +27,12 @@ export default function ArtworkGrid({ artworks, selectedArtworks, toggleArtwork,
       </div>
       <div className="flex justify-center mt-4">
         {/* Første side */}
-        <button onClick={() => setCurrentPage(1)} disabled={currentPage === 1} className={`disabled:opacity-50 ${currentPage !== 1 ? "cursor-pointer" : "cursor-default"}`}>
+        <button aria-label="Første side" onClick={() => setCurrentPage(1)} disabled={currentPage === 1} className={`disabled:opacity-50 ${currentPage !== 1 ? "cursor-pointer" : "cursor-default"}`}>
           <MdKeyboardDoubleArrowLeft />
         </button>
 
         {/* Forrige side */}
-        <button onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1} className={`p-4 disabled:opacity-50 ${currentPage !== 1 ? "cursor-pointer" : "cursor-default"}`}>
+        <button aria-label="Forrige side" onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))} disabled={currentPage === 1} className={`p-4 disabled:opacity-50 ${currentPage !== 1 ? "cursor-pointer" : "cursor-default"}`}>
           <MdKeyboardArrowLeft />
         </button>
 
@@ -41,12 +41,12 @@ export default function ArtworkGrid({ artworks, selectedArtworks, toggleArtwork,
         </span>
 
         {/* Næste side */}
-        <button onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} className={`p-4 disabled:opacity-50 ${currentPage !== totalPages ? "cursor-pointer" : "cursor-default"}`}>
+        <button aria-label="Næste side" onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages} className={`p-4 disabled:opacity-50 ${currentPage !== totalPages ? "cursor-pointer" : "cursor-default"}`}>
           <MdKeyboardArrowRight />
         </button>
 
         {/* Sidste side */}
-        <button onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages} className={`disabled:opacity-50 ${currentPage !== totalPages ? "cursor-pointer" : "cursor-default"}`}>
+        <button aria-label="Sidste side" onClick={() => setCurrentPage(totalPages)} disabled={currentPage === totalPages} className={`disabled:opacity-50 ${currentPage !== totalPages ? "cursor-pointer" : "cursor-default"}`}>
           <MdKeyboardDoubleArrowRight />
         </button>
       </div>
