@@ -78,7 +78,7 @@ const Header = ({ variant = "black" }) => {
     <nav className="mb-4 relative z-50 flex sm:flex-row items-center justify-between mt-space-m">
       {/* Logo */}
       <Link href="/" className="z-50">
-        <Image src={isLime ? logoLime : logoBlack} width={200} height={200} alt="SMK logo" />
+        <Image src={isLime ? logoLime : logoBlack} width={200} height={200} alt="SMK logo" loading="eager" />
       </Link>
 
       {/* Desktop menu */}

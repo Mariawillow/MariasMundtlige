@@ -73,7 +73,7 @@ const Basket = () => {
       <title>Din kurv</title>
       {/* MOBIL: baggrundsbillede */}
       <div className="absolute inset-0 md:hidden z-0">
-        <Image src={StatuePic} alt="Statue" fill className="object-cover" priority />
+        <Image src={StatuePic} alt="Statue" fill className="object-cover" priority loading="eager" />
         <div className="absolute inset-0 bg-white opacity-70" />
       </div>
 
@@ -85,7 +85,7 @@ const Basket = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-start">
             {/* VENSTRE kolonne – billede (kun på md+) */}
             <div className="hidden md:block">
-              <Image src={StatuePic} alt="Statue billede" width={600} height={800} className="w-full h-full object-cover" />
+              <Image src={StatuePic} alt="Statue billede" width={600} height={800} className="w-full h-full object-cover" loading="eager" />
             </div>
 
             {/* HØJRE kolonne – tekst og funktionalitet */}
