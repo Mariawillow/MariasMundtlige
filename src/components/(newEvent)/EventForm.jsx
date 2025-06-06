@@ -26,13 +26,15 @@ const EventForm = ({ eventName, setEventName, eventDescription, setEventDescript
   return (
     <div className="flex flex-col gap-4">
       <form>
-        <label className="text-sm font-medium">Eventnavn *</label>
-        <input required type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} className={`w-full border px-3 py-2 ${formErrors?.name ? "border-red-500" : ""}`} />
+        <label className="text-sm font-medium">Eventnavn *
+          <input required type="text" value={eventName} onChange={(e) => setEventName(e.target.value)} className={`w-full border px-3 py-2 ${formErrors?.name ? "border-red-500" : ""}`} />
+        </label>
       </form>
 
       <form>
-        <label className="text-sm font-medium mt-2">Beskrivelse *</label>
-        <textarea required value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} className={`w-full border px-3 py-2 ${formErrors?.description ? "border-red-500" : ""}`} rows={4} />
+        <label className="text-sm font-medium mt-2">Beskrivelse *
+          <textarea required value={eventDescription} onChange={(e) => setEventDescription(e.target.value)} className={`w-full border px-3 py-2 ${formErrors?.description ? "border-red-500" : ""}`} rows={4} />
+        </label>
       </form>
 
       <div className="flex flex-col">
