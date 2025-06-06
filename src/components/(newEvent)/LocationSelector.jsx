@@ -39,22 +39,20 @@ export default function LocationSelector({ location, setLocation, date }) {
   };
 
   return (
-    <div className="flex flex-col">
-      <label className="text-sm font-medium">Lokation *
-        <select value={location?.id || ""} onChange={handleChange} className="border px-3 py-2">
-          <option value="" disabled>
-            Vælg lokation
-          </option>
-          {locations.map((location) => {
-            const isBooked = bookedLocationsIds.includes(location.id);
-            return (
-              <option key={location.id} value={location.id} disabled={isBooked} className={isBooked ? "text-gray-400 bg-gray-100" : ""}>
-                {location.address} {isBooked ? "(optaget)" : ""}
-              </option>
-            );
-          })}
-        </select>
-      </label>
-    </div>
+    <label className="text-sm font-medium flex flex-col">Lokation *
+      <select value={location?.id || ""} onChange={handleChange} className="border px-3 py-2">
+        <option value="" disabled>
+          Vælg lokation
+        </option>
+        {locations.map((location) => {
+          const isBooked = bookedLocationsIds.includes(location.id);
+          return (
+            <option key={location.id} value={location.id} disabled={isBooked} className={isBooked ? "text-gray-400 bg-gray-100" : ""}>
+              {location.address} {isBooked ? "(optaget)" : ""}
+            </option>
+          );
+        })}
+      </select>
+    </label>
   );
 }
