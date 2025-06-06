@@ -35,7 +35,7 @@ const ListeCard = ({ event }) => {
   return (
     <Link href={`/event/${event.id}`} className="group w-full cursor-pointer">
       <div className="relative aspect-[3/2]">
-        <Image src={imageUrl} alt={event.title} width={300} height={200} className="w-full h-full object-cover transition duration-300 group-hover:bg-[#DAD6DD] group-hover:opacity-40 group-hover:border-[3px] group-hover:border-[#C4FF00]" loading="lazy" />
+        <Image src={imageUrl} alt={event.title} width={300} height={200} className="w-full h-full object-cover transition duration-300 group-hover:bg-[#DAD6DD] group-hover:opacity-40 group-hover:border-[3px] group-hover:border-[#C4FF00]" />
 
         {/* BADGE: Viser kun én af dem – Udsolgt har højeste prioritet */}
         {/* Fortæller at enten 0 eller under */}
