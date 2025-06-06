@@ -61,7 +61,7 @@ const Header = ({ variant = "black" }) => {
         </button>
       )}
 
-      <Link href="/basket" className="w-full text-center sm:w-auto sm:border-none border-${lineColor} pb-2 sm:pb-0" onClick={() => setIsOpen(false)}>
+      <Link aria-label="Gå til kurv" href="/basket" className="w-full text-center sm:w-auto sm:border-none border-${lineColor} pb-2 sm:pb-0" onClick={() => setIsOpen(false)}>
         <BasketIcon variant={variant} />
       </Link>
 
