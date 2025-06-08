@@ -4,15 +4,11 @@ import { useRef, useEffect } from "react";
 import ArtworkCard from "./ArtworkCard";
 
 const EventForm = ({ eventName, setEventName, eventDescription, setEventDescription, formErrors, setFormErrors, selectedArtworks, location, filteredArtworks, toggleArtwork }) => {
-  // Når eventName ændrer sig, ryd 'name' fejl
   useEffect(() => {
     if (eventName.trim() !== "" && formErrors.name) {
       setFormErrors((prev) => ({ ...prev, name: false }));
     }
-  }, [eventName, formErrors.name, setFormErrors]);
 
-  // Når eventDescription ændrer sig, ryd 'description' fejl
-  useEffect(() => {
     if (eventDescription.trim() !== "" && formErrors.description) {
       setFormErrors((prev) => ({ ...prev, description: false }));
     }
@@ -20,7 +16,7 @@ const EventForm = ({ eventName, setEventName, eventDescription, setEventDescript
     if (selectedArtworks.length > 0 && formErrors.artworks) {
       setFormErrors((prev) => ({ ...prev, artworks: false }));
     }
-  }, [eventDescription, formErrors.description, setFormErrors]);
+  }, [eventName, eventDescription, selectedArtworks.length, formErrors.name, formErrors.description, formErrors.artworks, setFormErrors]);
 
   const selectedWrapperRef = useRef();
 
