@@ -115,19 +115,19 @@ export default function EventInformation({ date, location, period, defaultData =
   // Filtrer og sorterer værker baseret på søgetekst (kunstner)
   const displayedArtworks = searchTerm
     ? filteredArtworks.filter((art) => {
-      // Sikre at art.artist er et array
-      const artistNames = Array.isArray(art.artist) ? art.artist : [];
-      // Gemmer searchterm i lowercase
-      const search = searchTerm.toLowerCase();
+        // Sikre at art.artist er et array
+        const artistNames = Array.isArray(art.artist) ? art.artist : [];
+        // Gemmer searchterm i lowercase
+        const search = searchTerm.toLowerCase();
 
-      // Tjekker om nogen af kunstnernavnene matcher søgetermen
-      return artistNames.some((name) => {
-        // Hvis navnet ikke er en streng (fx null, tal, etc.), ignorer det
-        if (typeof name !== "string") return false;
-        // Lowercaser navnet og tjekker om søgetermen indgår
-        return name.toLowerCase().includes(search);
-      });
-    })
+        // Tjekker om nogen af kunstnernavnene matcher søgetermen
+        return artistNames.some((name) => {
+          // Hvis navnet ikke er en streng (fx null, tal, etc.), ignorer det
+          if (typeof name !== "string") return false;
+          // Lowercaser navnet og tjekker om søgetermen indgår
+          return name.toLowerCase().includes(search);
+        });
+      })
     : filteredArtworks;
 
   // Fjern artwork toasten automatisk efter 1.5 sekunder
@@ -167,7 +167,7 @@ export default function EventInformation({ date, location, period, defaultData =
         description: descEmpty,
         artworks: noArtworks,
       });
-      setShowValidationPopup(true); // ← Tilføj denne linje
+      setShowValidationPopup(true);
       return;
     }
 
@@ -223,7 +223,7 @@ export default function EventInformation({ date, location, period, defaultData =
         {artworkToast && <div className="fixed bottom-6 right-6 bg-[#6b5f6e] text-white px-4 py-2 rounded shadow-lg z-50 transition-all">{artworkToast}</div>}
       </div>
       <div className="flex justify-end">
-        <button className="group inline-block text-[#C4FF00] cursor-pointer" onClick={handleMakeNewEvent}>
+        <button className="group inline-block text-[#C4FF00] cursor-pointer" onClick={handleMakeNewEvent} disabled={!eventName || !eventDescription || selectedArtworks.length === 0}>
           <span className="inline-flex flex-col">
             <span className="text-4xl font-bold px-8">{mode === "edit" ? "Gem ændringer" : "Opret event"}</span>
             <Image src={arrowLong} alt="pil" className="self-end transition-transform group-hover:translate-x-1 group-disabled:translate-x-0" />
