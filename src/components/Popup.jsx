@@ -30,7 +30,6 @@ const Popup = ({
                   alt={`Værk ${artwork.object_number}`}
                   fill
                   className="object-cover"
-                  loading="eager"
                 />
 
               </div>

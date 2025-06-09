@@ -4,8 +4,7 @@ import { periods } from "@/api/periods";
 
 export default function PeriodSelector({ period, setPeriod }) {
   return (
-    <div className="flex flex-col">
-      <label className="text-sm font-medium">Kunstperiode *</label>
+    <label className="text-sm font-medium flex flex-col">Kunstperiode *
       <select
         value={period?.id || ""}
         onChange={(e) => {
@@ -24,6 +23,6 @@ export default function PeriodSelector({ period, setPeriod }) {
           </option>
         ))}
       </select>
-    </div>
+    </label>
   );
 }

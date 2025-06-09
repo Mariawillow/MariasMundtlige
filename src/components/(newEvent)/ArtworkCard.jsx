@@ -33,7 +33,7 @@ export default function ArtworkCard({ artwork, selectedIds = [], onClick, disabl
   const handleClick = () => {
     if (disableSelect && !isSelected) return;
 
-    // Tryk-animation
+    // Klik-animation
     gsap.fromTo(
       cardRef.current,
       { scale: 1 },
