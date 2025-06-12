@@ -10,6 +10,25 @@ import { getEvents, getLocations } from "@/api/events"; // Henter data fra event
 import { getArtDetails } from "@/api/smk"; //Henter info/data fra SMK (info om kunstværer fra SMK)
 import { cityShorten } from "@/lib/cityHelpers";
 
+function groupEventsAlphabetically(events) {
+  const grouped = {};
+
+  events.forEach((event) => {
+    const firstLetter = event.title?.[0]?.toUpperCase() ?? "#";
+    if (!grouped[firstLetter]) {
+      grouped[firstLetter] = [];
+    }
+    grouped[firstLetter].push(event);
+  });
+
+  return Object.entries(grouped)
+    .sort(([a], [b]) => a.localeCompare(b, "da"))
+    .map(([letter, events]) => ({
+      letter,
+      events: events.sort((a, b) => a.title.localeCompare(b.title, "da")),
+    }));
+}
+
 export default function ListeView() {
   const [events, setEvents] = useState([]); // Gemmer events
   const [locations, setLocations] = useState([]); // Gemmer lokationer
@@ -96,7 +115,15 @@ export default function ListeView() {
         <LocationDropdown onSelectCity={setSelectedCity} />
         <SortingDropdown onSortChange={setSortOrder} />
       </div>
-      <ListeCardWrapper events={sortedEvents} />
+      {sortOrder === "alphabetical" ? (
+  groupEventsAlphabetically(sortedEvents).map(({ letter, events }) => (
+    <div key={letter} className="mb-10">
+      <h2 className="text-2xl font-bold mb-4">{letter}</h2>
+      <ListeCardWrapper events={events} />
     </div>
+  ))
+) : (
+  <ListeCardWrapper events={sortedEvents} />
+)}    </div>
   );
 }
