@@ -114,6 +114,7 @@ const Basket = () => {
                 <h2 className="text-lg sm:text-xl font-light">Billetter</h2>
               </div>
 
+              {/* Ternary expression. Bruges i react til at vise forskellige HTML/Komponenter afhængige af en betingelse */}
               {items.length === 0 ? <p className="text-gray-600">Du har ikke valgt nogle billetter...</p> : <Price />}
 
               {/* Formularfelter til navn, email og adresse. Alle styres af state og opdateres via onChange */}

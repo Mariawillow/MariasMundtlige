@@ -19,8 +19,8 @@ const cartStore = create(
       //items er arrayet med alle valgte billetter i kurven
       items: [], 
       
-//Funktion til at tilføje én billet.
-//Henter nuværende items fra state
+      //Funktion til at tilføje én billet.
+      //Henter nuværende items fra state
       addItem: (item) => {
         const { items } = get();
 
@@ -55,15 +55,12 @@ const cartStore = create(
         const { items } = get();
         const newItems = [...items];
       
-        //Loop igennem hvert nyt item som skal tilføjes
         for (const newItem of itemsToAdd) {
 
-          //Samme kontrol: tjek om tilføjelsen vil overstige antallet af tilgængelige billetter
           const totalQuantityForEvent = newItems
             .filter((i) => i.eventId === newItem.eventId)
             .reduce((sum, i) => sum + i.quantity, 0);
 
-            //Hvis man prøvet at overstige kommer alert.
           if (totalQuantityForEvent + newItem.quantity > newItem.remainingTickets) {
             alert("Der er ikke flere billetter tilgængelige for dette event.");
             continue; // spring over
@@ -72,9 +69,7 @@ const cartStore = create(
           const existingIndex = newItems.findIndex(
             (i) => i.id === newItem.id && i.eventId === newItem.eventId
             );
-            
-            //Hvis billetten allerede findes: læg quantity til.
-            //Ellers: tilføj som ny.
+
           if (existingIndex !== -1) {
             newItems[existingIndex].quantity += newItem.quantity;
           } else {
@@ -82,7 +77,6 @@ const cartStore = create(
           }
         }
       
-        //Opdater items med de nye værdier.
         set({ items: newItems });
       },
 

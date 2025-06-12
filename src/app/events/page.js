@@ -6,8 +6,8 @@ import LocationDropdown from "@/components/(events)/DropdownLocation";
 import SortingDropdown from "@/components/(events)/DropDownSorter";
 
 import { useEffect, useState } from "react";
-import { getEvents, getLocations } from "@/api/events"; // Henter event data
-import { getArtDetails } from "@/api/smk"; //Henter værk data
+import { getEvents, getLocations } from "@/api/events"; // Henter data fra events (Event data og Lokations Data)
+import { getArtDetails } from "@/api/smk"; //Henter info/data fra SMK (info om kunstværer fra SMK)
 import { cityShorten } from "@/lib/cityHelpers";
 
 export default function ListeView() {
@@ -17,7 +17,7 @@ export default function ListeView() {
   const [sortOrder, setSortOrder] = useState(null); // Gemmer sorteringsrækkefølge
 
   // useEffect kører kun én gang, når komponenten loader
-  // Her henter vi både events og lokationer fra API og gemmer i state
+  // Her henter vi både events og lokationer fra de 2 API'er og gemmer i state
   useEffect(() => {
     const fetchData = async () => {
       const [eventsData, locationsData] = await Promise.all([getEvents(), getLocations()]);
@@ -64,7 +64,7 @@ export default function ListeView() {
     return shorten.some((shorten) => location.address.toLowerCase().includes(shorten));
   });
 
-  //Vi sortere nu bogstaverne alfabetisk fra a-å og efter de populæreste:
+  //Vi sortere nu bogstaverne alfabetisk fra a-å ELLER efter de populæreste:
   const sortedEvents = [...filteredEvents].sort((a, b) => {
     if (sortOrder === "alphabetical") {
       return a.title.localeCompare(b.title, "da");
@@ -85,7 +85,6 @@ export default function ListeView() {
       const popularityB = b.bookedTickets / b.totalTickets || 0;
       return popularityB - popularityA;
     }
-
     return 0;
   });
 

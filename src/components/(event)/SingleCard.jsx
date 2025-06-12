@@ -27,6 +27,8 @@ const SingleCard = ({ eventData }) => {
   ];
 
   //Funktion der kaldes når brugeren klikker på "tilføj til kurv" Bygger en Array af billetterne - sender dem til addToCard (zustand store)
+              //() er starten på funktionen, og den betyder, at denne funktion ikke skal bruge nogle input lige nu.
+              //=> { betyder: "Når denne funktion kaldes, så gør følgende..."
   const handleAddToCart = () => {
     const ticketsToAdd = Object.entries(selectedTickets)
       .filter(([_, quantity]) => quantity > 0)
