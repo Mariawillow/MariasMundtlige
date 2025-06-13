@@ -10,6 +10,8 @@ import { getEvents, getLocations } from "@/api/events"; // Henter data fra event
 import { getArtDetails } from "@/api/smk"; //Henter info/data fra SMK (info om kunstværer fra SMK)
 import { cityShorten } from "@/lib/cityHelpers";
 
+
+//INDSAT DENNE NYE FUNKTION::
 function groupEventsAlphabetically(events) {
   const grouped = {};
 
@@ -28,6 +30,8 @@ function groupEventsAlphabetically(events) {
       events: events.sort((a, b) => a.title.localeCompare(b.title, "da")),
     }));
 }
+
+
 
 export default function ListeView() {
   const [events, setEvents] = useState([]); // Gemmer events
@@ -116,14 +120,15 @@ export default function ListeView() {
         <SortingDropdown onSortChange={setSortOrder} />
       </div>
       {sortOrder === "alphabetical" ? (
-  groupEventsAlphabetically(sortedEvents).map(({ letter, events }) => (
-    <div key={letter} className="mb-10">
-      <h2 className="text-2xl font-bold mb-4">{letter}</h2>
-      <ListeCardWrapper events={events} />
+         groupEventsAlphabetically(sortedEvents).map(({ letter, events }) => (
+        <div key={letter} className="mb-10">
+          <h2 className="text-2xl font-bold mb-4">{letter}</h2>
+          <ListeCardWrapper events={events} />
+        </div>
+        ))
+      ) : (
+        <ListeCardWrapper events={sortedEvents} />
+      )}    
     </div>
-  ))
-) : (
-  <ListeCardWrapper events={sortedEvents} />
-)}    </div>
   );
 }
